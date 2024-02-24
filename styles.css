@@ -7,22 +7,23 @@
 
 .navbar ul{
     list-style-type: none;
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
     overflow: hidden;
-
 }
-.navbar li{
-    float: left;
-    color: white;
+
+
+.navbar li a{
     display: block;
-    padding: 14px 16px;
-    text-align: center;
+    color: wheat;
+    padding: 8px 16px;
+    text-decoration: none;
 
 
 }
 
-.navbar li:hover{
+.navbar li a:hover{
+    color: white;
     background-color: gray;
 
 }
