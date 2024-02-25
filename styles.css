@@ -4,7 +4,7 @@
 
 }
 
-.h1 {
+h1 a {
     text-decoration: none;
 }
 
@@ -27,15 +27,15 @@
     background-color: gray;
 }
 
-.container button:hover {
+.create-event-button button:hover {
     background-color: gray;
     color: wheat;
 }
 
-.container button {
+.create-event-button button {
     position: fixed;
     top: 0;
     right: 0;
 }
 
-.login-form {}
+.password-form {}
