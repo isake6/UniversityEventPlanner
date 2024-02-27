@@ -7,7 +7,11 @@
 h1 a {
     text-decoration: none;
 }
+h1 a {
+    text-decoration: none;
+}
 
+.navbar ul {
 .navbar ul {
     list-style-type: none;
     margin: 0px;
@@ -16,12 +20,14 @@ h1 a {
 }
 
 .navbar li a {
+.navbar li a {
     display: block;
     color: wheat;
     padding: 8px 16px;
     text-decoration: none;
 }
 
+.navbar li a:hover {
 .navbar li a:hover {
     color: white;
     background-color: gray;
