@@ -4,39 +4,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>login</title>
 </head>
 
 <body>
-<<<<<<< HEAD
+    <div class="navbar bg-yellow-400 ">
+        <div class="flex-1">
+            <img class="h-20 w-100" src="assets/ucflogo.webp" alt="ucf-logo">
+            <a href="/" class="btn btn-ghost text-xl bg-yellow-400">UCF Event Planner</a>
+        </div>
+        <div class="flex-none">
+            <ul class="menu menu-horizontal px-1">
+                <li>
+                    <details>
+                        <summary>
+                            Events
+                        </summary>
+                        <ul class="p-2 bg-base-100 rounded-t-none">
+                            <li><a>Public</a></li>
+                            <li><a>Private</a></li>
+                            <li><a>RSO</a></li>
+                        </ul>
+                    </details>
+                </li>
+                <li><a href="login.html" class="text-black font-bold">Sign In</a></li>
 
-    <div class="logintitle">
-        <a href="index.html"><h1>University Event Planner</h1></a>
+            </ul>
+        </div>
+    </div>
+
+    <div class="relative flex flex-col justify-center h-screen overflow-hidden">
+        <div class="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg">
+            <h1 class="text-3xl font-semibold text-center text-yellow-400">Event Account</h1>
+            <form class="space-y-4">
+                <div>
+                    <label class="label">
+                        <span class="text-base label-text">Username</span>
+                    </label>
+                    <input type="text" placeholder="Email Address/User"
+                        class="w-full input input-bordered input-primary" />
+                </div>
+                <div>
+                    <label class="label">
+                        <span class="text-base label-text">Password</span>
+                    </label>
+                    <input type="password" placeholder="Enter Password"
+                        class="w-full input input-bordered input-primary" />
+                </div>
+                <a href="#" class="text-xs text-gray-600 hover:underline hover:text-blue-600">Forget Password?</a>
+                <div>
+                    <button class="btn btn-primary">Login</button>
+                </div>
+            </form>
+        </div>
     </div>
 
 
 
-    
-=======
-    <h1><a href="/#">University Event Planner</a></h1>
 
 
 
-    <div class="loginform">
-        <form action="" class="login-form">
-            <input type="email" id="username" class="username-form" placeholder="Username / Email">
-            <input type="password" id="password" placeholder="Password" class="password-form">
 
 
-
-        </form>
-
-    </div>
-
-
->>>>>>> main
 
 
 
