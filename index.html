@@ -10,77 +10,41 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
 
-    
+
     <title>University Event Planner</title>
 </head>
 
-<body>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="index.html">
-            <img src="/assets/ucf-knights-high-300x412.png" width="95" height="100">
-          </a>
-      
-          <a role="button" class="navbar-burger ]" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-      
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-start">
-            <a class="navbar-item">
-              Home
-            </a>
-      
-            <a class="navbar-item">
-              RSO
-            </a>
+<div class="navbar bg-yellow-400 ">
+    <div class="flex-1">
+        <img class="h-20 w-100" src="assets/ucflogo.webp" alt="ucf-logo">
+        <a class="btn btn-ghost text-xl bg-yellow-400">UCF Event Planner</a>
+    </div>
+    <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+            <li>
+                <details>
+                    <summary>
+                        Events
+                    </summary>
+                    <ul class="p-2 bg-base-100 rounded-t-none">
+                        <li><a>Public</a></li>
+                        <li><a>Private</a></li>
+                        <li><a>RSO</a></li>
+                    </ul>
+                </details>
+            </li>
+            <li><a href="login.html" class="text-black font-bold">Sign In</a></li>
 
-            <div class="bg-black h-4"></div>
-      
-            <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">
-                Events
-              </a>
-      
-              <div class="navbar-dropdown">
-                <a class="navbar-item">
-                  Public
-                </a>
-                <a class="navbar-item">
-                  Private
-                </a>
-                <a class="navbar-item">
-                  RSO
-                </a>
-                <hr class="navbar-divider">
-                <a class="navbar-item">
-                  Report an issue
-                </a>
-              </div>
-            </div>
-          </div>
-      
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="buttons">
-                <a class="button is-warning">
-                  <strong>Sign up</strong>
-                </a>
-                <a href="login.html" class="button is-light">
-                  Log in
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+        </ul>
+    </div>
+</div>
 
 
 
-      
+
+
+
+
 </body>
 
 
