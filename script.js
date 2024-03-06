@@ -1,4 +1,4 @@
-function getDateTime() {
+ function getDateTime() {
     var now = new Date();
     var datetimeElement = document.getElementById('datetime');
     datetimeElement.innerHTML = now.toLocaleString();
