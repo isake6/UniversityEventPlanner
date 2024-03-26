@@ -4,7 +4,7 @@ import logo from '../assets/ucflogo.webp'
 function Navbar() {
     
     return (
-            <div className="navbar bg-yellow-400 " style={{height: window.innerHeight * .1}}>
+            <div className="navbar bg-yellow-400 flex-1" style={{maxHeight: "80px"}}>
                 <div className="flex-1">
                     <img className="h-20 w-100" src={logo} alt="ucf-logo" style={{height: 75, width: 75, borderRadius: 100}}/>
                         <a className="btn btn-ghost text-xl bg-yellow-400">UCF Event Planner</a>

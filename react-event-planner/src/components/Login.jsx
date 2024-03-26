@@ -3,8 +3,8 @@ import React from "react"
 function Login() {
 
     return (
-            <div className="relative flex flex-col justify-center h-screen overflow-hidden bg-white" style={{height: window.innerHeight * .9}}>
-                <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg">
+            <div className="relative flex flex-col justify-center h-screen overflow-hidden bg-white" style={{flex: 1}}>
+                <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg" style={{ maxWidth: "500px"}}>
                     <h1 className="text-3xl font-semibold text-center text-yellow-400">Event Account</h1>
                     <form className="space-y-4">
                         <div>
