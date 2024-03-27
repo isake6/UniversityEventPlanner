@@ -1,3 +1,0 @@
-# UniversityEventPlanner
-
-Description incoming...
