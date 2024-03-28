@@ -1,7 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 
-const Login = () => {
+
+function Login ()  {
+
+    function doLogin() { 
+        
+    }
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',
                     textAlign: 'center', margin: 'auto', backgroundColor: 'white',
@@ -27,9 +34,14 @@ const Login = () => {
                 </div>
                 <div className="text-sm text-gray-600">Don't have an account?</div>
                 <div>
-                    <button className="btn btn-warning text">Create account here!</button>
+                <Link to={'/create'} ><button className="btn btn-warning text">Create an account here!</button></Link>
+                   
                 </div>
+            
             </form>
+
+        
+
         </div>
     );
 }
