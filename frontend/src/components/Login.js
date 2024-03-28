@@ -12,7 +12,7 @@ function Login ()  {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',
                     textAlign: 'center', margin: 'auto', backgroundColor: 'white',
-                    maxWidth: '500px', border: '1px solid red', borderRadius: '30px', padding: '1rem' }}>
+                    maxWidth: '500px', borderRadius: '30px', padding: '1rem' }}>
             <form>
                 <div>
                     <label className="label">
