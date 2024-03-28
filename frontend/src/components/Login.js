@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 
 
 function Login ()  {
+    
 
-    function doLogin() { 
-        
-    }
+    
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',
