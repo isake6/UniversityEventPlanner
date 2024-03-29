@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import CreateEventForm from './CreateEventForm';
 
-function Navbar() {
+const Navbar = () => {
 
   return (
     <div>
-      <div class="navbar bg-yellow-500 pb-3 fixed">
-        <div class="navbar-start">
-          <div class="dropdown">
-            <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+      <div className="navbar bg-yellow-500 pb-3 fixed">
+        <div className="navbar-start">
+          <div className="dropdown">
+            <div tabindex="0" role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
+                className="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -27,14 +27,14 @@ function Navbar() {
             </div>
             <ul
               tabindex="0"
-              class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
                 <a>Events</a>
               </li>
               <li>
                 <a>Parent</a>
-                <ul class="p-2">
+                <ul className="p-2">
                   <li>
                     <a>Submenu 1</a>
                   </li>
@@ -49,18 +49,18 @@ function Navbar() {
             </ul>
           </div>
           <Link to={'/'}>
-            <button class="btn btn-ghost text-xl">daisyUI</button>
+            <button className="btn btn-ghost text-xl">daisyUI</button>
           </Link>
         </div>
-        <div class="navbar-center hidden lg:flex">
-          <ul class="menu menu-horizontal px-1">
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1">
             <li>
               <a>Item 1</a>
             </li>
             <li>
               <details>
                 <summary>Parent</summary>
-                <ul class="p-2">
+                <ul className="p-2">
                   <li>
                     <a>Submenu 1</a>
                   </li>
@@ -75,8 +75,8 @@ function Navbar() {
             </li>
           </ul>
         </div>
-        <div class="navbar-end">
-          <a class="btn">Button</a>
+        <div className="navbar-end">
+          <a className="btn">Button</a>
         </div>
       </div>
     </div>
