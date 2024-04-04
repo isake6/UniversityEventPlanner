@@ -12,13 +12,13 @@ const CreateAccount = () => {
               <input type="text" id="firstName" placeholder='Username/Email' className=" w-full input input-bordered input-primary"></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">Last Name</h3>
-              <input type="password" id="lastName" placeholder='Username/Email' className="w-full input input-bordered border-yellow-500"></input>
+              <input type="text" id="lastName" placeholder='Username/Email' className="w-full input input-bordered border-yellow-500"></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">Email</h3>
               <input type="text" id="email" placeholder='Username/Email' className=" w-full input input-bordered border-yellow-500"></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">Password</h3>
-              <input type="text" id="password" placeholder='Password' className=" w-full input input-bordered border-yellow-500"></input>
+              <input type="password" id="password" placeholder='Password' className=" w-full input input-bordered border-yellow-500"></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">Password</h3>
               <input type="password" id="passwordConfirm" placeholder='Confirm Password' className="w-full input input-bordered border-yellow-500"></input>
