@@ -7,7 +7,7 @@ const createEventForm = () => {
       <Navbar />
 
       <div className="text">
-        <h2>Create your event here!</h2>
+        <h2>Create your event here! </h2>
       </div>
 
       <div className="flex justify-center items-center min-h-screen">
