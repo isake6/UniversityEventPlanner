@@ -1,14 +1,25 @@
 import React from 'react';
-
+import axios from 'axios';
 
 const Login = () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const response = await axios.post('https://lobster-app-g8oyg.ondigitalocean.app/login', { username, password });
+
+        // Handle the response here
+        console.log(response);
+    }
 
     return (
         <div className="flex items-center h-screen">
             <div className="w-1/3 h-fit max-w-xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col justify-center border border-yellow-500">
                 <div className="p-5">
                     <h1 className="text-3xl font-bold text-center text-black">Event Login</h1>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <h3 className="text-base font-bold pt-10 text-gray-600">Username</h3>
                         <input type="text" id="username" placeholder='Username/Email' className=" w-full input input-bordered input-primary"></input>
 
