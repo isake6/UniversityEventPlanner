@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import CreateEventForm from './CreateEventForm';
 
 const Navbar = () => {
-
   return (
     <div>
       <div className="navbar bg-yellow-500 pb-3 fixed">
@@ -30,57 +29,59 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a>Events</a>
+                <a>Register Event</a>
               </li>
               <li>
-                <a>Parent</a>
+                <a>Events</a>
                 <ul className="p-2">
                   <li>
-                    <a>Submenu 1</a>
+                    <a>Upcoming</a>
                   </li>
                   <li>
-                    <a>Submenu 2</a>
+                    <a>Past</a>
                   </li>
                 </ul>
               </li>
               <li>
-                <a>Item 3</a>
+                <a>Register RSO</a>
               </li>
             </ul>
           </div>
           <Link to={'/'}>
-            <button className="btn btn-ghost text-xl">daisyUI</button>
+            <button className="btn btn-ghost text-xl">Knights Events</button>
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a>Item 1</a>
+              <Link to={'/createEvent'}>
+                <button>Register Event</button>
+              </Link>
             </li>
             <li>
               <details>
-                <summary>Parent</summary>
+                <summary>Events</summary>
                 <ul className="p-2">
                   <li>
-                    <a>Submenu 1</a>
+                    <a>Upcoming</a>
                   </li>
                   <li>
-                    <a>Submenu 2</a>
+                    <a>Past Events</a>
                   </li>
                 </ul>
               </details>
             </li>
             <li>
-              <button>fsfsd</button>
+              <button></button>
             </li>
           </ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          <a className="btn">Home</a>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Navbar;
