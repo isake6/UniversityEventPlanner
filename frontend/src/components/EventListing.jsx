@@ -1,8 +1,12 @@
 import React from 'react';
+import Navbar from '../components/Navbar';
 
 const eventList = () => {
   return (
     <div>
+      <div>
+        <Navbar />
+      </div>
       {/* Hero Section */}
       <div className="hero min-h-screen">
         <div className="hero-overlay bg-opacity-60"></div>
