@@ -9,7 +9,7 @@ const Login = () => {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
-        const response = await axios.post('http://159.203.80.189:8000/login', { username, password });
+        const response = await axios.post('https://159.203.80.189:8000/login', { username, password });
 
         // Handle the response here
         console.log(response);
