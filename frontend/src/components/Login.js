@@ -42,8 +42,8 @@ const Login = () => {
                         <input type="password" id="password" placeholder='Username/Email' className="w-full input input-bordered input-primary"></input>
 
                         <div className=' w-full py-5 flex flex-col m-auto'>
-                        <button type="submit" className='btn btn-info font-bold text-xl bg-yellow-500'>Login</button>
-                    </div>
+                            <button type="submit" className='btn btn-info font-bold text-xl bg-yellow-500'>Login</button>
+                        </div>
                     </form>
 
                     <div className='pt-3 flex flex-col'>
