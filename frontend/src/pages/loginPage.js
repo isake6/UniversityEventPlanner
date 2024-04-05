@@ -3,7 +3,7 @@ import Login from '../components/Login';
 import Navbar from '../components/Navbar';
 
 
-function LoginPage() {
+function loginPage() {
     return (
         <>
             <Navbar />
@@ -12,4 +12,4 @@ function LoginPage() {
     );
 }
 
-export default LoginPage;
+export default loginPage;

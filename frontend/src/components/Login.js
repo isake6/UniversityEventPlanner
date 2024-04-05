@@ -35,11 +35,11 @@ const Login = () => {
                 <div className="p-5">
                     <h1 className="text-3xl font-bold text-center text-black">Event Login</h1>
                     <form onSubmit={handleSubmit}>
-                        <h3 className="text-base font-bold pt-10 text-gray-600">Username</h3>
-                        <input type="text" id="username" placeholder='Username/Email' className=" w-full input input-bordered input-primary"></input>
+                        <h3 className="text-base font-bold pt-10 text-gray-600">Email</h3>
+                        <input type="text" id="username" placeholder='Email' className=" w-full input input-bordered input-primary"></input>
 
                         <h3 className="text-sm font-bold text-gray-600 pt-5">Password</h3>
-                        <input type="password" id="password" placeholder='Username/Email' className="w-full input input-bordered input-primary"></input>
+                        <input type="password" id="password" placeholder='Password' className="w-full input input-bordered input-primary"></input>
 
                         <div className=' w-full py-5 flex flex-col m-auto'>
                         <button type="submit" className='btn btn-info font-bold text-xl bg-yellow-500'>Login</button>

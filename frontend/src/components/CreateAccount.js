@@ -9,13 +9,13 @@ const CreateAccount = () => {
             <h1 className="text-3xl font-bold text-center text-black">Create Account</h1>
             <form>
               <h3 className="text-base font-bold pt-3 text-gray-600">First Name</h3>
-              <input type="text" id="firstName" placeholder='Username/Email' className=" w-full input input-bordered input-primary"></input>
+              <input type="text" id="firstName" placeholder='First Name' className=" w-full input input-bordered input-primary"></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">Last Name</h3>
-              <input type="text" id="lastName" placeholder='Username/Email' className="w-full input input-bordered border-yellow-500"></input>
+              <input type="text" id="lastName" placeholder='Last Name' className="w-full input input-bordered border-yellow-500"></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">Email</h3>
-              <input type="text" id="email" placeholder='Username/Email' className=" w-full input input-bordered border-yellow-500"></input>
+              <input type="text" id="email" placeholder='Email' className=" w-full input input-bordered border-yellow-500"></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">Password</h3>
               <input type="password" id="password" placeholder='Password' className=" w-full input input-bordered border-yellow-500"></input>

@@ -7,8 +7,8 @@ import {
 } from 'react-router-dom';
 import LoginPage from './pages/loginPage';
 import CreateAccountPage from './pages/createAccountPage';
+import AdminAccountPage from './pages/adminPage';
 import CreateEventForm from './components/CreateEventForm';
-import Navbar from './components/Navbar';
 import List from './components/EventListing';
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
         <Route path="/create" element={<CreateAccountPage />} />
         <Route path="/createEvent" element={<CreateEventForm />} />
         <Route path="/home" element={<List />} />
+        <Route path="/admin" element={<AdminAccountPage/>} />
       </Routes>
     </BrowserRouter>
   );
