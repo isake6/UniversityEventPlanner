@@ -44,8 +44,8 @@ const CreateAccount = () => {
 
             <div className='pt-3 flex flex-col'>
               <div className='m-auto'>
-                <a className='text-base text-gray-600'>Already have an account?</a>
-                <a href='/' className='text-base text-gray-600 hover:underline hover:text-blue-600 text-center'> Login</a>
+                <a className='text-base text-gray-600'>Already have an account? </a>
+                <a href='/' className='text-base text-gray-600 hover:underline hover:text-blue-600 text-center'>Login</a>
               </div>
             </div>
           </div>

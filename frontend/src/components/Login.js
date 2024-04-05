@@ -49,8 +49,8 @@ const Login = () => {
                     <div className='pt-3 flex flex-col'>
                         <a href='#' className='text-base text-gray-600 hover:underline hover:text-blue-600 text-center'>Forgot Password?</a>
                         <div className='m-auto'>
-                            <a className='text-base text-gray-600'>Don't have an account?</a>
-                            <a href='/create' className='text-base text-gray-600 hover:underline hover:text-blue-600 text-center'> Create Account</a>
+                            <a className='text-base text-gray-600'>Don't have an account? </a>
+                            <a href='/create' className='text-base text-gray-600 hover:underline hover:text-blue-600 text-center'>Create Account</a>
                         </div>
                     </div>
                 </div>
