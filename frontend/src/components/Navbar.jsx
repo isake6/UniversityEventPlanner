@@ -29,7 +29,9 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a>Register Event</a>
+                <Link to={'/createEvent'}>
+                  <a>Register Event</a>
+                </Link>
               </li>
               <li>
                 <a>Events</a>
