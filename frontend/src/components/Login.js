@@ -9,10 +9,24 @@ const Login = () => {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
-        const response = await axios.post('https://159.203.80.189:8000/login', { username, password });
+        try {
+        
+            const response = await axios.post('http://159.203.80.189/login', { username, password }, { withCredentials: true });
+            console.log('Response:', response.data);
 
-        // Handle the response here
-        console.log(response);
+        } catch (error) {
+            // Log the error message
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                console.error('Error message:', error.response.data);
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.error('No response received:', error.request);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.error('Error', error.message);
+            }
+        }
     }
 
     return (
