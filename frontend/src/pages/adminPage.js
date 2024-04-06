@@ -1,15 +1,20 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
-import AdminAccount from '../components/AdminAccount'
+import React from 'react';
+import AdminProfile from '../components/AdminAccount';
+import Navbar from '../components/Navbar';
 
-const adminAccountPage = () => {
+const AdminAccountPage = () => {
+
+    const adminData = {
+        username: 'admin123',
+        university: 'University of Central Florida'
+    };
+
     return (
         <>
-            <Navbar/>
-            <AdminAccount />
+            <Navbar />
+            <AdminProfile adminData={adminData} />
         </>
-        
-  )
-}
+    );
+};
 
-export default adminAccountPage;
+export default AdminAccountPage
