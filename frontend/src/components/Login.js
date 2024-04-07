@@ -10,7 +10,7 @@ const Login = () => {
         const password = document.getElementById('password').value;
 
         try {
-
+        
             const response = await axios.post('https://somethingorother.xyz/login', { email, password }, { withCredentials: true });
             console.log('Response:', response.data);
 
