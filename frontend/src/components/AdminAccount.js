@@ -1,49 +1,197 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const AdminProfile = ({ adminData }) => {
+    const [activeRowIndex, setActiveRowIndex] = useState(null);
+
+    const toggleRow = (index) => {
+        setActiveRowIndex(activeRowIndex === index ? null : index);
+    };
+
+    const [activeRowIndex2, setActiveRowIndex2] = useState(null);
+
+    const toggleRow2 = (index) => {
+        setActiveRowIndex2(activeRowIndex2 === index ? null : index);
+    };
+
     return (
         <>
             <div className='bg-white shadow-md rounded px-8 pt-7 pb-8 mb-4 max-w-md mx-auto'></div> {/* Spacing for Navbar */}
-            <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-5xl mx-auto" style={{height: "90vh"}}>
-                <h2 className="text-4xl text-black font-bold mb-1 text-center">Profile : Admin</h2>
-                <div className="mb-4">
-                    <div className="flex justify-center text-lg text-black">
-                        <span>{adminData.university}</span>
-                    </div>
-                    <div className="flex justify-center mb-5 text-lg text-black">
-                        <span>{adminData.username}</span>
-                    </div>
+            <div className='flex justify-center mx-auto' style={{ maxWidth: "90%" }}>
+                <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style={{ width: "90%" }}>
+                    <h2 className="text-4xl text-black font-bold mb-1 text-center">Profile : Admin</h2>
+                    <div className="mb-4">
+                        <div className="flex justify-center text-lg text-black">
+                            <span>{adminData.university}</span>
+                        </div>
+                        <div className="flex justify-center mb-5 text-lg text-black">
+                            <span>{adminData.username}</span>
+                        </div>
 
-                    {/* Created RSOs */}
-                    {/* Plan to Populate Dynamically */}
-                    <div className='flex flex-col text-center my-5'>
-                        <span className=' text-2xl font-bold text-black'>Registered Student Organizations</span>
-                        <div class="card card-side bg-base-100 shadow-lg" style={{border: "2px solid rgb(234,179,8)"}}>
-                            <figure><img src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg" alt="Movie" /></figure>
-                            <div class="card-body">
-                                <h2 class="card-title mx-auto">Movie Night!</h2>
-                                <p>Click the button to watch on Jetflix app.</p>
-                                <div class="card-actions justify-center">
-                                    <button class="btn btn-wide hover:bg-yellow-500 text-black" style={{border: "2px solid rgb(234,179,8)"}}>Edit</button>
-                                </div>
+                        {/* Created RSOs */}
+                        {/* Plan to Populate Dynamically */}
 
-                                {/* Plan to turn into dropdown for each event under Admin RSO */}
+                        {/* Table */}
+                        <div className="overflow-x-auto collapse">
+                            <span className='flex justify-center text-2xl font-bold text-black'>Registered Student Organizations</span>
+                            <table className="table mt-4 text-black">
+                                {/* head */}
+                                <thead className='text-black text-lg'>
+                                    <tr>
+                                        <th></th>
+                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>Event Description</th>
+                                        <th>Members</th>
+                                        <th>More</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {/* rows */}
+                                    {[{ name: 'Cy Ganderton', category: 'Quality Control Specialist', description: 'Blue' },
+                                    { name: 'Hart Hagerty', category: 'Desktop Support Technician', description: 'Purple' },
+                                    { name: 'Brice Swyre', category: 'Tax Accountant', description: 'Red' }].map((row, index) => (
+                                        <React.Fragment key={index}>
+                                            {/* visible row */}
+                                            <tr onClick={() => toggleRow(index)} className='clickable'>
+                                                <th>{index + 1}</th>
+                                                <td>{row.name}</td>
+                                                <td>{row.category}</td>
+                                                <td>{row.description}</td>
+                                                <td>Members</td>
+                                                <td>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                    </svg>
 
-                            </div>
+                                                </td>
+                                            </tr>
+                                            {/* collapsible row */}
+                                            {activeRowIndex === index && (
+                                                <tr>
+                                                    <td>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                        </svg>
+                                                    </td>
+                                                    <td>
+                                                        {/* additional content */}
+                                                        <div>
+                                                            {/* Add content you want to show when row is expanded */}
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {/* additional content */}
+                                                        <div>
+                                                            {/* Add content you want to show when row is expanded */}
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {/* additional content */}
+                                                        <div>
+                                                            {/* Add content you want to show when row is expanded */}
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {/* additional content */}
+                                                        <div>
+                                                            {/* Add content you want to show when row is expanded */}
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </React.Fragment>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                        {/* Table End */}
+
+
+
+                        <div className=' mt-24'>
+                            <span className='flex justify-center text-2xl font-bold text-black'>Student Organization Requests</span>
+                            <table className="table mt-4 text-black">
+                                {/* head */}
+                                <thead className='text-black text-lg'>
+                                    <tr>
+                                        <th></th>
+                                        <th>Student Organization</th>
+                                        <th>Status</th>
+                                        <th>Number of Members</th>
+                                        <th>Members</th>
+                                        <th>More</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {/* rows */}
+                                    {[{ name: 'Tom', category: 'Quality Control Specialist', description: 'Blue' },
+                                    { name: 'Tom', category: 'Desktop Support Technician', description: 'Purple' },
+                                    { name: 'Tom', category: 'Tax Accountant', description: 'Red' }].map((row2, index) => (
+                                        <React.Fragment key={index}>
+                                            {/* visible row */}
+                                            <tr onClick={() => toggleRow2(index)} className='clickable'>
+                                                <th>{index + 1}</th>
+                                                <td>{row2.name}</td>
+                                                <td>{row2.category}</td>
+                                                <td>{row2.description}</td>
+                                                <td>Members</td>
+                                                <td>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                    </svg>
+
+                                                </td>
+                                            </tr>
+                                            {/* collapsible row */}
+                                            {activeRowIndex2 === index && (
+                                                <tr>
+                                                    <td>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                        </svg>
+                                                    </td>
+                                                    <td>
+                                                        {/* additional content */}
+                                                        <div>
+                                                            {/* Add content you want to show when row is expanded */}
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {/* additional content */}
+                                                        <div>
+                                                            {/* Add content you want to show when row is expanded */}
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {/* additional content */}
+                                                        <div>
+                                                            {/* Add content you want to show when row is expanded */}
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {/* additional content */}
+                                                        <div>
+                                                            {/* Add content you want to show when row is expanded */}
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </React.Fragment>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
-                    <div>
-                        Requests To Join RSOs
-                        <div>
-                            <h1>Requests as a Table</h1>
-                            <div>
-                                Each Request with associated information
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div >
+                </div >
+            </div>
         </>
     );
 };
