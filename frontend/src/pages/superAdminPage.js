@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 
 const SuperAdminAccountPage = () => {
 
-    const adminData = {
+    const superData = {
         username: 'superadmin123',
         university: 'University of Central Florida'
     };
@@ -12,9 +12,9 @@ const SuperAdminAccountPage = () => {
     return (
         <>
             <Navbar />
-            <SuperAdminProfile adminData={adminData} />
+            <SuperAdminProfile superData={superData} />
         </>
     );
 };
 
-export default SuperAdminAccountPage
+export default SuperAdminAccountPage;

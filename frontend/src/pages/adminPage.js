@@ -17,4 +17,4 @@ const AdminAccountPage = () => {
     );
 };
 
-export default AdminAccountPage
+export default AdminAccountPage;

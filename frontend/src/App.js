@@ -9,6 +9,7 @@ import LoginPage from './pages/loginPage';
 import CreateAccountPage from './pages/createAccountPage';
 import AdminAccountPage from './pages/adminPage';
 import SuperAdminAccountPage from './pages/superAdminPage';
+import StudentAccountPage from './pages/studentPage';
 import CreateEventForm from './components/CreateEventForm';
 import List from './components/EventListing';
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/home" element={<List />} />
         <Route path="/admin" element={<AdminAccountPage/>} />
         <Route path="/super" element={<SuperAdminAccountPage/>} />
+        <Route path="/student" element={<StudentAccountPage/>} />
       </Routes>
     </BrowserRouter>
   );
