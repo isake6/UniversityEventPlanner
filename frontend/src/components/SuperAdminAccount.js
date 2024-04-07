@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const AdminProfile = ({ adminData }) => {
+const SuperAdminProfile = ({ adminData }) => {
     const [activeRowIndex, setActiveRowIndex] = useState(null);
 
     const toggleRow = (index) => {
@@ -18,7 +18,7 @@ const AdminProfile = ({ adminData }) => {
             <div className='bg-white shadow-md rounded px-8 pt-7 pb-8 mb-4 max-w-md mx-auto'></div> {/* Spacing for Navbar */}
             <div className='flex justify-center mx-auto' style={{ maxWidth: "90%" }}>
                 <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style={{ width: "90%" }}>
-                    <h2 className="text-4xl text-black font-bold mb-1 text-center">Profile : Admin</h2>
+                    <h2 className="text-4xl text-black font-bold mb-1 text-center">Profile : Super Admin</h2>
                     <div className="mb-4">
                         <div className="flex justify-center text-lg text-black">
                             <span>{adminData.university}</span>
@@ -32,32 +32,32 @@ const AdminProfile = ({ adminData }) => {
 
                         {/* Table */}
                         <div className="overflow-x-auto collapse">
-                            <span className='flex justify-center text-2xl font-bold text-black'>Registered Student Organizations</span>
+                            <span className='flex justify-center text-2xl font-bold text-black'>Universities</span>
                             <table className="table mt-4 text-black">
                                 {/* head */}
                                 <thead className='text-black text-lg'>
                                     <tr>
                                         <th></th>
                                         <th>Name</th>
-                                        <th>Category</th>
-                                        <th>Event Description</th>
-                                        <th>Members</th>
+                                        <th>Location</th>
+                                        <th>Description</th>
+                                        <th>Number of Students</th>
                                         <th>More</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {/* rows */}
-                                    {[{ name: 'Cy Ganderton', category: 'Quality Control Specialist', description: 'Blue' },
-                                    { name: 'Hart Hagerty', category: 'Desktop Support Technician', description: 'Purple' },
-                                    { name: 'Brice Swyre', category: 'Tax Accountant', description: 'Red' }].map((row, index) => (
+                                    {[{ name: 'University of Central Florida', location: '123 Drive', description: 'Go Knights!', students: '80000' },
+                                    { name: 'University of South Florida', location: '453 Apple Rd', description: 'Go Bulls!', students: '45000' },
+                                    { name: 'University of Florida', location: '911 Police Dr', description: 'Go Gators!', students: '60000' }].map((row, index) => (
                                         <React.Fragment key={index}>
                                             {/* visible row */}
                                             <tr onClick={() => toggleRow(index)} className='clickable'>
                                                 <th>{index + 1}</th>
                                                 <td>{row.name}</td>
-                                                <td>{row.category}</td>
+                                                <td>{row.location}</td>
                                                 <td>{row.description}</td>
-                                                <td>Members</td>
+                                                <td>{row.students}</td>
                                                 <td>
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -110,35 +110,39 @@ const AdminProfile = ({ adminData }) => {
                         </div>
                         {/* Table End */}
 
+                        <div className='flex justify-center'>
+                            <button className='border rounded-lg hover:bg-yellow-500 hover:text-white border-yellow-600 px-10 py-2'>Add University</button>
+                        </div>
+
 
 
                         <div className=' mt-24'>
-                            <span className='flex justify-center text-2xl font-bold text-black'>Student Organization Requests</span>
+                            <span className='flex justify-center text-2xl font-bold text-black'>Admins</span>
                             <table className="table mt-4 text-black">
                                 {/* head */}
                                 <thead className='text-black text-lg'>
                                     <tr>
                                         <th></th>
-                                        <th>Student Organization</th>
-                                        <th>Status</th>
-                                        <th>Number of Members</th>
-                                        <th>Members</th>
+                                        <th>Name</th>
+                                        <th>University</th>
+                                        <th>Email</th>
+                                        <th>Student Organizations</th>
                                         <th>More</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {/* rows */}
-                                    {[{ name: 'Tom', category: 'Quality Control Specialist', description: 'Blue' },
-                                    { name: 'Tom', category: 'Desktop Support Technician', description: 'Purple' },
-                                    { name: 'Tom', category: 'Tax Accountant', description: 'Red' }].map((row2, index) => (
+                                    {[{ name: 'Tom', university: 'Univeristy of Central Florida', email: 'tom@ucf.edu', numOrganizations: '4' },
+                                    { name: 'Marry', university: 'Univeristy of South Florida', email: 'marry@usf.edu', numOrganizations: '2' },
+                                    { name: 'John', university: 'Univeristy of Florida', email: 'john@uf.edu', numOrganizations: '6' }].map((row, index) => (
                                         <React.Fragment key={index}>
                                             {/* visible row */}
                                             <tr onClick={() => toggleRow2(index)} className='clickable'>
                                                 <th>{index + 1}</th>
-                                                <td>{row2.name}</td>
-                                                <td>{row2.category}</td>
-                                                <td>{row2.description}</td>
-                                                <td>Members</td>
+                                                <td>{row.name}</td>
+                                                <td>{row.university}</td>
+                                                <td>{row.email}</td>
+                                                <td>{row.numOrganizations}</td>
                                                 <td>
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -192,13 +196,12 @@ const AdminProfile = ({ adminData }) => {
                     </div>
 
                     <div className='flex justify-center'>
-                        <button className='border rounded-lg hover:bg-yellow-500 hover:text-white border-yellow-600 px-10 py-2'>Add New Student Organization</button>
+                        <button className='border rounded-lg hover:bg-yellow-500 hover:text-white border-yellow-600 px-10 py-2'>Add Admin</button>
                     </div>
-
                 </div >
             </div>
         </>
     );
 };
 
-export default AdminProfile;
+export default SuperAdminProfile;
