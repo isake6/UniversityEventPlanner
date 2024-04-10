@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
+import axios from 'axios';
 
 const eventList = () => {
   const eventName = 'Event Name';
@@ -27,11 +28,47 @@ const eventList = () => {
       <div className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-semibold text-gray-900 text-center">
-            Upcoming Events
+            Upcoming Events?
           </h2>
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Single Event Card Placeholder */}
             {/* Repeat this block for each event */}
+            <div className="max-w-sm rounded overflow-hidden shadow-lg">
+              <img className="w-full" alt="Event" />
+              <div className="px-6 py-4">
+                <div className="font-bold text-xl mb-2">{eventName}</div>
+                <p className="text-gray-700 text-base">{eventDescription}</p>
+              </div>
+              <div className="px-6 pt-4 pb-2">
+                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                  #{eventCategory}
+                </span>
+              </div>
+            </div>
+            <div className="max-w-sm rounded overflow-hidden shadow-lg">
+              <img className="w-full" alt="Event" />
+              <div className="px-6 py-4">
+                <div className="font-bold text-xl mb-2">{eventName}</div>
+                <p className="text-gray-700 text-base">{eventDescription}</p>
+              </div>
+              <div className="px-6 pt-4 pb-2">
+                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                  #{eventCategory}
+                </span>
+              </div>
+            </div>
+            <div className="max-w-sm rounded overflow-hidden shadow-lg">
+              <img className="w-full" alt="Event" />
+              <div className="px-6 py-4">
+                <div className="font-bold text-xl mb-2">{eventName}</div>
+                <p className="text-gray-700 text-base">{eventDescription}</p>
+              </div>
+              <div className="px-6 pt-4 pb-2">
+                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                  #{eventCategory}
+                </span>
+              </div>
+            </div>
             <div className="max-w-sm rounded overflow-hidden shadow-lg">
               <img className="w-full" alt="Event" />
               <div className="px-6 py-4">
