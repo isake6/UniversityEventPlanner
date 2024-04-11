@@ -1,16 +1,22 @@
 import React from 'react';
 import Navbar from './Navbar';
 import axios from 'axios';
+import { useUserSession } from '../hooks/useUserSession';
 
-const createEventForm = () => {
+const CreateEventForm = () => {
+  const { getUserSessionData } = useUserSession();
+  const userSession = getUserSessionData();
+
   const handleEventSubmit = async (event) => {
     event.preventDefault();
     console.log('Form submitted. Awaiting response...');
+    console.log('User session:', userSession);
 
-    const user_id = document.getElementById('user_id').value;
-    const user_email = document.getElementById('user_email').value;
-    const rso = document.getElementById('rso').value;
-    const name = document.getElementById('event_name').value;
+    const user_id = 4;
+    const user_email = userSession.email;
+
+    const rso = 1; // This is a placeholder value
+    const name = userSession.first_name + ' ' + userSession.last_name;
     const category = document.getElementById('category').value;
     const time = document.getElementById('time').value;
     const description = document.getElementById('description').value;
@@ -116,7 +122,11 @@ const createEventForm = () => {
 
             <label className="input input-bordered flex items-center gap-2">
               Email
-              <input type="text" id="email" placeholder="ucfknights@ucf.edu" />
+              <input
+                type="text"
+                id="contact_email"
+                placeholder="ucfknights@ucf.edu"
+              />
             </label>
 
             <button className="btn btn-info">Submit</button>
@@ -127,4 +137,4 @@ const createEventForm = () => {
   );
 };
 
-export default createEventForm;
+export default CreateEventForm;
