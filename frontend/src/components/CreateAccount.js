@@ -18,7 +18,10 @@ const CreateAccount = () => {
       return;
     }
 
+    let myrequest;
     try {
+      myrequest = JSON.stringify({ firstName, lastName, email, password, role });
+      console.log('Sending request: ' + myrequest)
       const response = await axios.post(
         'http://localhost:8000/create',
         { firstName, lastName, email, password, role },
@@ -100,7 +103,7 @@ const CreateAccount = () => {
               <div className="relative">
                 <h3 className="text-base font-bold mt-2 text-gray-800">Role</h3>
                 <select className="w-full input input-bordered input-primary border border-gray-300 appearance-none">
-                  <option value="superAdmin">Super Admin</option>
+                  <option value="super admin">Super Admin</option>
                   <option value="admin">Admin</option>
                   <option selected value="student">
                     Student
