@@ -26,7 +26,7 @@ const CreateEventForm = () => {
 
     try {
       const response = await axios.post(
-        'https://somethingorother.xyz/add_event',
+        'http://localhost:8000/add_event',
         {
           user_id,
           user_email,

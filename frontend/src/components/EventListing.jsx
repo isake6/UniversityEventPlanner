@@ -19,7 +19,7 @@ const EventList = () => {
 
     try {
       const response = await axios.post(
-        'https://somethingorother.xyz/get_events',
+        'http://localhost:8000/get_events',
         { user_id, university_id },
         { withCredentials: true }
       );

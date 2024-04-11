@@ -20,7 +20,7 @@ const CreateAccount = () => {
 
     try {
       const response = await axios.post(
-        'https://somethingorother.xyz/create',
+        'http://localhost:8000/create',
         { firstName, lastName, email, password, role },
         { withCredentials: true }
       );

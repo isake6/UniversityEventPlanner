@@ -14,7 +14,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        'https://somethingorother.xyz/login',
+        'http://localhost:8000/login',
         { email, password },
         { withCredentials: true }
       );

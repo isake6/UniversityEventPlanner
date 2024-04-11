@@ -11,7 +11,7 @@ const homePage = () => {
 
     try {
       const response = await axios.post(
-        'https://somethingorother.xyz/getevent',
+        'http://localhost:8000/getevent',
         { email, password },
         { withCredentials: true }
       );
