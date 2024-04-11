@@ -10,6 +10,7 @@ import CreateAccountPage from './pages/createAccountPage';
 import CreateEventForm from './components/CreateEventForm';
 import Navbar from './components/Navbar';
 import List from './components/EventListing';
+import AdminPage from './pages/adminPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/create" element={<CreateAccountPage />} />
         <Route path="/createEvent" element={<CreateEventForm />} />
         <Route path="/home" element={<List />} />
+        <Route path="/admin" element={<AdminPage />} />
       </Routes>
     </BrowserRouter>
   );
