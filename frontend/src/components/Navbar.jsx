@@ -4,10 +4,14 @@ import { useUserSession } from '../hooks/useUserSession';
 
 const Navbar = () => {
   // Function to get user role from local storage
-  const { getUserSessionData } = useUserSession();
-  const userSession = getUserSessionData();
+  const getUserRole = () => {
+    const userSession = localStorage.getItem('userSession');
+    return userSession ? JSON.parse(userSession).role : null;
+  };
 
-  const role = userSession.role;
+  const role = getUserRole();
+
+  console.log('Role:', role);
 
   return (
     <div>
@@ -45,32 +49,16 @@ const Navbar = () => {
                 <a>Events</a>
                 <ul className="p-2">
                   <li>
-                    <Link to="/upcoming-events">
-                      <a>Upcoming</a>
-                    </Link>
+                    <a>Upcoming</a>
                   </li>
                   <li>
-                    <Link to="/past-events">
-                      <a>Past</a>
-                    </Link>
+                    <a>Past</a>
                   </li>
                 </ul>
               </li>
-              <li>
-                <Link to="/join-rso">
-                  <a>Join RSO</a>
-                </Link>
-              </li>
-              <li>
-                <Link to="/register-public-event">
-                  <a>Register Public Event</a>
-                </Link>
-              </li>
               {role === 'admin' && (
                 <li>
-                  <Link to="/register-rso">
-                    <a>Register RSO</a>
-                  </Link>
+                  <a>Register RSO</a>
                 </li>
               )}
             </ul>
@@ -93,33 +81,17 @@ const Navbar = () => {
                 <summary>Events</summary>
                 <ul className="p-2">
                   <li>
-                    <Link to="/upcoming-events">
-                      <a>Upcoming</a>
-                    </Link>
+                    <a>Upcoming</a>
                   </li>
                   <li>
-                    <Link to="/past-events">
-                      <a>Past Events</a>
-                    </Link>
+                    <a>Past Events</a>
                   </li>
                 </ul>
               </details>
             </li>
-            <li>
-              <Link to="/join-rso">
-                <button>Join RSO</button>
-              </Link>
-            </li>
-            <li>
-              <Link to="/register-public-event">
-                <button>Register Public Event</button>
-              </Link>
-            </li>
             {role === 'admin' && (
               <li>
-                <Link to="/register-rso">
-                  <button>Register RSO</button>
-                </Link>
+                <button>Register RSO</button>
               </li>
             )}
           </ul>
