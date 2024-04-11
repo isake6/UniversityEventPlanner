@@ -74,14 +74,6 @@ const CreateEventForm = () => {
               className="input input-bordered flex items-center gap-2"
               id="event_name"
             >
-              User ID
-              <input type="text" placeholder="Knight World" />
-            </label>
-
-            <label
-              className="input input-bordered flex items-center gap-2"
-              id="event_name"
-            >
               Event Name
               <input type="text" placeholder="Knight World" />
             </label>
