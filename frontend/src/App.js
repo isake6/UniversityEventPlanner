@@ -11,6 +11,7 @@ import CreateEventForm from './components/CreateEventForm';
 import Navbar from './components/Navbar';
 import List from './components/EventListing';
 import AdminPage from './pages/adminPage';
+import EventDetail from './components/EventDetail';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/createEvent" element={<CreateEventForm />} />
         <Route path="/home" element={<List />} />
         <Route path="/admin" element={<AdminPage />} />
+        <Route path="/events/:eventId" element={<EventDetail />} />
       </Routes>
     </BrowserRouter>
   );

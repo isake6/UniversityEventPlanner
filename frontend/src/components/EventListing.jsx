@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
 import { useUserSession } from '../hooks/useUserSession';
+import { Link } from 'react-router-dom';
 
 const EventList = () => {
   const { getUserSessionData } = useUserSession();
   const userSession = getUserSessionData();
-
   const [events, setEvents] = useState([]);
 
-  const handleEventListing = async (event) => {
-    event.preventDefault();
-    console.log('Form submitted. Awaiting response...');
+  useEffect(() => {
+    handleEventListing();
+  }, []);
+
+  const handleEventListing = async () => {
+    console.log('Fetching events. Awaiting response...');
     console.log('User session:', userSession);
-    const user_id = userSession.id;
-    const university_id = userSession.university_id;
-    console.log('User session:', user_id, university_id);
+    const { id: user_id, university_id } = userSession;
 
     try {
       const response = await axios.post(
@@ -26,25 +27,21 @@ const EventList = () => {
       console.log('Response:', response.data);
       setEvents(response.data.events);
     } catch (error) {
-      // Log the error message
       if (error.response) {
-        // The request was made and the server responded with a status code
         console.error('Error message:', error.response.data);
       } else if (error.request) {
-        // The request was made but no response was received
         console.error('No response received:', error.request);
       } else {
-        // Something happened in setting up the request that triggered an Error
         console.error('Error', error.message);
       }
     }
   };
 
+  console.log('Events:', events);
+
   return (
     <div>
-      <div>
-        <Navbar />
-      </div>
+      <Navbar />
       {/* Hero Section */}
       <div className="hero min-h-screen">
         <div className="hero-overlay bg-opacity-60"></div>
@@ -58,37 +55,33 @@ const EventList = () => {
           </div>
         </div>
       </div>
-
       {/* Upcoming Events Section */}
       <div className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-semibold text-gray-900 text-center">
-            Upcoming Events?
+            Upcoming Events
           </h2>
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Single Event Card Placeholder */}
-            {/* Repeat this block for each event */}
-            {events.map((event, index) => (
-              <div
-                key={index}
-                className="max-w-sm rounded overflow-hidden shadow-lg"
-              >
-                <img className="w-full" alt="Event" />
-                <div className="px-6 py-4">
-                  <div className="font-bold text-xl mb-2">{event.name}</div>
-                  <p className="text-gray-700 text-base">{event.description}</p>
+            {events.map((event) => (
+              <Link key={event.id} to={`/events/${event.id}`} state={event}>
+                <div className="max-w-sm rounded overflow-hidden shadow-lg">
+                  <div className="px-6 py-4">
+                    <div className="font-bold text-xl mb-2">{event.name}</div>
+                    <p className="text-gray-700 text-base">
+                      {event.description} {event.id}
+                    </p>
+                  </div>
+                  <div className="px-6 pt-4 pb-2">
+                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                      #{event.category}
+                    </span>
+                  </div>
                 </div>
-                <div className="px-6 pt-4 pb-2">
-                  <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                    #{event.category}
-                  </span>
-                </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
       </div>
-
       {/* CTA Section */}
       <div className="bg-yellow-500">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 text-center">
