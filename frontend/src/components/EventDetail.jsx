@@ -10,7 +10,6 @@ const EventDetail = () => {
   const { getUserSessionData } = useUserSession();
   const userSession = getUserSessionData();
   const [events, setEvents] = useState([]);
-  const comment = 'This is a comment!';
   const event_id = event.id;
   const [comments, setComments] = useState([
     { id: 1, text: 'Looking forward to this event!' },
@@ -18,10 +17,11 @@ const EventDetail = () => {
   ]);
 
   const handleAddComment = async () => {
+    const comment = prompt('Enter your comment:');
+
     console.log('Fetching events. Awaiting response...');
     console.log('User session:', userSession);
     console.log('Event ID:', event_id); // You can log it to verify it's correct
-
     const { id: user_id, university_id } = userSession;
 
     try {
@@ -30,8 +30,10 @@ const EventDetail = () => {
         { user_id, event_id, comment },
         { withCredentials: true }
       );
+
       console.log('Response:', response.data);
       setEvents(response.data.events);
+      setComments([...comments, { id: comments.length + 1, text: comment }]);
     } catch (error) {
       if (error.response) {
         console.error('Error message:', error.response.data);
@@ -42,11 +44,9 @@ const EventDetail = () => {
       }
     }
 
+    console.log('Comment:', comment);
+
     // Placeholder function for adding comments
-    const newComment = prompt('Enter your comment:!');
-    if (newComment) {
-      setComments([...comments, { id: comments.length + 1, text: newComment }]);
-    }
   };
   const handleDeleteComment = (id) => {
     setComments(comments.filter((comment) => comment.id !== id));
