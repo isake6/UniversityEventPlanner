@@ -65,11 +65,6 @@ const EventList = () => {
             {events.map((event) => (
               <Link key={event.id} to={`/events/${event.id}`} state={event}>
                 <div className="max-w-sm rounded overflow-hidden shadow-lg">
-                  <img
-                    className="w-full"
-                    src={event.imageUrl || 'default_image.jpg'}
-                    alt="Event"
-                  />
                   <div className="px-6 py-4">
                     <div className="font-bold text-xl mb-2">{event.name}</div>
                     <p className="text-gray-700 text-base">
