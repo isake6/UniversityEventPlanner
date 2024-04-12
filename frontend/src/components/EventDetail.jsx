@@ -10,7 +10,7 @@ const EventDetail = () => {
   const { getUserSessionData } = useUserSession();
   const userSession = getUserSessionData();
   const [events, setEvents] = useState([]);
-  const comment = 'This is a comment';
+  const comment = 'This is a comment!';
   const event_id = event.id;
   const [comments, setComments] = useState([
     { id: 1, text: 'Looking forward to this event!' },
