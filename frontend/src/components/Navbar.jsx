@@ -4,10 +4,14 @@ import { useUserSession } from '../hooks/useUserSession';
 
 const Navbar = () => {
   // Function to get user role from local storage
-  const { getUserSessionData } = useUserSession();
-  const userSession = getUserSessionData();
+  const getUserRole = () => {
+    const userSession = localStorage.getItem('userSession');
+    return userSession ? JSON.parse(userSession).role : null;
+  };
 
-  const role = userSession.role;
+  const role = getUserRole();
+
+  console.log('Role:', role);
 
   return (
     <div>
