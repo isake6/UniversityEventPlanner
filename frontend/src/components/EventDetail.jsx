@@ -43,7 +43,7 @@ const EventDetail = () => {
     }
 
     // Placeholder function for adding comments
-    const newComment = prompt('Enter your comment:');
+    const newComment = prompt('Enter your comment:!');
     if (newComment) {
       setComments([...comments, { id: comments.length + 1, text: newComment }]);
     }
