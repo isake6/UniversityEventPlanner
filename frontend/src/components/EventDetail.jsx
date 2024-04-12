@@ -10,36 +10,37 @@ const EventDetail = () => {
   const { getUserSessionData } = useUserSession();
   const userSession = getUserSessionData();
   const [events, setEvents] = useState([]);
-
+  const comment = 'This is a comment';
+  const event_id = event.id;
   const [comments, setComments] = useState([
     { id: 1, text: 'Looking forward to this event!' },
     { id: 2, text: 'Can anyone tell me if there will be parking available?' },
   ]);
 
-  const handleAddComment = () => {
-    const handleEventListing = async () => {
-      console.log('Fetching events. Awaiting response...');
-      console.log('User session:', userSession);
-      const { id: user_id, university_id } = userSession;
+  const handleAddComment = async () => {
+    console.log('Fetching events. Awaiting response...');
+    console.log('User session:', userSession);
+    console.log('Event ID:', event_id); // You can log it to verify it's correct
 
-      try {
-        const response = await axios.post(
-          'https://somethingorother.xyz/add_comment',
-          { user_id, university_id },
-          { withCredentials: true }
-        );
-        console.log('Response:', response.data);
-        setEvents(response.data.events);
-      } catch (error) {
-        if (error.response) {
-          console.error('Error message:', error.response.data);
-        } else if (error.request) {
-          console.error('No response received:', error.request);
-        } else {
-          console.error('Error', error.message);
-        }
+    const { id: user_id, university_id } = userSession;
+
+    try {
+      const response = await axios.post(
+        'https://somethingorother.xyz/add_comment',
+        { user_id, event_id, comment },
+        { withCredentials: true }
+      );
+      console.log('Response:', response.data);
+      setEvents(response.data.events);
+    } catch (error) {
+      if (error.response) {
+        console.error('Error message:', error.response.data);
+      } else if (error.request) {
+        console.error('No response received:', error.request);
+      } else {
+        console.error('Error', error.message);
       }
-    };
+    }
 
     // Placeholder function for adding comments
     const newComment = prompt('Enter your comment:');

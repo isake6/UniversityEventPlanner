@@ -68,7 +68,7 @@ const EventList = () => {
                   <div className="px-6 py-4">
                     <div className="font-bold text-xl mb-2">{event.name}</div>
                     <p className="text-gray-700 text-base">
-                      {event.description}
+                      {event.description} {event.id}
                     </p>
                   </div>
                   <div className="px-6 pt-4 pb-2">
