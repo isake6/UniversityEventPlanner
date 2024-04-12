@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { useLocation } from 'react-router-dom';
+import { useUserSession } from '../hooks/useUserSession';
+import axios from 'axios';
 
 const EventDetail = () => {
   const location = useLocation();
   const event = location.state;
+  const { getUserSessionData } = useUserSession();
+  const userSession = getUserSessionData();
+  const [events, setEvents] = useState([]);
 
   const [comments, setComments] = useState([
     { id: 1, text: 'Looking forward to this event!' },
@@ -12,6 +17,30 @@ const EventDetail = () => {
   ]);
 
   const handleAddComment = () => {
+    const handleEventListing = async () => {
+      console.log('Fetching events. Awaiting response...');
+      console.log('User session:', userSession);
+      const { id: user_id, university_id } = userSession;
+
+      try {
+        const response = await axios.post(
+          'https://somethingorother.xyz/add_comment',
+          { user_id, university_id },
+          { withCredentials: true }
+        );
+        console.log('Response:', response.data);
+        setEvents(response.data.events);
+      } catch (error) {
+        if (error.response) {
+          console.error('Error message:', error.response.data);
+        } else if (error.request) {
+          console.error('No response received:', error.request);
+        } else {
+          console.error('Error', error.message);
+        }
+      }
+    };
+
     // Placeholder function for adding comments
     const newComment = prompt('Enter your comment:');
     if (newComment) {
