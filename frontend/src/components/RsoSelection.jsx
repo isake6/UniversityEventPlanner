@@ -57,21 +57,35 @@ const RSOSelection = () => {
 
     setNewRSOId(id);
     console.log('Attempting to join RSO ID:', id);
+    console.log('User ID:', userSession.id);
+
     try {
       const response = await axios.post(
         'https://somethingorother.xyz/join_rso',
         { user_id: userSession.id, rso_id: id },
-        { withCredentials: true }
+        { withCredentials: true}
       );
       console.log('Join Response:', response.data);
       if (response.data.success) {
-        setRsos([...rsos, { rso_id: id }]); // Optionally update the list
+        if (!rsos.some(rso => rso.rso_id === id)) {
+          setRsos([...rsos, { rso_id: id }]);
+        }
         setNewRSOId(''); // Clear the input after joining
 
         console.log(rsos);
       }
     } catch (error) {
-      console.error('Error joining RSO:', error);
+      // Log the error message
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error('Error message:', error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error', error.message);
+      }
     }
   };
 
@@ -87,7 +101,7 @@ const RSOSelection = () => {
             <ul className="mt-5">
               {rsos.map((rso) => (
                 <lis
-                  key={rso}
+                  key={rso.rso_id}
                   className="flex justify-between items-center border-b border-gray-200 py-2"
                 >
                   <button
