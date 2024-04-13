@@ -21,8 +21,17 @@ const RSOForm = () => {
 
     try {
       const response = await axios.post(
-        'https://somethingorother.xyz/create',
-        { firstName, lastName, email, password, role },
+        'https://somethingorother.xyz/add_rso',
+        {
+          user1_email,
+          user2_email,
+          user3_email,
+          user4_email,
+          user5_email,
+          admin_email,
+          name,
+          university_id,
+        },
         { withCredentials: true }
       );
       console.log('Response:', response.data);
