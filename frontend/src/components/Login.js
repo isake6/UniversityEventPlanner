@@ -44,21 +44,7 @@ const Login = () => {
 
       localStorage.setItem('userSession', userSessionData);
 
-      // Navigation logic based on roles
-      // switch (role) {
-      //   case 'student':
-      //     navigate('/student-dashboard');
-      //     break;
-      //   case 'admin':
-      //     navigate('/admin');
-      //     break;
-      //   case 'super-admin':
-      //     navigate('/super-admin-dashboard');
-      //     break;
-      //   default:
-      //     navigate('/'); // Default route if role is unrecognized
-      // }
-      navigate('/home');
+      navigate('/selectRSO');
     } catch (error) {
       // Log the error message
       if (error.response) {

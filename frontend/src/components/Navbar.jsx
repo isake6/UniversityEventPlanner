@@ -56,11 +56,12 @@ const Navbar = () => {
                   </li>
                 </ul>
               </li>
-              {role === 'admin' && (
+
+              <Link to={'/registerRSO'}>
                 <li>
-                  <a>Register RSO</a>
+                  <button>Register RSO</button>
                 </li>
-              )}
+              </Link>
             </ul>
           </div>
           <Link to={'/'}>
@@ -89,11 +90,12 @@ const Navbar = () => {
                 </ul>
               </details>
             </li>
-            {role === 'admin' && (
+
+            <Link to={'/registerRSO'}>
               <li>
                 <button>Register RSO</button>
               </li>
-            )}
+            </Link>
           </ul>
         </div>
         <div className="navbar-end">
