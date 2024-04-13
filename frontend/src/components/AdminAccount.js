@@ -39,8 +39,8 @@ const AdminProfile = ({ adminData }) => {
                                     <tr>
                                         <th></th>
                                         <th>Name</th>
-                                        <th>Category</th>
-                                        <th>Event Description</th>
+                                        <th>Number of Events</th>
+                                        <th></th>
                                         <th>Members</th>
                                         <th>More</th>
                                     </tr>
@@ -101,6 +101,14 @@ const AdminProfile = ({ adminData }) => {
                                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                                         </div>
                                                     </td>
+                                                    <td>
+                                                        {/* additional content */}
+                                                        <div>
+                                                            {/* Add content you want to show when row is expanded */}
+                                                            <button className='btn btn-warning m-4'>Edit</button>
+                                                            <button className='btn btn-warning m-4'>Delete</button>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             )}
                                         </React.Fragment>
@@ -112,17 +120,17 @@ const AdminProfile = ({ adminData }) => {
 
 
 
-                        <div className=' mt-24'>
-                            <span className='flex justify-center text-2xl font-bold text-black'>Student Organization Requests</span>
+                        <div className='overflow-x-auto collapse mt-24'>
+                            <span className='flex justify-center text-2xl font-bold text-black'>Current Events</span>
                             <table className="table mt-4 text-black">
                                 {/* head */}
                                 <thead className='text-black text-lg'>
                                     <tr>
                                         <th></th>
                                         <th>Student Organization</th>
-                                        <th>Status</th>
-                                        <th>Number of Members</th>
-                                        <th>Members</th>
+                                        <th>Category</th>
+                                        <th>Description</th>
+                                        <th>Location</th>
                                         <th>More</th>
                                     </tr>
                                 </thead>
@@ -155,7 +163,21 @@ const AdminProfile = ({ adminData }) => {
                                                         </svg>
                                                     </td>
                                                     <td>
-                                                        {/* additional content */}
+                                                        {/* Phone Number */}
+                                                        <div>
+                                                            {/* Add content you want to show when row is expanded */}
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {/* Event Time */}
+                                                        <div>
+                                                            {/* Add content you want to show when row is expanded */}
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {/* Email */}
                                                         <div>
                                                             {/* Add content you want to show when row is expanded */}
                                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -165,21 +187,15 @@ const AdminProfile = ({ adminData }) => {
                                                         {/* additional content */}
                                                         <div>
                                                             {/* Add content you want to show when row is expanded */}
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                                            {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> */}
                                                         </div>
                                                     </td>
                                                     <td>
                                                         {/* additional content */}
                                                         <div>
                                                             {/* Add content you want to show when row is expanded */}
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        {/* additional content */}
-                                                        <div>
-                                                            {/* Add content you want to show when row is expanded */}
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                                            <button className='btn btn-warning m-4'>Edit</button>
+                                                            <button className='btn btn-warning m-4'>Delete</button>
                                                         </div>
                                                     </td>
                                                 </tr>

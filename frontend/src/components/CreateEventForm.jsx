@@ -126,7 +126,10 @@ const CreateEventForm = () => {
               />
             </label>
 
-            <button className="btn btn-info">Submit</button>
+            <div className='flex flex-wrap justify-between'>
+              <button className="btn btn-info">Submit</button>
+              <button className="btn btn-info">Cancel</button>
+            </div>
           </div>
         </div>
       </form>

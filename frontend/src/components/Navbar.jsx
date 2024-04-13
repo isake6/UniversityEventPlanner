@@ -46,15 +46,9 @@ const Navbar = () => {
                 </li>
               )}
               <li>
-                <a>Events</a>
-                <ul className="p-2">
-                  <li>
-                    <a>Upcoming</a>
-                  </li>
-                  <li>
-                    <a>Past</a>
-                  </li>
-                </ul>
+                <Link to="/admin">
+                  <button>MyRSO</button>
+                </Link>
               </li>
 
               <Link to={'/registerRSO'}>
@@ -78,17 +72,9 @@ const Navbar = () => {
               </li>
             )}
             <li>
-              <details>
-                <summary>Events</summary>
-                <ul className="p-2">
-                  <li>
-                    <a>Upcoming</a>
-                  </li>
-                  <li>
-                    <a>Past Events</a>
-                  </li>
-                </ul>
-              </details>
+              <Link to="/admin">
+                <button>MyRSO</button>
+              </Link>
             </li>
 
             <Link to={'/registerRSO'}>

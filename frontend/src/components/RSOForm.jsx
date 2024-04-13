@@ -10,6 +10,7 @@ import { useUserSession } from '../hooks/useUserSession';
 const RSOForm = () => {
   const { getUserSessionData } = useUserSession();
   const userSession = getUserSessionData();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Form submitted. Awaiting response...');
@@ -66,6 +67,10 @@ const RSOForm = () => {
       }
     }
   };
+
+  const handelCancel = () => {
+    window.location.href = "/home";
+  }
 
   return (
     <div>
@@ -151,9 +156,16 @@ const RSOForm = () => {
               <div className=" w-full py-6 flex flex-col m-auto">
                 <button
                   type="submit"
-                  className="btn btn-info font-bold text-lg bg-yellow-500"
+                  className="btn btn-info font-bold text-lg bg-yellow-500 mb-4"
                 >
                   Register RSO
+                </button>
+
+                <button
+                  onClick={handelCancel}
+                  className="btn btn-error font-bold text-lg"
+                >
+                  Cancel
                 </button>
               </div>
             </form>
