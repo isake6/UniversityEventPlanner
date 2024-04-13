@@ -84,7 +84,6 @@ const JoinRSOSelection = () => {
           setRsos([...rsos, { rso_id: id }]);
         }
         setNewRSOId(''); // Clear the input after joining
-
         console.log(rsos);
       }
     } catch (error) {
@@ -121,7 +120,11 @@ const JoinRSOSelection = () => {
                     onClick={() => handleSelectRSO(rso.id)}
                     className="text-lg text-left w-full font-semibold hover:bg-yellow-100 px-2 py-1 rounded"
                   >
-                    {rso.name}
+                    <h2 style={{fontSize: "24px"}}>{rso.name}</h2>
+
+                    <p style={{fontSize: "16px"}}>
+                    {rso.description}
+                    </p>
                   </button>
                   <button
                     onClick={() => handleJoinRSO(rso.id)}
@@ -132,18 +135,6 @@ const JoinRSOSelection = () => {
                 </lis>
               ))}
             </ul>
-            {/* <div className="mt-4">
-              <input
-                type="text"
-                placeholder="Enter RSO ID to join"
-                value={newRSOId}
-                onChange={(e) => setNewRSOId(e.target.value)}
-                className="input input-bordered w-full max-w-xs"
-              />
-              <button onClick={handleJoinRSO} className="btn btn-success ml-2">
-                Join RSO
-              </button>
-            </div> */}
             <div className="w-full py-5 flex flex-col m-auto">
               <button
                 onClick={() => navigate('/home')}
