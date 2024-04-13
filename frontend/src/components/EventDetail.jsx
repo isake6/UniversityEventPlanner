@@ -66,10 +66,31 @@ const EventDetail = () => {
 
     console.log('Comment:', comment);
 
+    getEventComments();
     // Placeholder function for adding comments
   };
-  const handleDeleteComment = (id) => {
-    setComments(comments.filter((comment) => comment.id !== id));
+  const handleDeleteComment = async (id) => {
+    const userId = userSession.id;
+
+    try {
+      const response = await axios.post(
+        'https://somethingorother.xyz/delete_comment',
+        { user_id : userId, comment_id : id },
+        { withCredentials: true }
+      );
+
+      console.log('Response:', response.data);
+    } catch (error) {
+      if (error.response) {
+        console.error('Error message:', error.response.data);
+      } else if (error.request) {
+        console.error('No response received:', error.request);
+      } else {
+        console.error('Error', error.message);
+      }
+    }
+
+    getEventComments();
   };
 
   const handleEditComment = async (id, curComment) => {
