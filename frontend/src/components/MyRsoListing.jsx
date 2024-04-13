@@ -46,9 +46,10 @@ const MyRSOSelection = () => {
     }
   };
 
-  const handleSelectRSO = (rsoId) => {
+  const handleSelectRSO = (rsoId, adminId) => {
     console.log('Selected RSO ID:', rsoId);
     localStorage.setItem("rsoID", rsoId);
+    localStorage.setItem("rsoAdminId", adminId);
 
     navigate('/details');
 
@@ -89,7 +90,7 @@ const MyRSOSelection = () => {
                   className="flex justify-between items-center border-b border-gray-200 py-2"
                 >
                   <button
-                    onClick={() => handleSelectRSO(rso.id)}
+                    onClick={() => handleSelectRSO(rso.id, rso.admin)}
                     className="text-lg text-left w-full font-semibold hover:bg-yellow-100 px-2 py-1 rounded"
                   >
                     {rso.name}
