@@ -23,15 +23,15 @@ const RSOForm = () => {
     const name = document.getElementById('name').value;
     const university_id = userSession.university_id;
 
-    const users = {
+    const users = [
       user1_email,
       user2_email,
       user3_email,
       user4_email,
       user5_email,
-    };
+    ];
 
-    if (!(admin_email in users)) {
+    if (!users.includes(admin_email)) {
       console.error('Admin email not in users list');
       return;
     }
