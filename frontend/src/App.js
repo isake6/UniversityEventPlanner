@@ -13,7 +13,8 @@ import List from './components/EventListing';
 import AdminPage from './pages/adminPage';
 import EventDetail from './components/EventDetail';
 import RSOForm from './components/RSOForm';
-import RSOSelection from './components/RsoSelection';
+import JoinRSOSelection from './components/JoinRsoListing';
+import MyRSOSelection from './components/MyRsoListing';
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/events/:eventId" element={<EventDetail />} />
         <Route path="/registerRSO" element={<RSOForm />} />
-        <Route path="/selectRSO" element={<RSOSelection />} />
+        <Route path="/joinRSO" element={<JoinRSOSelection />} />
+        <Route path="/myRSO" element={<MyRSOSelection />} />
       </Routes>
     </BrowserRouter>
   );
