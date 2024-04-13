@@ -7,8 +7,10 @@ import {
 } from 'react-router-dom';
 import LoginPage from './pages/loginPage';
 import CreateAccountPage from './pages/createAccountPage';
+// import AdminAccountPage from './pages/adminPage';
+import SuperAdminAccountPage from './pages/superAdminPage';
+import StudentAccountPage from './pages/studentPage';
 import CreateEventForm from './components/CreateEventForm';
-import Navbar from './components/Navbar';
 import List from './components/EventListing';
 import AdminPage from './pages/adminPage';
 import EventDetail from './components/EventDetail';
@@ -27,6 +29,9 @@ function App() {
         <Route path="/events/:eventId" element={<EventDetail />} />
         <Route path="/registerRSO" element={<RSOForm />} />
         <Route path="/selectRSO" element={<RSOSelection />} />
+        {/* <Route path="/admin" element={<AdminAccountPage/>} /> */}
+        <Route path="/super" element={<SuperAdminAccountPage/>} />
+        <Route path="/student" element={<StudentAccountPage/>} />
       </Routes>
     </BrowserRouter>
   );

@@ -7,9 +7,7 @@ const createAccountPage = () => {
         <>
             <Navbar/>
             <CreateAccountForm />
-        </>
-        
-        
+        </>        
   )
 }
 

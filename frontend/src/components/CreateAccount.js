@@ -42,7 +42,8 @@ const CreateAccount = () => {
 
   return (
     <div>
-      <div className="flex items-center h-screen pt-28">
+      <div className='bg-white shadow-md rounded px-8 pt-7 pb-8 mb-4 max-w-md mx-auto'></div> {/* Spacing for Navbar */}
+      <div className="flex items-center h-fit pt-16">
         <div className="w-1/3 h-fit max-w-xl m-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col justify-center border border-yellow-500">
           <div className="p-5">
             <h1 className="text-3xl font-bold text-center text-black">
