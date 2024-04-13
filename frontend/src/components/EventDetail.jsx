@@ -158,7 +158,7 @@ const EventDetail = () => {
                 >
                   <p className='m-3'>{comment.author_email}</p>
                   <p className='m-3'>{comment.author_first_name} {comment.author_last_name}</p>
-                  <p className='m-3' style={{ color: "black" }} >{comment.comment}</p>
+                  <p className='m-3' style={{ color: "black", whiteSpace: "pre-wrap" }} >{comment.comment}</p>
                   <p className='m-3'>Created On: {comment.created_time}</p>
                   <p className='m-3'>Edited On: {comment.edit_time}</p>
                   <div className='flex justify-between'>
@@ -182,7 +182,11 @@ const EventDetail = () => {
                       }}
                     >
                     <h2 style={{fontSize:"20px", fontWeight:"bold"}}>Edit Comment</h2>
-                    <input type="text" value={currentComment?.text} onChange={e => setCurrentComment({ ...currentComment, text: e.target.value })} />
+                    <textarea 
+                      value={currentComment?.text} 
+                      onChange={e => setCurrentComment({ ...currentComment, text: e.target.value })}
+                      style={{ width: '100%', height: '100px' }} 
+                    />
                     <div className="flex justify-between">
                       <button className='btn btn-info' onClick={handleEditCommentSubmit}>Submit</button>
                       <button className='btn btn-error' onClick={() => setModalIsOpen(false)}>Cancel</button>

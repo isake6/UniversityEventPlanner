@@ -69,7 +69,7 @@ const RSODetails = () => {
                 { user_id : userSession.id, event_id : eventID },
                 { withCredentials: true }
             );
-
+            handleEventListing();
         } catch (error) {
             if (error.response) {
                 console.error('Error message:', error.response.data);
@@ -80,6 +80,7 @@ const RSODetails = () => {
             }
         }
         console.log("Do Delete: ", eventID);
+
     }
 
     const handleEdit = async (eventID) => {
@@ -187,9 +188,11 @@ const RSODetails = () => {
                         </div>
                         {/* Table End */}
 
+                        {role === "admin" && (
                         <div className='flex justify-center'>
                             <button onClick={() => handleAddEvent()} className='border rounded-lg hover:bg-yellow-500 hover:text-white border-yellow-600 px-10 py-2'>Add Event</button>
                         </div>
+                        )}
                     </div>
 
                 </div >

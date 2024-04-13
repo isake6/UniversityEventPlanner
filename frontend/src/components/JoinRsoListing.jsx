@@ -86,6 +86,8 @@ const JoinRSOSelection = () => {
         setNewRSOId(''); // Clear the input after joining
         console.log(rsos);
       }
+
+      fetchRSOs();
     } catch (error) {
       // Log the error message
       if (error.response) {

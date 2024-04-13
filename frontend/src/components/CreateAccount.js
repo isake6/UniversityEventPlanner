@@ -25,6 +25,9 @@ const CreateAccount = () => {
         { withCredentials: true }
       );
       console.log('Response:', response.data);
+
+      // redirect to login page
+      window.location.href = '/';
     } catch (error) {
       // Log the error message
       if (error.response) {

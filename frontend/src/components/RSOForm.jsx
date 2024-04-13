@@ -52,6 +52,11 @@ const RSOForm = () => {
         { withCredentials: true }
       );
       console.log('Response:', response.data);
+
+      // redirect to login page
+      if (!response.error) {
+        window.location.href = '/myRSO';
+      }
     } catch (error) {
       // Log the error message
       if (error.response) {

@@ -26,6 +26,11 @@ const EventList = () => {
       );
       console.log('Response:', response.data);
       setEvents(response.data.events);
+
+      // Scroll the page down to the events list
+      const element = document.getElementById('event_content');
+      element.scrollIntoView({ behavior: 'smooth' });
+
     } catch (error) {
       if (error.response) {
         console.error('Error message:', error.response.data);
@@ -56,6 +61,7 @@ const EventList = () => {
         </div>
       </div>
       {/* Upcoming Events Section */}
+      <div id="event_content"></div>
       <div className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-semibold text-gray-900 text-center">
@@ -67,8 +73,14 @@ const EventList = () => {
                 <div className="max-w-sm rounded overflow-hidden shadow-lg">
                   <div className="px-6 py-4">
                     <div className="font-bold text-xl mb-2">{event.name}</div>
+                    <p className="text-black text-base">
+                      {event.description}
+                    </p>
                     <p className="text-gray-700 text-base">
-                      {event.description} {event.id}
+                      Location: {event.location}
+                    </p>
+                    <p className="text-gray-700 text-base">
+                      Time: {event.time}
                     </p>
                   </div>
                   <div className="px-6 pt-4 pb-2">
