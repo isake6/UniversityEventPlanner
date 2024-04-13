@@ -15,6 +15,7 @@ import EventDetail from './components/EventDetail';
 import RSOForm from './components/RSOForm';
 import JoinRSOSelection from './components/JoinRsoListing';
 import MyRSOSelection from './components/MyRsoListing';
+import RSODetailsPage from './pages/rsoDetailsPage';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/registerRSO" element={<RSOForm />} />
         <Route path="/joinRSO" element={<JoinRSOSelection />} />
         <Route path="/myRSO" element={<MyRSOSelection />} />
+        <Route path="/details" element={<RSODetailsPage />} />
       </Routes>
     </BrowserRouter>
   );

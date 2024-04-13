@@ -48,6 +48,11 @@ const MyRSOSelection = () => {
 
   const handleSelectRSO = (rsoId) => {
     console.log('Selected RSO ID:', rsoId);
+    localStorage.setItem("rsoID", rsoId);
+
+    navigate('/details');
+
+
     // navigate(`/rso/${rsoId}`);
   };
 

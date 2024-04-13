@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useUserSession } from '../hooks/useUserSession';
 
-const RSODetails = ({ adminData }) => {
+const RSODetails = () => {
+    const { getUserSessionData } = useUserSession();
+    const userSession = getUserSessionData();
     const [activeRowIndex, setActiveRowIndex] = useState(null);
 
     const toggleRow = (index) => {
@@ -21,10 +24,10 @@ const RSODetails = ({ adminData }) => {
                     <h2 className="text-4xl text-black font-bold mb-1 text-center">Profile : Admin</h2>
                     <div className="mb-4">
                         <div className="flex justify-center text-lg text-black">
-                            <span>{adminData.university}</span>
+                            <span>{userSession.university_id}</span>
                         </div>
                         <div className="flex justify-center mb-5 text-lg text-black">
-                            <span>{adminData.username}</span>
+                            <span>{userSession.first_name}</span>
                         </div>
 
                         {/* Created RSOs */}
