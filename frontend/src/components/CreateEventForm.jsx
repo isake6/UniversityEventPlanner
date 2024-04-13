@@ -15,9 +15,9 @@ const CreateEventForm = () => {
     const user_id = userSession.id;
     const user_email = userSession.email;
 
-    const rso = 1; // This is a placeholder value
-    const name = userSession.first_name + ' ' + userSession.last_name;
-    const category = document.getElementById('category').value;
+    const rso = ""; // This is a placeholder value
+    const name = document.getElementById('event_name').value;
+    const category = "public";
     const time = document.getElementById('time').value;
     const description = document.getElementById('description').value;
     const location = document.getElementById('location').value;
@@ -76,17 +76,6 @@ const CreateEventForm = () => {
             >
               Event Name
               <input type="text" placeholder="Knight World" />
-            </label>
-
-            <label className="input input-bordered flex items-center gap-2">
-              Category
-              <select type="input" id="category" placeholder="Tailgate">
-                {' '}
-                <option value="public">Public</option>
-                <option value="private">Private</option>
-                <option value="rso">RSO</option>
-              </select>
-              {/* Changed type to email */}
             </label>
 
             <label className="input input-bordered flex items-center gap-2">

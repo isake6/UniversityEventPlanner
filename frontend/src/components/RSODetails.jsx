@@ -7,6 +7,7 @@ const RSODetails = () => {
     const userSession = getUserSessionData();
     const [activeRowIndex, setActiveRowIndex] = useState(null);
     const [events, setEvents] = useState([]);
+    const [role, setRole] = useState(null);
 
     useEffect(() => {
         handleEventListing();
@@ -16,6 +17,17 @@ const RSODetails = () => {
         console.log('Fetching events. Awaiting response...');
         console.log('User session:', userSession);
         const { id: user_id, university_id } = userSession;
+        const adminID = localStorage.getItem("rsoAdminId");
+        
+        if (parseInt(adminID) === user_id) {
+            setRole("admin");
+            console.log("Set role to admin for adminID: ", adminID, " and user_id: ", user_id);
+        }
+        else
+        {
+            setRole("student");
+            console.log("Set role to student for adminID: ", adminID, " and user_id: ", user_id);
+        }
 
         try {
             const response = await axios.post(
@@ -27,8 +39,8 @@ const RSODetails = () => {
 
             const difference = response.data.events.filter(events => events.rso === parseInt(rsoId));
 
-
             setEvents(difference);
+
         } catch (error) {
             if (error.response) {
                 console.error('Error message:', error.response.data);
@@ -154,11 +166,13 @@ const RSODetails = () => {
                                                     </td>
                                                     <td>
                                                         {/* additional content */}
+                                                        {role === "admin" && (
                                                         <div>
                                                             {/* Add content you want to show when row is expanded */}
                                                             <button className='btn btn-warning m-4'>Edit</button>
                                                             <button onClick={() => handleDelete(row.id)} className='btn btn-warning m-4'>Delete</button>
                                                         </div>
+                                                        )}
                                                     </td>
                                                 </tr>
                                             )}

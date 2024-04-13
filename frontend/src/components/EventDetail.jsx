@@ -69,6 +69,7 @@ const EventDetail = () => {
   return (
     <div>
       <Navbar />
+      <div className='bg-white shadow-md rounded px-8 pt-7 pb-8 mb-4 max-w-md mx-auto'></div>
       <div className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold text-center">{event.name}</h1>
