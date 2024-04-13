@@ -97,21 +97,15 @@ const RSODetails = () => {
             <div className='bg-white shadow-md rounded px-8 pt-7 pb-8 mb-4 max-w-md mx-auto'></div> {/* Spacing for Navbar */}
             <div className='flex justify-center mx-auto' style={{ maxWidth: "90%" }}>
                 <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style={{ width: "90%" }}>
-                    <h2 className="text-4xl text-black font-bold mb-1 text-center">Profile : Admin</h2>
+                    <h2 className="text-4xl text-black font-bold mb-1 text-center">{localStorage.getItem("rsoName")}</h2>
                     <div className="mb-4">
-                        <div className="flex justify-center text-lg text-black">
-                            <span>{userSession.university_id}</span>
-                        </div>
-                        <div className="flex justify-center mb-5 text-lg text-black">
-                            <span>{userSession.first_name}</span>
-                        </div>
 
                         {/* Created RSOs */}
                         {/* Plan to Populate Dynamically */}
 
                         {/* Table */}
                         <div className="overflow-x-auto collapse">
-                            <span className='flex justify-center text-2xl font-bold text-black'>Registered Student Organizations</span>
+                            <span className='flex justify-center text-2xl font-bold text-black'>Events</span>
                             <table className="table mt-4 text-black">
                                 {/* head */}
                                 <thead className='text-black text-lg'>

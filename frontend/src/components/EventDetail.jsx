@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { useLocation } from 'react-router-dom';
 import { useUserSession } from '../hooks/useUserSession';
@@ -9,12 +9,34 @@ const EventDetail = () => {
   const event = location.state;
   const { getUserSessionData } = useUserSession();
   const userSession = getUserSessionData();
-  const [events, setEvents] = useState([]);
   const event_id = event.id;
-  const [comments, setComments] = useState([
-    { id: 1, text: 'Looking forward to this event!' },
-    { id: 2, text: 'Can anyone tell me if there will be parking available?' },
-  ]);
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    getEventComments();
+  }, []);
+
+  const getEventComments = async () => {
+    // Get comments
+
+    try {
+      const response = await axios.post(
+        'https://somethingorother.xyz/get_comments',
+        { event_id: event_id },
+        { withCredentials: true }
+      );
+      console.log('Response:', response.data);
+      setComments(response.data.comments);
+    } catch (error) {
+      if (error.response) {
+        console.error('Error message:', error.response.data);
+      } else if (error.request) {
+        console.error('No response received:', error.request);
+      } else {
+        console.error('Error', error.message);
+      }
+    }
+  };
 
   const handleAddComment = async () => {
     const comment = prompt('Enter your comment:');
@@ -32,8 +54,6 @@ const EventDetail = () => {
       );
 
       console.log('Response:', response.data);
-      setEvents(response.data.events);
-      setComments([...comments, { id: comments.length + 1, text: comment }]);
     } catch (error) {
       if (error.response) {
         console.error('Error message:', error.response.data);
@@ -52,18 +72,28 @@ const EventDetail = () => {
     setComments(comments.filter((comment) => comment.id !== id));
   };
 
-  const handleEditComment = (id) => {
-    const newText = prompt('Edit your comment:');
-    if (newText) {
-      setComments(
-        comments.map((comment) => {
-          if (comment.id === id) {
-            return { ...comment, text: newText };
-          }
-          return comment;
-        })
-      );
-    }
+  const handleEditComment = async (id, curComment) => {
+    const userId = userSession.id;
+
+    const newText = prompt("Comment");
+
+    // try {
+    //   const response = await axios.post(
+    //     'https://somethingorother.xyz/update_comment',
+    //     { user_id : userId, comment_id : id, new_comment: newText },
+    //     { withCredentials: true }
+    //   );
+
+    //   console.log('Response:', response.data);
+    // } catch (error) {
+    //   if (error.response) {
+    //     console.error('Error message:', error.response.data);
+    //   } else if (error.request) {
+    //     console.error('No response received:', error.request);
+    //   } else {
+    //     console.error('Error', error.message);
+    //   }
+    // }
   };
 
   return (
@@ -89,19 +119,20 @@ const EventDetail = () => {
                   key={comment.id}
                   className="bg-gray-100 rounded p-4 mb-2 relative"
                 >
-                  <p>{comment.text}</p>
-                  <button
-                    onClick={() => handleEditComment(comment.id)}
-                    className="absolute top-2 right-12 text-blue-500"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDeleteComment(comment.id)}
-                    className="absolute top-2 right-2 text-red-500"
-                  >
-                    Delete
-                  </button>
+                  <p className='m-3'>{comment.author_email}</p>
+                  <p className='m-3'>{comment.author_first_name} {comment.author_last_name}</p>
+                  <p className='m-3' style={{ color: "black" }} >{comment.comment}</p>
+                  <p className='m-3'>{comment.created_time}</p>
+                  <p className='m-3'>{comment.edit_time}</p>
+                  <div className='flex justify-between'>
+                    <button onClick={() => handleEditComment(comment.id, comment.comment)} className="text-blue-500">
+                      Edit
+                    </button>
+
+                    <button onClick={() => handleDeleteComment(comment.id)} className="text-red-500">
+                      Delete
+                    </button>
+                  </div>
                 </div>
               ))}
               <button
