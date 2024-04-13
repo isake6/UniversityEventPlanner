@@ -12,7 +12,7 @@ const CreateEventForm = () => {
     console.log('Form submitted. Awaiting response...');
     console.log('User session:', userSession);
 
-    const user_id = 4;
+    const user_id = userSession.id;
     const user_email = userSession.email;
 
     const rso = 1; // This is a placeholder value
