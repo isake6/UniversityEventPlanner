@@ -80,16 +80,18 @@ const CreateEventForm = () => {
 
             <label className="input input-bordered flex items-center gap-2">
               Category
-              <select type="input" id="category" placeholder="Tailgate" />{' '}
-              <option value="public">Public</option>
-              <option value="private">Private</option>
-              <option value="rso">RSO</option>
+              <select type="input" id="category" placeholder="Tailgate">
+                {' '}
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+                <option value="rso">RSO</option>
+              </select>
               {/* Changed type to email */}
             </label>
 
             <label className="input input-bordered flex items-center gap-2">
               Event Time
-              <input type="text" id="time" placeholder="2:00pm" />
+              <input type="datetime-local" id="time" placeholder="2:00pm" />
             </label>
 
             <label className="input input-bordered flex items-center gap-2">
