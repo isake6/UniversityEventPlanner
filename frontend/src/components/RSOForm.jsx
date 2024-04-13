@@ -175,26 +175,12 @@ const RSOForm = () => {
               <div className=" w-full py-6 flex flex-col m-auto">
                 <button
                   type="submit"
-                  className="btn btn-info font-bold text-xl bg-yellow-500"
+                  className="btn btn-info font-bold text-lg bg-yellow-500"
                 >
-                  Sign Up
+                  Register RSO
                 </button>
               </div>
             </form>
-
-            <div className="pt-3 flex flex-col">
-              <div className="m-auto">
-                <a className="text-base text-gray-600">
-                  Already have an account?{' '}
-                </a>
-                <a
-                  href="/"
-                  className="text-base text-gray-600 hover:underline hover:text-blue-600 text-center"
-                >
-                  Login
-                </a>
-              </div>
-            </div>
           </div>
         </div>
       </div>
