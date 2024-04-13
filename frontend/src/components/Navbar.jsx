@@ -46,8 +46,13 @@ const Navbar = () => {
                 </li>
               )}
               <li>
-                <Link to="/selectRSO">
+                <Link to="/myRSO">
                   <button>MyRSO</button>
+                </Link>
+              </li>
+              <li>
+                <Link to="/joinRSO">
+                  <button>JoinRSO</button>
                 </Link>
               </li>
 
@@ -76,6 +81,11 @@ const Navbar = () => {
                 <button>MyRSO</button>
               </Link>
             </li>
+            <li>
+                <Link to="/joinRSO">
+                  <button>JoinRSO</button>
+                </Link>
+              </li>
 
             <Link to={'/registerRSO'}>
               <li>
