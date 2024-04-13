@@ -82,6 +82,12 @@ const RSODetails = () => {
         console.log("Do Delete: ", eventID);
     }
 
+    const handleEdit = async (eventID) => {
+        console.log("Do Edit: ", eventID);
+        localStorage.setItem("eventID", eventID);
+        window.location.href = '/editRsoEvent';
+    }
+
     return (
         <>
             <div className='bg-white shadow-md rounded px-8 pt-7 pb-8 mb-4 max-w-md mx-auto'></div> {/* Spacing for Navbar */}
@@ -169,7 +175,7 @@ const RSODetails = () => {
                                                         {role === "admin" && (
                                                         <div>
                                                             {/* Add content you want to show when row is expanded */}
-                                                            <button className='btn btn-warning m-4'>Edit</button>
+                                                            <button onClick={() => handleEdit(row.id)} className='btn btn-warning m-4'>Edit</button>
                                                             <button onClick={() => handleDelete(row.id)} className='btn btn-warning m-4'>Delete</button>
                                                         </div>
                                                         )}
