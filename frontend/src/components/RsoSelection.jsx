@@ -40,7 +40,7 @@ const RSOSelection = () => {
       if (!userRsosResponse.data.rso_details) return;
       const difference = universityRsosResponse.data.rso_details.filter(
         universityRso => !userRsosResponse.data.rso_details.some(
-          userRso => userRso.rso_id === universityRso.rso_id
+          userRso => userRso.id === universityRso.id
         )
       );
 
