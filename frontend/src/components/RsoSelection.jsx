@@ -19,15 +19,45 @@ const RSOSelection = () => {
     console.log('Fetching RSOs. Awaiting response...');
     const { id: user_id } = userSession;
     try {
-      const response = await axios.post(
+      const universityRsosResponse = await axios.post(
+        'https://somethingorother.xyz/get_university_rsos',
+        { university_id: userSession.university_id},
+        { withCredentials: true }
+      );
+
+    // Fetch user RSOs
+      const userRsosResponse = await axios.post(
         'https://somethingorother.xyz/get_user_rso_list',
         { user_id },
         { withCredentials: true }
       );
-      console.log('Response for RSO:', response.data);
-      setRsos(response.data.rso_details);
+
+      console.log('University RSOs:', universityRsosResponse.data);
+      console.log('User RSOs:', userRsosResponse.data);
+
+      // Find the difference between the two data sets
+      if (!universityRsosResponse.data.rso_details) return;
+      if (!userRsosResponse.data.rso_details) return;
+      const difference = universityRsosResponse.data.rso_details.filter(
+        universityRso => !userRsosResponse.data.rso_details.some(
+          userRso => userRso.rso_id === universityRso.rso_id
+        )
+      );
+
+        // Update the state with the difference
+        setRsos(difference);
     } catch (error) {
-      console.error('Error fetching RSOs:', error);
+      // Log the error message
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error('Error message:', error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error', error.message);
+      }
     }
   };
 
