@@ -88,6 +88,10 @@ const RSODetails = () => {
         window.location.href = '/editRsoEvent';
     }
 
+    const handleAddEvent = async () => {
+        window.location.href = '/createRsoEvent';
+    }
+
     return (
         <>
             <div className='bg-white shadow-md rounded px-8 pt-7 pb-8 mb-4 max-w-md mx-auto'></div> {/* Spacing for Navbar */}
@@ -190,7 +194,7 @@ const RSODetails = () => {
                         {/* Table End */}
 
                         <div className='flex justify-center'>
-                            <button className='border rounded-lg hover:bg-yellow-500 hover:text-white border-yellow-600 px-10 py-2'>Add Event</button>
+                            <button onClick={() => handleAddEvent()} className='border rounded-lg hover:bg-yellow-500 hover:text-white border-yellow-600 px-10 py-2'>Add Event</button>
                         </div>
                     </div>
 
