@@ -66,23 +66,6 @@ const JoinRSOSelection = () => {
     // navigate(`/rso/${rsoId}`);
   };
 
-  const handleDeleteRSO = async (rsoId) => {
-    console.log('Attempting to leave/delete RSO ID:', rsoId);
-    try {
-      const response = await axios.post(
-        'https://somethingorother.xyz/leave_rso',
-        { user_id: userSession.id, rso_id: rsoId },
-        { withCredentials: true }
-      );
-      console.log('Delete Response:', response.data);
-      if (response.data.success) {
-        setRsos(rsos.filter((rso) => rso.id !== rsoId));
-      }
-    } catch (error) {
-      console.error('Error leaving RSO:', error);
-    }
-  };
-
   const handleJoinRSO = async (id) => {
 
     setNewRSOId(id);
@@ -126,7 +109,7 @@ const JoinRSOSelection = () => {
         <div className="w-1/3 h-fit max-w-xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col justify-center border border-yellow-500">
           <div className="p-5">
             <h1 className="text-3xl font-bold text-center text-black">
-              Select or Join an RSO
+              Available RSOs to Join
             </h1>
             <ul className="mt-5">
               {rsos.map((rso) => (
@@ -145,12 +128,6 @@ const JoinRSOSelection = () => {
                     className="ml-4 bg-green-600 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
                   >
                     Join
-                  </button>
-                  <button
-                    onClick={() => handleDeleteRSO(rso.id)}
-                    className="ml-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                  >
-                    Leave
                   </button>
                 </lis>
               ))}

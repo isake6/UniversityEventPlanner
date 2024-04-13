@@ -72,7 +72,7 @@ const Navbar = () => {
               </li>
             )}
             <li>
-              <Link to="/MyRSO">
+              <Link to="/myRSO">
                 <button>MyRSO</button>
               </Link>
             </li>

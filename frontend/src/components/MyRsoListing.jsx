@@ -19,11 +19,6 @@ const MyRSOSelection = () => {
     console.log('Fetching RSOs. Awaiting response...');
     const { id: user_id } = userSession;
     try {
-      const universityRsosResponse = await axios.post(
-        'https://somethingorother.xyz/get_university_rsos',
-        { university_id: userSession.university_id},
-        { withCredentials: true }
-      );
 
     // Fetch user RSOs
       const userRsosResponse = await axios.post(
@@ -32,20 +27,10 @@ const MyRSOSelection = () => {
         { withCredentials: true }
       );
 
-      console.log('University RSOs:', universityRsosResponse.data);
       console.log('User RSOs:', userRsosResponse.data);
 
-      // Find the difference between the two data sets
-      if (!universityRsosResponse.data.rso_details) return;
-      if (!userRsosResponse.data.rso_details) return;
-      const difference = universityRsosResponse.data.rso_details.filter(
-        universityRso => !userRsosResponse.data.rso_details.some(
-          userRso => userRso.id === universityRso.id
-        )
-      );
-
-        // Update the state with the difference
-        setRsos(difference);
+      // Update the state with the difference
+      setRsos(userRsosResponse.data.rso_details);
     } catch (error) {
       // Log the error message
       if (error.response) {
@@ -83,42 +68,6 @@ const MyRSOSelection = () => {
     }
   };
 
-  const handleJoinRSO = async (id) => {
-
-    setNewRSOId(id);
-    console.log('Attempting to join RSO ID:', id);
-    console.log('User ID:', userSession.id);
-
-    try {
-      const response = await axios.post(
-        'https://somethingorother.xyz/join_rso',
-        { user_id: userSession.id, rso_id: id },
-        { withCredentials: true}
-      );
-      console.log('Join Response:', response.data);
-      if (response.data.success) {
-        if (!rsos.some(rso => rso.rso_id === id)) {
-          setRsos([...rsos, { rso_id: id }]);
-        }
-        setNewRSOId(''); // Clear the input after joining
-
-        console.log(rsos);
-      }
-    } catch (error) {
-      // Log the error message
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        console.error('Error message:', error.response.data);
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error('No response received:', error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error('Error', error.message);
-      }
-    }
-  };
-
   return (
     <div>
       <Navbar />
@@ -126,7 +75,7 @@ const MyRSOSelection = () => {
         <div className="w-1/3 h-fit max-w-xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col justify-center border border-yellow-500">
           <div className="p-5">
             <h1 className="text-3xl font-bold text-center text-black">
-              Select or Join an RSO
+              My RSOs
             </h1>
             <ul className="mt-5">
               {rsos.map((rso) => (
@@ -139,12 +88,6 @@ const MyRSOSelection = () => {
                     className="text-lg text-left w-full font-semibold hover:bg-yellow-100 px-2 py-1 rounded"
                   >
                     {rso.name}
-                  </button>
-                  <button
-                    onClick={() => handleJoinRSO(rso.id)}
-                    className="ml-4 bg-green-600 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
-                  >
-                    Join
                   </button>
                   <button
                     onClick={() => handleDeleteRSO(rso.id)}
