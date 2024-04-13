@@ -118,7 +118,9 @@ const AdminProfile = ({ adminData }) => {
                         </div>
                         {/* Table End */}
 
-
+                        <div className='flex justify-center'>
+                            <button className='border rounded-lg hover:bg-yellow-500 hover:text-white border-yellow-600 px-10 py-2'>Add New RSO</button>
+                        </div>
 
                         <div className='overflow-x-auto collapse mt-24'>
                             <span className='flex justify-center text-2xl font-bold text-black'>Current Events</span>
