@@ -146,31 +146,7 @@ const RSOForm = () => {
                 className="w-full input input-bordered border-yellow-500"
               ></input>
 
-              <div className="relative">
-                <h3 className="text-base font-bold mt-2 text-gray-800">Role</h3>
-                <select className="w-full input input-bordered input-primary border border-gray-300 appearance-none">
-                  <option value="superAdmin">Super Admin</option>
-                  <option value="admin">Admin</option>
-                  <option selected value="student">
-                    Student
-                  </option>
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center px-2 pt-5 pointer-events-none">
-                  <svg
-                    className="w-5 h-5 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
+              <div className="relative"></div>
 
               <div className=" w-full py-6 flex flex-col m-auto">
                 <button
