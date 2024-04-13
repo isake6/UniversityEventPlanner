@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import { useLocation } from 'react-router-dom';
 import { useUserSession } from '../hooks/useUserSession';
 import axios from 'axios';
+import Modal from 'react-modal';
 
 const EventDetail = () => {
   const location = useLocation();
@@ -11,6 +12,9 @@ const EventDetail = () => {
   const userSession = getUserSessionData();
   const event_id = event.id;
   const [comments, setComments] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [currentComment, setCurrentComment] = useState(null);
+  const [currentCommentId, setCurrentCommentId] = useState(null);
 
   useEffect(() => {
     getEventComments();
@@ -93,28 +97,40 @@ const EventDetail = () => {
     getEventComments();
   };
 
-  const handleEditComment = async (id, curComment) => {
+  const handleEditCommentSubmit = async () => {
+    // call the edit comment endpoint /update_comment
     const userId = userSession.id;
+    const commentId = currentCommentId;
+    const newComment = currentComment.text;
 
-    const newText = prompt("Comment");
+    try {
+      const response = await axios.post(
+        'https://somethingorother.xyz/update_comment',
+        { user_id: userId, comment_id: commentId, new_comment: newComment },
+        { withCredentials: true }
+      );
+    
+      console.log('Response:', response.data);
 
-    // try {
-    //   const response = await axios.post(
-    //     'https://somethingorother.xyz/update_comment',
-    //     { user_id : userId, comment_id : id, new_comment: newText },
-    //     { withCredentials: true }
-    //   );
+    } catch (error) {
+      if (error.response) {
+        console.error('Error message:', error.response.data);
+      } else if (error.request) {
+        console.error('No response received:', error.request);
+      } else {
+        console.error('Error', error.message);
+      }
+    }
+  
+    // Close the modal
+    setModalIsOpen(false);
+    getEventComments();
+  };
 
-    //   console.log('Response:', response.data);
-    // } catch (error) {
-    //   if (error.response) {
-    //     console.error('Error message:', error.response.data);
-    //   } else if (error.request) {
-    //     console.error('No response received:', error.request);
-    //   } else {
-    //     console.error('Error', error.message);
-    //   }
-    // }
+  const toggleModal = async (comment, id) => {
+    setModalIsOpen(!modalIsOpen);
+    setCurrentCommentId(id);
+    setCurrentComment({ ...currentComment, text: comment });
   };
 
   return (
@@ -143,12 +159,35 @@ const EventDetail = () => {
                   <p className='m-3'>{comment.author_email}</p>
                   <p className='m-3'>{comment.author_first_name} {comment.author_last_name}</p>
                   <p className='m-3' style={{ color: "black" }} >{comment.comment}</p>
-                  <p className='m-3'>{comment.created_time}</p>
-                  <p className='m-3'>{comment.edit_time}</p>
+                  <p className='m-3'>Created On: {comment.created_time}</p>
+                  <p className='m-3'>Edited On: {comment.edit_time}</p>
                   <div className='flex justify-between'>
-                    <button onClick={() => handleEditComment(comment.id, comment.comment)} className="text-blue-500">
+                    <button onClick={() => toggleModal(comment.comment, comment.id)}>
                       Edit
                     </button>
+                    <Modal 
+                      isOpen={modalIsOpen} 
+                      onRequestClose={() => setModalIsOpen(false)}
+                      style={{
+                        overlay: {
+                          backgroundColor: 'rgba(0, 0, 0, 0.75)' // This will give the overlay a black color with 75% opacity
+                        },
+                        content: {
+                          color: 'black', // This will give the text inside the modal a light steel blue color
+                          width: '50%', // This will make the modal take up 50% of the width of the viewport
+                          height: '25%', // This will make the modal take up 50% of the height of the viewport
+                          margin: 'auto', // This will center the modal in the middle of the viewport
+                          padding: '20px' // This will add 20px of padding inside the modal
+                        }
+                      }}
+                    >
+                    <h2 style={{fontSize:"20px", fontWeight:"bold"}}>Edit Comment</h2>
+                    <input type="text" value={currentComment?.text} onChange={e => setCurrentComment({ ...currentComment, text: e.target.value })} />
+                    <div className="flex justify-between">
+                      <button className='btn btn-info' onClick={handleEditCommentSubmit}>Submit</button>
+                      <button className='btn btn-error' onClick={() => setModalIsOpen(false)}>Cancel</button>
+                    </div>
+                  </Modal>
 
                     <button onClick={() => handleDeleteComment(comment.id)} className="text-red-500">
                       Delete
