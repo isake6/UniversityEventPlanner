@@ -1,21 +1,38 @@
 import React from 'react';
 import axios from 'axios';
+import { useUserSession } from '../hooks/useUserSession';
 //# Input: user1_email, user2_email, user3_email, user4_email, user5_email, admin_email, name, university_id
+// //if (password !== passwordConfirm) {
+//     console.error('Passwords do not match');
+//     return;
+//   }
 
 const RSOForm = () => {
+  const { getUserSessionData } = useUserSession();
+  const userSession = getUserSessionData();
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Form submitted. Awaiting response...');
 
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const passwordConfirm = document.getElementById('passwordConfirm').value;
-    const role = document.querySelector('select').value;
+    const user1_email = document.getElementById('user1').value;
+    const user2_email = document.getElementById('user2').value;
+    const user3_email = document.getElementById('user3').value;
+    const user4_email = document.getElementById('user4').value;
+    const user5_email = document.getElementById('user5').value;
+    const admin_email = document.getElementById('admin').value;
+    const name = document.getElementById('name').value;
+    const university_id = userSession.university_id;
 
-    if (password !== passwordConfirm) {
-      console.error('Passwords do not match');
+    const users = {
+      user1_email,
+      user2_email,
+      user3_email,
+      user4_email,
+      user5_email,
+    };
+
+    if (!(admin_email in users)) {
+      console.error('Admin email not in users list');
       return;
     }
 
@@ -64,17 +81,17 @@ const RSOForm = () => {
               </h3>
               <input
                 type="text"
-                id="firstName"
+                id="name"
                 placeholder="First Name"
                 className=" w-full input input-bordered input-primary"
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
-                Last Name
+                Email #1
               </h3>
               <input
                 type="text"
-                id="lastName"
+                id="user1"
                 placeholder="Last Name"
                 className="w-full input input-bordered border-yellow-500"
               ></input>
@@ -88,21 +105,51 @@ const RSOForm = () => {
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
-                Password
+                Email #2
               </h3>
               <input
-                type="password"
-                id="password"
-                placeholder="Password"
+                type="text"
+                id="user2"
+                placeholder=""
                 className=" w-full input input-bordered border-yellow-500"
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
-                Confirm Password
+                Email #3
               </h3>
               <input
-                type="password"
-                id="passwordConfirm"
+                type="text"
+                id="user3"
+                placeholder="Confirm Password"
+                className="w-full input input-bordered border-yellow-500"
+              ></input>
+
+              <h3 className="text-base font-bold pt-3 text-gray-600">
+                Email #4
+              </h3>
+              <input
+                type="text"
+                id="user4"
+                placeholder="Confirm Password"
+                className="w-full input input-bordered border-yellow-500"
+              ></input>
+
+              <h3 className="text-base font-bold pt-3 text-gray-600">
+                Email #5
+              </h3>
+              <input
+                type="text"
+                id="user5"
+                placeholder="Confirm Password"
+                className="w-full input input-bordered border-yellow-500"
+              ></input>
+
+              <h3 className="text-base font-bold pt-3 text-gray-600">
+                Admin Email
+              </h3>
+              <input
+                type="text"
+                id="admin"
                 placeholder="Confirm Password"
                 className="w-full input input-bordered border-yellow-500"
               ></input>
