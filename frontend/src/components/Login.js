@@ -44,7 +44,7 @@ const Login = () => {
 
       localStorage.setItem('userSession', userSessionData);
 
-      navigate('/selectRSO');
+      navigate('/myRSO');
     } catch (error) {
       // Log the error message
       if (error.response) {

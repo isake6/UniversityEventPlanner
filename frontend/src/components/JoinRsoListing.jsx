@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from './Navbar';
 import axios from 'axios';
 import { useUserSession } from '../hooks/useUserSession';
 import { useNavigate } from 'react-router-dom';
 
-const RSOSelection = () => {
+const JoinRSOSelection = () => {
   const navigate = useNavigate();
   const { getUserSessionData } = useUserSession();
   const userSession = getUserSessionData();
@@ -182,4 +182,4 @@ const RSOSelection = () => {
   );
 };
 
-export default RSOSelection;
+export default JoinRSOSelection;
