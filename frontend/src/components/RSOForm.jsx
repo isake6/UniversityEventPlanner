@@ -82,7 +82,7 @@ const RSOForm = () => {
               <input
                 type="text"
                 id="name"
-                placeholder="First Name"
+                placeholder=""
                 className=" w-full input input-bordered input-primary"
               ></input>
 
@@ -92,16 +92,8 @@ const RSOForm = () => {
               <input
                 type="text"
                 id="user1"
-                placeholder="Last Name"
+                placeholder=""
                 className="w-full input input-bordered border-yellow-500"
-              ></input>
-
-              <h3 className="text-base font-bold pt-3 text-gray-600">Email</h3>
-              <input
-                type="text"
-                id="email"
-                placeholder="Email"
-                className=" w-full input input-bordered border-yellow-500"
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
@@ -120,7 +112,7 @@ const RSOForm = () => {
               <input
                 type="text"
                 id="user3"
-                placeholder="Confirm Password"
+                placeholder=""
                 className="w-full input input-bordered border-yellow-500"
               ></input>
 
@@ -130,7 +122,7 @@ const RSOForm = () => {
               <input
                 type="text"
                 id="user4"
-                placeholder="Confirm Password"
+                placeholder=""
                 className="w-full input input-bordered border-yellow-500"
               ></input>
 
@@ -140,7 +132,7 @@ const RSOForm = () => {
               <input
                 type="text"
                 id="user5"
-                placeholder="Confirm Password"
+                placeholder=""
                 className="w-full input input-bordered border-yellow-500"
               ></input>
 
@@ -150,7 +142,7 @@ const RSOForm = () => {
               <input
                 type="text"
                 id="admin"
-                placeholder="Confirm Password"
+                placeholder=""
                 className="w-full input input-bordered border-yellow-500"
               ></input>
 
