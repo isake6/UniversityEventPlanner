@@ -25,7 +25,7 @@ const RSOSelection = () => {
         { withCredentials: true }
       );
       console.log('Response for RSO:', response.data);
-      setRsos(response.data.rso_ids);
+      setRsos(response.data.rso_details);
     } catch (error) {
       console.error('Error fetching RSOs:', error);
     }
@@ -46,25 +46,29 @@ const RSOSelection = () => {
       );
       console.log('Delete Response:', response.data);
       if (response.data.success) {
-        setRsos(rsos.filter((rso) => rso.rso_id !== rsoId));
+        setRsos(rsos.filter((rso) => rso.id !== rsoId));
       }
     } catch (error) {
       console.error('Error leaving RSO:', error);
     }
   };
 
-  const handleJoinRSO = async () => {
-    console.log('Attempting to join RSO ID:', newRSOId);
+  const handleJoinRSO = async (id) => {
+
+    setNewRSOId(id);
+    console.log('Attempting to join RSO ID:', id);
     try {
       const response = await axios.post(
         'https://somethingorother.xyz/join_rso',
-        { user_id: userSession.id, rso_id: newRSOId },
+        { user_id: userSession.id, rso_id: id },
         { withCredentials: true }
       );
       console.log('Join Response:', response.data);
       if (response.data.success) {
-        setRsos([...rsos, { rso_id: newRSOId }]); // Optionally update the list
+        setRsos([...rsos, { rso_id: id }]); // Optionally update the list
         setNewRSOId(''); // Clear the input after joining
+
+        console.log(rsos);
       }
     } catch (error) {
       console.error('Error joining RSO:', error);
@@ -82,26 +86,32 @@ const RSOSelection = () => {
             </h1>
             <ul className="mt-5">
               {rsos.map((rso) => (
-                <li
-                  key={rso.rso_id}
+                <lis
+                  key={rso}
                   className="flex justify-between items-center border-b border-gray-200 py-2"
                 >
                   <button
-                    onClick={() => handleSelectRSO(rso.rso_id)}
+                    onClick={() => handleSelectRSO(rso.id)}
                     className="text-lg text-left w-full font-semibold hover:bg-yellow-100 px-2 py-1 rounded"
                   >
-                    RSO #{rso.rso_id}
+                    {rso.name}
                   </button>
                   <button
-                    onClick={() => handleDeleteRSO(rso.rso_id)}
+                    onClick={() => handleJoinRSO(rso.id)}
+                    className="ml-4 bg-green-600 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Join
+                  </button>
+                  <button
+                    onClick={() => handleDeleteRSO(rso.id)}
                     className="ml-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                   >
                     Leave
                   </button>
-                </li>
+                </lis>
               ))}
             </ul>
-            <div className="mt-4">
+            {/* <div className="mt-4">
               <input
                 type="text"
                 placeholder="Enter RSO ID to join"
@@ -112,7 +122,7 @@ const RSOSelection = () => {
               <button onClick={handleJoinRSO} className="btn btn-success ml-2">
                 Join RSO
               </button>
-            </div>
+            </div> */}
             <div className="w-full py-5 flex flex-col m-auto">
               <button
                 onClick={() => navigate('/home')}
