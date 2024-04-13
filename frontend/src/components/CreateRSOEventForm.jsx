@@ -78,11 +78,9 @@ const CreateRSOEventForm = () => {
 
     try {
       const response = await axios.post(
-        'https://somethingorother.xyz/add_event',
+        'https://somethingorother.xyz/update_event',
         {
-          user_id,
-          user_email,
-          rso,
+          event_id: parseInt(localStorage.getItem('eventID')),
           name,
           category,
           time,
@@ -107,6 +105,8 @@ const CreateRSOEventForm = () => {
         console.error('Error', error.message);
       }
     }
+
+    window.location.href = '/details';
   };
   return (
     <>
