@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useUserSession } from '../hooks/useUserSession';
 import axios from 'axios';
+import Modal from 'react-modal';
 
 const RSODetails = () => {
     const { getUserSessionData } = useUserSession();
@@ -8,6 +9,11 @@ const RSODetails = () => {
     const [activeRowIndex, setActiveRowIndex] = useState(null);
     const [events, setEvents] = useState([]);
     const [role, setRole] = useState(null);
+    const [rsoDetails, setRsoDetails] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [name, setName] = useState('');
+    const [admin, setAdmin] = useState('');
+    const [description, setDescription] = useState('');
 
     useEffect(() => {
         handleEventListing();
@@ -17,17 +23,37 @@ const RSODetails = () => {
         console.log('Fetching events. Awaiting response...');
         console.log('User session:', userSession);
         const { id: user_id, university_id } = userSession;
-        const adminID = localStorage.getItem("rsoAdminId");
-        
-        if (parseInt(adminID) === user_id) {
-            setRole("admin");
-            console.log("Set role to admin for adminID: ", adminID, " and user_id: ", user_id);
-        }
-        else
-        {
-            setRole("student");
-            console.log("Set role to student for adminID: ", adminID, " and user_id: ", user_id);
-        }
+
+        // Get RSO details
+        try {
+            const response = await axios.post(
+                'https://somethingorother.xyz/get_single_rso_details',
+                { rso_id: localStorage.getItem("rsoID") },
+                { withCredentials: true }
+            );
+            console.log('Response:', response.data);
+
+            setRsoDetails(response.data.rso_details);
+
+            if (response.data.rso_details.admin === user_id) {
+                setRole("admin");
+                console.log("Set role to admin for adminID: ", response.data.rso_details.admin, " and user_id: ", user_id);
+            }
+            else
+            {
+                setRole("student");
+                console.log("Set role to student for adminID: ", response.data.rso_details.admin, " and user_id: ", user_id);
+            }
+
+        } catch (error) {
+            if (error.response) {
+                console.error('Error message:', error.response.data);
+            } else if (error.request) {
+                console.error('No response received:', error.request);
+            } else {
+                console.error('Error', error.message);
+            }
+        }   
 
         try {
             const response = await axios.post(
@@ -93,12 +119,103 @@ const RSODetails = () => {
         window.location.href = '/createRsoEvent';
     }
 
+    const toggleModal = async () => {
+        setIsModalOpen(!isModalOpen);
+    }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        console.log('Form submitted. Awaiting response...');
+
+        try {
+            const response = await axios.post(
+                'https://somethingorother.xyz/update_rso',
+                {
+                    user_id: userSession.id,
+                    rso_id: localStorage.getItem("rsoID"),
+                    name: name,
+                    description: description,
+                    admin_email: admin,
+                    university_id: userSession.university_id
+                },
+                { withCredentials: true }
+            );
+            console.log('Response:', response.data);
+            handleEventListing();
+            setIsModalOpen(false);
+            localStorage.setItem("rsoAdminId", response.data.admin_id);
+        } catch (error) {
+            if (error.response) {
+                console.error('Error message:', error.response.data);
+            } else if (error.request) {
+                console.error('No response received:', error.request);
+            } else {
+                console.error('Error', error.message);
+            }
+        }
+    }
+
+    useEffect(() => {
+        if (isModalOpen) {
+            setName(rsoDetails.name);
+            setAdmin(rsoDetails.admin_email);
+            setDescription(rsoDetails.description);
+        }
+    }, [isModalOpen, rsoDetails]);
+
     return (
         <>
             <div className='bg-white shadow-md rounded px-8 pt-7 pb-8 mb-4 max-w-md mx-auto'></div> {/* Spacing for Navbar */}
             <div className='flex justify-center mx-auto' style={{ maxWidth: "90%" }}>
                 <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style={{ width: "90%" }}>
-                    <h2 className="text-4xl text-black font-bold mb-1 text-center">{localStorage.getItem("rsoName")}</h2>
+                    <h2 className="text-4xl text-black font-bold mb-1 text-center">{rsoDetails.name}</h2>
+                    <h1 className="text-2xl text-black font-bold mb-1 text-center">{rsoDetails.description}</h1>
+                    <p className="text-lg text-black font-bold mb-1 text-center">Admin: {rsoDetails.admin_email}</p>
+                    <p className="text-lg text-black mb-1 text-center">Member Count: {rsoDetails.member_count}</p>
+                    {/* Edit RSO details button */}
+                    {role === "admin" && (
+                    <div className='flex justify-center'>
+                        <button onClick={() => toggleModal()} className='border rounded-lg hover:bg-yellow-500 hover:text-white border-yellow-600 px-10 py-2'>Edit RSO</button>
+                    </div>
+                    )}
+                    <Modal 
+                        isOpen={isModalOpen} 
+                        onRequestClose={() => setIsModalOpen(false)}
+                        style={{
+                            overlay: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.75)'
+                            },
+                            content: {
+                            color: 'black',
+                            width: '50%',
+                            height: '35%',
+                            margin: 'auto',
+                            padding: '20px'
+                            }
+                        }}
+                        >
+                        {/* Modal content */}
+                        <h2 className="text-lg text-black font-bold mb-1 text-center">Edit RSO Details</h2>
+                        {/* Add form fields for editing RSO details here */}
+                        <form onSubmit={handleSubmit}>
+                            <div>
+                                <label htmlFor="name" style={{ fontWeight: 'bold'}}>Name: </label>
+                                <input type="text" id="name" value={name} onChange={e => setName(e.target.value)} style={{ color: 'grey'}}/>
+                            </div>
+                            <div>
+                                <label htmlFor="admin" style={{ fontWeight: 'bold'}}>Admin: </label>
+                                <input type="text" id="admin" value={admin} onChange={e => setAdmin(e.target.value)} style={{ color: 'grey'}} />
+                            </div>
+                            <div>
+                                <label htmlFor="description" style={{ fontWeight: 'bold'}}>Description:</label>
+                                <textarea id="description" value={description} onChange={e => setDescription(e.target.value)} style={{ color: 'grey', width: '100%', height: '100px' }}/>
+                            </div>
+                            <div className="flex justify-between">
+                                <button className='btn btn-info' type="submit">Submit</button>
+                                <button className='btn btn-error' onClick={() => setIsModalOpen(false)}>Close</button>
+                            </div>
+                        </form>
+                    </Modal>
                     <div className="mb-4">
 
                         {/* Created RSOs */}
