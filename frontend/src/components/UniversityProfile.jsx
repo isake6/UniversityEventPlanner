@@ -28,6 +28,10 @@ const UniversityDetails = () => {
         }
       );
       console.log('Update Response:', response.data);
+      setName(response.data.new_name);
+      setLocation(response.data.new_location);
+      setDescription(response.data.new_description);
+      setPopulation(response.data.new_population);
       setIsModalOpen(false);
     } catch (error) {
       // Log the error message
@@ -61,6 +65,9 @@ const UniversityDetails = () => {
             {location}
           </h1>
           <p className="text-lg text-black mb-1 text-center">{description}</p>
+          <p className="text-lg text-black mb-1 text-center">
+            Population: {population}
+          </p>
 
           <div className="flex justify-center">
             <button
@@ -82,41 +89,6 @@ const UniversityDetails = () => {
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="name" className="font-bold">
-                  Name:{' '}
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="border rounded-md px-2 py-1 w-full text-gray-600"
-                />
-              </div>
-              <div>
-                <label htmlFor="location" className="font-bold">
-                  Location:{' '}
-                </label>
-                <input
-                  type="text"
-                  id="location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="border rounded-md px-2 py-1 w-full text-gray-600"
-                />
-              </div>
-              <div>
-                <label htmlFor="description" className="font-bold">
-                  Description:
-                </label>
-                <textarea
-                  id="description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="border rounded-md px-2 py-1 w-full h-24 text-gray-600"
-                />
-              </div>
-              <div>
                 <label htmlFor="population" className="font-bold">
                   Population:{' '}
                 </label>
@@ -130,7 +102,6 @@ const UniversityDetails = () => {
               </div>
               <div className="flex justify-between">
                 <button
-                  onClick={toggleModal}
                   type="submit"
                   className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded"
                 >
