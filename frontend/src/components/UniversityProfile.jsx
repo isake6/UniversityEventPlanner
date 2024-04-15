@@ -15,40 +15,75 @@ const UniversityDetails = () => {
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
   const [population, setPopulation] = useState('');
+  const [events, setPublicEvents] = useState([]);
+
+  const [activeRowIndex, setActiveRowIndex] = useState(null);
+
+  const toggleRow = (index) => {
+    setActiveRowIndex(activeRowIndex === index ? null : index);
+  };
+
+  const fetchUniversityDetails = async (event) => {
+    console.log('Sending request to get university details');
+    try {
+      const response = await axios.post(
+        'https://somethingorother.xyz/get_university_details',
+        {
+          university_id: userSession.university_id,
+        }
+      );
+      console.log('Response:', response.data);
+      const { name, location, description, student_population } =
+        response.data;
+      setName(name);
+      setLocation(location);
+      setDescription(description);
+      setPopulation(student_population);
+    } catch (error) {
+      // Log the error message
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error('Error message:', error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error', error.message);
+      }
+    }
+  };
+
+  const fetchPendingPublicEvents = async (event) => {
+    try {
+      const response = await axios.post(
+        'https://somethingorother.xyz/get_pending_public_events',
+        {
+          user_id: userSession.id, university_id: userSession.university_id
+        }
+      );
+      console.log('Response:', response.data);
+
+      setPublicEvents(response.data);
+
+    } catch (error) {
+      // Log the error message
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error('Error message:', error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error', error.message);
+      }
+    }
+  };
 
   useEffect(() => {
-    const fetchUniversityDetails = async (event) => {
-      console.log('Sending request to get university details');
-      try {
-        const response = await axios.post(
-          'https://somethingorother.xyz/get_university_details',
-          {
-            university_id: userSession.university_id,
-          }
-        );
-        console.log('Response:', response.data);
-        const { name, location, description, student_population } =
-          response.data;
-        setName(name);
-        setLocation(location);
-        setDescription(description);
-        setPopulation(student_population);
-      } catch (error) {
-        // Log the error message
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          console.error('Error message:', error.response.data);
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.error('No response received:', error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.error('Error', error.message);
-        }
-      }
-    };
-
     fetchUniversityDetails();
+    fetchPendingPublicEvents();
   }, [userSession.university_id]);
 
   const handleSubmit = async (event) => {
@@ -88,6 +123,65 @@ const UniversityDetails = () => {
     setIsModalOpen(!isModalOpen);
   };
 
+  const handleApprove = async (event_id) => {
+    try {
+      const response = await axios.post(
+        'https://somethingorother.xyz/approve_pending_public_event',
+        {
+          user_id: userSession.id,
+          university_id: userSession.university_id,
+          event_id: event_id
+        }
+      );
+      console.log('Approve Response:', response.data);
+
+    } catch (error) {
+      // Log the error message
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error('Error message:', error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error', error.message);
+      }
+    }
+    console.log("Approved: ", event_id);
+    fetchPendingPublicEvents();
+  }
+
+  const handleDeny = async (event_id) => {
+    try {
+      const response = await axios.post(
+        'https://somethingorother.xyz/deny_pending_public_event',
+        {
+          user_id: userSession.id,
+          university_id: userSession.university_id,
+          event_id: event_id
+        }
+      );
+      console.log('Deny Response:', response.data);
+
+    } catch (error) {
+      // Log the error message
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error('Error message:', error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error', error.message);
+      }
+    }
+
+    console.log("Deny: ", event_id);
+    fetchPendingPublicEvents();
+  }
+
   return (
     <>
       <Navbar />
@@ -113,6 +207,88 @@ const UniversityDetails = () => {
               Edit University Details
             </button>
           </div>
+
+          {/* Table */}
+          <div className="overflow-x-auto collapse">
+            <span className='flex justify-center text-2xl font-bold text-black'>Events</span>
+            <table className="table mt-4 text-black">
+              {/* head */}
+              <thead className='text-black text-lg'>
+                <tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Location</th>
+                  <th>Time</th>
+                  <th>More</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* rows */}
+                {events.map((row, index) => (
+                  <React.Fragment key={index}>
+                    {/* visible row */}
+                    <tr onClick={() => toggleRow(index)} className='clickable'>
+                      <th>{index + 1}</th>
+                      <td>{row.name}</td>
+                      <td>{row.category}</td>
+                      <td>{row.location}</td>
+                      <td>{row.time}</td>
+                      <td>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+
+                      </td>
+                    </tr>
+                    {/* collapsible row */}
+                    {activeRowIndex === index && (
+                      <tr>
+                        <td>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                          </svg>
+                        </td>
+                        <td>
+                          {/* Description */}
+                          <div>
+                            {/* Add content you want to show when row is expanded */}
+                            <p style={{ fontSize: "15px", fontWeight: "bold" }}>Description:</p>
+                            <p>{row.description}</p>
+                          </div>
+                        </td>
+                        <td>
+                          {/* Email */}
+                          <div>
+                            {/* Add content you want to show when row is expanded */}
+                            <p style={{ fontSize: "15px", fontWeight: "bold" }}>Email:</p>
+                            <p>{row.email}</p>
+                          </div>
+                        </td>
+                        <td>
+                          {/* Phone */}
+                          <div>
+                            {/* Add content you want to show when row is expanded */}
+                            <p style={{ fontSize: "15px", fontWeight: "bold" }}>Phone:</p>
+                            <p>{row.phone}</p>
+                          </div>
+                        </td>
+                        <td>
+                          {/* additional content */}
+                          <div>
+                            {/* Add content you want to show when row is expanded */}
+                            <button onClick={() => handleApprove(row.id)} className='btn btn-success m-4'>Approve</button>
+                            <button onClick={() => handleDeny(row.id)} className='btn btn-error m-4'>Deny</button>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {/* Table End */}
 
           <Modal
             isOpen={isModalOpen}
