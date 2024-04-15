@@ -18,6 +18,7 @@ const UniversityDetails = () => {
 
   useEffect(() => {
     const fetchUniversityDetails = async (event) => {
+      console.log('Sending request to get university details');
       try {
         const response = await axios.post(
           'https://somethingorother.xyz/get_university_details',
@@ -25,6 +26,7 @@ const UniversityDetails = () => {
             university_id: userSession.university_id,
           }
         );
+        console.log('Response:', response.data);
         const { name, location, description, student_population } =
           response.data;
         setName(name);
@@ -96,9 +98,9 @@ const UniversityDetails = () => {
             {name}
           </h2>
           <h1 className="text-2xl text-black font-bold mb-1 text-center">
-            {location}
+            Location: {location}
           </h1>
-          <p className="text-lg text-black mb-1 text-center">{description}</p>
+          <p className="text-lg text-black mb-1 text-center">Description: {description}</p>
           <p className="text-lg text-black mb-1 text-center">
             Student Population: {population}
           </p>
