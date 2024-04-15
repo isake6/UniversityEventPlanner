@@ -13,7 +13,9 @@ const EventDetail = () => {
   const event_id = event.id;
   const [comments, setComments] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [addCommentModalIsOpen, setAddCommentModalIsOpen] = useState(false);
   const [currentComment, setCurrentComment] = useState(null);
+  const [newComment, setNewComment] = useState(null);
   const [currentCommentId, setCurrentCommentId] = useState(null);
 
   useEffect(() => {
@@ -41,15 +43,23 @@ const EventDetail = () => {
       }
     }
   };
+  
+  const handleAddComment = () => {
+    setAddCommentModalIsOpen(true);
+  };
 
-  const handleAddComment = async () => {
-    const comment = prompt('Enter your comment:');
+  const handleAddCommentCancel = () => {
+    setAddCommentModalIsOpen(false);
+    setNewComment({ ...newComment, text: '' });
+  };
 
-    console.log('Fetching events. Awaiting response...');
+  const handleAddCommentSubmit = async () => {
+    setAddCommentModalIsOpen(false);
     console.log('User session:', userSession);
     console.log('Event ID:', event_id); // You can log it to verify it's correct
     const { id: user_id, university_id } = userSession;
-
+    const comment = newComment.text;
+    setNewComment({ ...newComment, text: '' });
     try {
       const response = await axios.post(
         'https://somethingorother.xyz/add_comment',
@@ -163,10 +173,11 @@ const EventDetail = () => {
                   <p className='m-3'>Edited On: {comment.edit_time}</p>
                   <div className='flex justify-between'>
                     {userSession.id === comment.author_id && (
-                      <button onClick={() => toggleModal(comment.comment, comment.id)}>
+                      <button onClick={() => toggleModal(comment.comment, comment.id)} className = 'btn btn-info'>
                         Edit
                       </button>
                     )}
+                    {/* Edit Comment Modal */}
                     <Modal
                       isOpen={modalIsOpen}
                       onRequestClose={() => setModalIsOpen(false)}
@@ -194,9 +205,37 @@ const EventDetail = () => {
                         <button className='btn btn-error' onClick={() => setModalIsOpen(false)}>Cancel</button>
                       </div>
                     </Modal>
+                    {/* Add Comment Modal */}
+                    <Modal
+                      isOpen={addCommentModalIsOpen}
+                      onRequestClose={() => setAddCommentModalIsOpen(false)}
+                      style={{
+                        overlay: {
+                          backgroundColor: 'rgba(0, 0, 0, 0.75)' // This will give the overlay a black color with 75% opacity
+                        },
+                        content: {
+                          color: 'black', // This will give the text inside the modal a light steel blue color
+                          width: '50%', // This will make the modal take up 50% of the width of the viewport
+                          height: '25%', // This will make the modal take up 50% of the height of the viewport
+                          margin: 'auto', // This will center the modal in the middle of the viewport
+                          padding: '20px' // This will add 20px of padding inside the modal
+                        }
+                      }}
+                    >
+                      <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>Add Comment</h2>
+                      <textarea
+                        value={newComment?.text}
+                        onChange={e => setNewComment({ ...currentComment, text: e.target.value })}
+                        style={{ width: '100%', height: '100px' }}
+                      />
+                      <div className="flex justify-between">
+                        <button className='btn btn-info' onClick={handleAddCommentSubmit}>Submit</button>
+                        <button className='btn btn-error' onClick={handleAddCommentCancel}>Cancel</button>
+                      </div>
+                    </Modal>
 
                     {userSession.id === comment.author_id && (
-                      <button onClick={() => handleDeleteComment(comment.id)} className="text-red-500">
+                      <button onClick={() => handleDeleteComment(comment.id)} className="btn btn-error"> 
                         Delete
                       </button>
                     )}
@@ -207,7 +246,7 @@ const EventDetail = () => {
               {userSession.id !== -1 && (
                 <button
                   onClick={handleAddComment}
-                  className="btn btn-primary mt-4"
+                  className="btn btn-success"
                 >
                   Add Comment
                 </button>

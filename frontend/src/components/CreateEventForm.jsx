@@ -41,6 +41,9 @@ const CreateEventForm = () => {
         },
         { withCredentials: true }
       );
+      if (!response.error) {
+        window.location.href = '/home';
+      }
       console.log('Response:', response.data);
     } catch (error) {
       // Log the error message
