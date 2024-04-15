@@ -10,7 +10,6 @@ const Navbar = () => {
   };
 
   const role = getUserRole();
-
   console.log('Role:', role);
 
   return (
@@ -55,12 +54,18 @@ const Navbar = () => {
                   <button>JoinRSO</button>
                 </Link>
               </li>
-
               <Link to={'/registerRSO'}>
                 <li>
                   <button>Register RSO</button>
                 </li>
               </Link>
+              {role === 'superAdmin' && (
+                <Link to={'/UniversityProfile'}>
+                  <li>
+                    <button>University Profile</button>
+                  </li>
+                </Link>
+              )}
             </ul>
           </div>
           <Link to={'/'}>
@@ -82,16 +87,22 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-                <Link to="/joinRSO">
-                  <button>JoinRSO</button>
-                </Link>
-              </li>
-
+              <Link to="/joinRSO">
+                <button>JoinRSO</button>
+              </Link>
+            </li>
             <Link to={'/registerRSO'}>
               <li>
                 <button>Register RSO</button>
               </li>
             </Link>
+            {role === 'super_admin' && (
+              <Link to={'/UniversityProfile'}>
+                <li>
+                  <button>University Profile</button>
+                </li>
+              </Link>
+            )}
           </ul>
         </div>
         <div className="navbar-end">
