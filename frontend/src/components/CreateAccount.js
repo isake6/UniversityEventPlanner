@@ -103,7 +103,7 @@ const CreateAccount = () => {
               <div className="relative">
                 <h3 className="text-base font-bold mt-2 text-gray-800">Role</h3>
                 <select className="w-full input input-bordered input-primary border border-gray-300 appearance-none">
-                  <option value="superAdmin">Super Admin</option>
+                  <option value="super admin">Super Admin</option>
                   <option value="admin">Admin</option>
                   <option selected value="student">
                     Student
