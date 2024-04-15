@@ -5,6 +5,17 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const navigate = useNavigate();
 
+  const userSessionData = JSON.stringify({
+    id : -1,
+    first_name : null,
+    last_name : null,
+    role : null,
+    email: null,
+    university_id : null,
+  });
+
+  localStorage.setItem('userSession', userSessionData);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Form submitted. Awaiting response...');

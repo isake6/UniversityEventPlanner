@@ -14,30 +14,56 @@ const EventList = () => {
   }, []);
 
   const handleEventListing = async () => {
-    console.log('Fetching events. Awaiting response...');
-    console.log('User session:', userSession);
-    const { id: user_id, university_id } = userSession;
+    if (userSession.id != -1) {
+      console.log('Fetching events. Awaiting response...');
+      console.log('User session:', userSession);
+      const { id: user_id, university_id } = userSession;
 
-    try {
-      const response = await axios.post(
-        'https://somethingorother.xyz/get_events',
-        { user_id, university_id },
-        { withCredentials: true }
-      );
-      console.log('Response:', response.data);
-      setEvents(response.data.events);
+      try {
+        const response = await axios.post(
+          'https://somethingorother.xyz/get_events',
+          { user_id, university_id },
+          { withCredentials: true }
+        );
+        console.log('Response:', response.data);
+        setEvents(response.data.events);
 
-      // Scroll the page down to the events list
-      const element = document.getElementById('event_content');
-      element.scrollIntoView({ behavior: 'smooth' });
+        // Scroll the page down to the events list
+        const element = document.getElementById('event_content');
+        element.scrollIntoView({ behavior: 'smooth' });
 
-    } catch (error) {
-      if (error.response) {
-        console.error('Error message:', error.response.data);
-      } else if (error.request) {
-        console.error('No response received:', error.request);
-      } else {
-        console.error('Error', error.message);
+      } catch (error) {
+        if (error.response) {
+          console.error('Error message:', error.response.data);
+        } else if (error.request) {
+          console.error('No response received:', error.request);
+        } else {
+          console.error('Error', error.message);
+        }
+      }
+    }
+    else {
+      try {
+        const response = await axios.post(
+          'https://somethingorother.xyz/get_events_for_guest',
+          {},
+          { withCredentials: true }
+        );
+        console.log('Response:', response.data);
+        setEvents(response.data.events);
+
+        // Scroll the page down to the events list
+        const element = document.getElementById('event_content');
+        element.scrollIntoView({ behavior: 'smooth' });
+
+      } catch (error) {
+        if (error.response) {
+          console.error('Error message:', error.response.data);
+        } else if (error.request) {
+          console.error('No response received:', error.request);
+        } else {
+          console.error('Error', error.message);
+        }
       }
     }
   };

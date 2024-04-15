@@ -79,7 +79,7 @@ const EventDetail = () => {
     try {
       const response = await axios.post(
         'https://somethingorother.xyz/delete_comment',
-        { user_id : userId, comment_id : id },
+        { user_id: userId, comment_id: id },
         { withCredentials: true }
       );
 
@@ -109,7 +109,7 @@ const EventDetail = () => {
         { user_id: userId, comment_id: commentId, new_comment: newComment },
         { withCredentials: true }
       );
-    
+
       console.log('Response:', response.data);
 
     } catch (error) {
@@ -121,7 +121,7 @@ const EventDetail = () => {
         console.error('Error', error.message);
       }
     }
-  
+
     // Close the modal
     setModalIsOpen(false);
     getEventComments();
@@ -162,11 +162,13 @@ const EventDetail = () => {
                   <p className='m-3'>Created On: {comment.created_time}</p>
                   <p className='m-3'>Edited On: {comment.edit_time}</p>
                   <div className='flex justify-between'>
-                    <button onClick={() => toggleModal(comment.comment, comment.id)}>
-                      Edit
-                    </button>
-                    <Modal 
-                      isOpen={modalIsOpen} 
+                    {userSession.id === comment.author_id && (
+                      <button onClick={() => toggleModal(comment.comment, comment.id)}>
+                        Edit
+                      </button>
+                    )}
+                    <Modal
+                      isOpen={modalIsOpen}
                       onRequestClose={() => setModalIsOpen(false)}
                       style={{
                         overlay: {
@@ -181,30 +183,35 @@ const EventDetail = () => {
                         }
                       }}
                     >
-                    <h2 style={{fontSize:"20px", fontWeight:"bold"}}>Edit Comment</h2>
-                    <textarea 
-                      value={currentComment?.text} 
-                      onChange={e => setCurrentComment({ ...currentComment, text: e.target.value })}
-                      style={{ width: '100%', height: '100px' }} 
-                    />
-                    <div className="flex justify-between">
-                      <button className='btn btn-info' onClick={handleEditCommentSubmit}>Submit</button>
-                      <button className='btn btn-error' onClick={() => setModalIsOpen(false)}>Cancel</button>
-                    </div>
-                  </Modal>
+                      <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>Edit Comment</h2>
+                      <textarea
+                        value={currentComment?.text}
+                        onChange={e => setCurrentComment({ ...currentComment, text: e.target.value })}
+                        style={{ width: '100%', height: '100px' }}
+                      />
+                      <div className="flex justify-between">
+                        <button className='btn btn-info' onClick={handleEditCommentSubmit}>Submit</button>
+                        <button className='btn btn-error' onClick={() => setModalIsOpen(false)}>Cancel</button>
+                      </div>
+                    </Modal>
 
-                    <button onClick={() => handleDeleteComment(comment.id)} className="text-red-500">
-                      Delete
-                    </button>
+                    {userSession.id === comment.author_id && (
+                      <button onClick={() => handleDeleteComment(comment.id)} className="text-red-500">
+                        Delete
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
-              <button
-                onClick={handleAddComment}
-                className="btn btn-primary mt-4"
-              >
-                Add Comment
-              </button>
+
+              {userSession.id !== -1 && (
+                <button
+                  onClick={handleAddComment}
+                  className="btn btn-primary mt-4"
+                >
+                  Add Comment
+                </button>
+              )}
             </div>
           </div>
         </div>

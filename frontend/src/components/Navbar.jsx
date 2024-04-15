@@ -12,6 +12,10 @@ const Navbar = () => {
   const role = getUserRole();
   console.log('Role:', role);
 
+  const doLogout = () => {
+    localStorage.clear();
+  };
+
   return (
     <div>
       <div className="navbar bg-yellow-500 pb-3 fixed bg-opacity-100">
@@ -37,26 +41,34 @@ const Navbar = () => {
               tabIndex="0"
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li>
-                <Link to="/createEvent">
-                  <a>Register Event</a>
-                </Link>
-              </li>
-              <li>
-                <Link to="/myRSO">
-                  <button>MyRSO</button>
-                </Link>
-              </li>
-              <li>
-                <Link to="/joinRSO">
-                  <button>JoinRSO</button>
-                </Link>
-              </li>
-              <Link to={'/registerRSO'}>
+              {role && (
                 <li>
-                  <button>Register RSO</button>
+                  <Link to="/createEvent">
+                    <a>Register Event</a>
+                  </Link>
                 </li>
-              </Link>
+              )}
+              {role && (
+                <li>
+                  <Link to="/myRSO">
+                    <button>MyRSO</button>
+                  </Link>
+                </li>
+              )}
+              {role && (
+                <li>
+                  <Link to="/joinRSO">
+                    <button>JoinRSO</button>
+                  </Link>
+                </li>
+              )}
+              {role && (
+                <Link to={'/registerRSO'}>
+                  <li>
+                    <button>Register RSO</button>
+                  </li>
+                </Link>
+              )}
               {role === 'super admin' && (
                 <Link to={'/UniversityProfile'}>
                   <li>
@@ -64,6 +76,22 @@ const Navbar = () => {
                   </li>
                 </Link>
               )}
+              {role && (
+                <Link to={'/'}>
+                  <li>
+                    <button>Logout</button>
+                  </li>
+                </Link>
+              )}
+
+              {!role && (
+                <Link to={'/'}>
+                  <li>
+                    <button>Login</button>
+                  </li>
+                </Link>
+              )}
+
             </ul>
           </div>
           {/* <Link to={'/'}> */}
@@ -72,30 +100,56 @@ const Navbar = () => {
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-            <li>
-              <Link to="/createEvent">
-                <button>Register Event</button>
-              </Link>
-            </li>
-            <li>
-              <Link to="/myRSO">
-                <button>MyRSO</button>
-              </Link>
-            </li>
-            <li>
-              <Link to="/joinRSO">
-                <button>JoinRSO</button>
-              </Link>
-            </li>
-            <Link to={'/registerRSO'}>
+            {role && (
               <li>
-                <button>Register RSO</button>
+                <Link to="/createEvent">
+                  <button>Register Event</button>
+                </Link>
               </li>
-            </Link>
+            )}
+
+            {role && (
+              <li>
+                <Link to="/myRSO">
+                  <button>MyRSO</button>
+                </Link>
+              </li>
+            )}
+
+            {role && (
+              <li>
+                <Link to="/joinRSO">
+                  <button>JoinRSO</button>
+                </Link>
+              </li>
+            )}
+
+            {role && (
+              <Link to={'/registerRSO'}>
+                <li>
+                  <button>Register RSO</button>
+                </li>
+              </Link>
+            )}
             {role === 'super admin' && (
               <Link to={'/UniversityProfile'}>
                 <li>
                   <button>University Profile</button>
+                </li>
+              </Link>
+            )}
+            {role && (
+              <Link to={'/'}>
+                <li>
+                  <button onClick={doLogout}>Logout</button>
+                </li>
+              </Link>
+            )}
+
+            {!role && (
+              <Link to={'/'}>
+                <li>
+                  <button>Login</button>
                 </li>
               </Link>
             )}
