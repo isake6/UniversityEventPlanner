@@ -96,7 +96,7 @@ const Navbar = () => {
                 <button>Register RSO</button>
               </li>
             </Link>
-            {role === 'super_admin' && (
+            {role === 'super admin' && (
               <Link to={'/UniversityProfile'}>
                 <li>
                   <button>University Profile</button>
