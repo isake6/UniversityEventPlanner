@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Navbar from './Navbar';
 import { useUserSession } from '../hooks/useUserSession';
 //# Input: user1_email, user2_email, user3_email, user4_email, user5_email, admin_email, name, university_id
 // //if (password !== passwordConfirm) {
@@ -74,6 +75,7 @@ const RSOForm = () => {
 
   return (
     <div>
+      <Navbar />
       <div className="flex items-center h-screen pt-28">
         <div className="w-1/3 h-fit max-w-xl m-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col justify-center border border-yellow-500">
           <div className="p-5">

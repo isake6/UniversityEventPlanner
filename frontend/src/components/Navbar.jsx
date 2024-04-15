@@ -37,13 +37,11 @@ const Navbar = () => {
               tabIndex="0"
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
-              {role === 'admin' && (
-                <li>
-                  <Link to="/createEvent">
-                    <a>Register Event</a>
-                  </Link>
-                </li>
-              )}
+              <li>
+                <Link to="/createEvent">
+                  <a>Register Event</a>
+                </Link>
+              </li>
               <li>
                 <Link to="/myRSO">
                   <button>MyRSO</button>
@@ -68,19 +66,17 @@ const Navbar = () => {
               )}
             </ul>
           </div>
-          <Link to={'/'}>
-            <button className="btn btn-ghost text-xl">Knights Events</button>
-          </Link>
+          {/* <Link to={'/'}> */}
+          <div className=" ps-3 text-xl">Knights Events</div>
+          {/* </Link> */}
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-            {role === 'admin' && (
-              <li>
-                <Link to="/createEvent">
-                  <button>Register Event</button>
-                </Link>
-              </li>
-            )}
+            <li>
+              <Link to="/createEvent">
+                <button>Register Event</button>
+              </Link>
+            </li>
             <li>
               <Link to="/myRSO">
                 <button>MyRSO</button>
