@@ -8,6 +8,8 @@ const EditRsoEventForm = () => {
   const { getUserSessionData } = useUserSession();
   const userSession = getUserSessionData();
   const [message, setMessage] = useState("");
+  const [pressetLat, setPresetLat] = useState(0);
+  const [pressetLong, setPresetLong] = useState(0);
 
   useEffect(() => {
     handlePrefill();
@@ -55,6 +57,8 @@ const EditRsoEventForm = () => {
       document.getElementById("contact_email").value = email;
       localStorage.setItem("lat", response.data.event.lat);
       localStorage.setItem("long", response.data.event.long);
+      setPresetLat(lat);
+      setPresetLong(long);
     } catch (error) {
       // Log the error message
       if (error.response) {
@@ -193,10 +197,7 @@ const EditRsoEventForm = () => {
 
               <MyMap
                 id="mymap"
-                position={[
-                  localStorage.getItem("lat"),
-                  localStorage.getItem("long"),
-                ]}
+                position={[pressetLat, pressetLong]}
                 zoom={13}
               />
 

@@ -17,6 +17,8 @@ const Login = () => {
   });
 
   localStorage.setItem('userSession', userSessionData);
+  localStorage.setItem('lat', 0);
+  localStorage.setItem('long', 0);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

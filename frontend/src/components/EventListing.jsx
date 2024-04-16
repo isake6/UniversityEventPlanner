@@ -11,12 +11,14 @@ const EventList = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     handleEventListing();
   }, []);
 
   const handleEventListing = async () => {
+    setLoading(true);
     if (userSession.id != -1) {
       console.log("Fetching events. Awaiting response...");
       console.log("User session:", userSession);
@@ -66,6 +68,7 @@ const EventList = () => {
         }
       }
     }
+    setLoading(false);
   };
 
   console.log("Events:", events);
@@ -87,6 +90,18 @@ const EventList = () => {
         </div>
       </div>
       {/* Upcoming Events Section */}
+      <div>
+        {loading ? (
+          <div className="text-center mt-6">
+            <svg
+              className="animate-spin h-5 w-5 mr-3 ..."
+              viewBox="0 0 24 24"
+            ></svg>
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
       <div id="event_content"></div>
       <div className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
