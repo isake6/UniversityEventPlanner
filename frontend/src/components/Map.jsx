@@ -5,6 +5,7 @@ import pointer from "../images/pointer.png";
 
 const MyMap = ({ position, zoom }) => {
   const [selectedLocation, setSelectedLocation] = useState([0, 0]);
+
   const customIcon = new Icon({
     iconUrl: pointer,
     iconSize: [20, 60], // size of the icon
@@ -24,6 +25,11 @@ const MyMap = ({ position, zoom }) => {
         map.off("click", handleClick);
       };
     }, [map]);
+
+    useEffect(() => {
+      map.flyTo(position);
+      setSelectedLocation(position);
+    }, [position]);
 
     return null;
   };

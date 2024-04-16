@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { useUserSession } from "../hooks/useUserSession";
@@ -8,6 +8,37 @@ const CreateRsoEventForm = () => {
   const { getUserSessionData } = useUserSession();
   const userSession = getUserSessionData();
   const [message, setMessage] = useState("");
+  const [pressetLat, setPresetLat] = useState(0);
+  const [pressetLong, setPresetLong] = useState(0);
+
+  useEffect(() => {
+    (async () => {
+      await handlePrefillCoordinates();
+    })();
+  }, []);
+
+  const handlePrefillCoordinates = async () => {
+    try {
+      const response = await axios.post(
+        "https://somethingorother.xyz/get_university_details",
+        { university_id: userSession.university_id },
+        { withCredentials: true }
+      );
+      console.log("Response:", response.data);
+      const response_lat = response.data.lat;
+      const response_long = response.data.long;
+      setPresetLat(response_lat);
+      setPresetLong(response_long);
+    } catch (error) {
+      if (error.response) {
+        console.error("Error message:", error.response.data);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error", error.message);
+      }
+    }
+  };
 
   const handleEventSubmit = async (event) => {
     event.preventDefault();
@@ -138,7 +169,11 @@ const CreateRsoEventForm = () => {
                 onChange={handleChange}
               ></input>
 
-              <MyMap id="mymap" position={[28, -81]} zoom={7} />
+              <MyMap
+                id="mymap"
+                position={[pressetLat, pressetLong]}
+                zoom={13}
+              />
 
               <h3 className="text-base font-bold pt-3 text-gray-600">Phone</h3>
               <input

@@ -197,7 +197,7 @@ const EditRsoEventForm = () => {
                   localStorage.getItem("lat"),
                   localStorage.getItem("long"),
                 ]}
-                zoom={10}
+                zoom={13}
               />
 
               <h3 className="text-base font-bold pt-3 text-gray-600">Phone</h3>

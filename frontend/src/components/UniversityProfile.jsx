@@ -392,7 +392,7 @@ const UniversityDetails = () => {
                   className="border rounded-md px-2 py-1 w-full text-gray-600"
                 />
               </div>
-              <MyMap id="mymap" position={[lat, long]} zoom={10} />
+              <MyMap id="mymap" position={[lat, long]} zoom={13} />
               <div>
                 <label htmlFor="description" className="font-bold">
                   Description:
