@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
 const Login = () => {
   const navigate = useNavigate();
+  const [message, setMessage] = useState('');
+
+  const userSessionData = JSON.stringify({
+    id : -1,
+    first_name : null,
+    last_name : null,
+    role : null,
+    email: null,
+    university_id : null,
+  });
+
+  localStorage.setItem('userSession', userSessionData);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -50,6 +63,7 @@ const Login = () => {
       if (error.response) {
         // The request was made and the server responded with a status code
         console.error('Error message:', error.response.data);
+        setMessage(error.response.data.message);
       } else if (error.request) {
         // The request was made but no response was received
         console.error('No response received:', error.request);
@@ -60,7 +74,12 @@ const Login = () => {
     }
   };
 
+  const handleChange = async () => {
+    setMessage('');
+  }
+
   return (
+
     <div className="flex items-center h-screen">
       <div className="w-1/3 h-fit max-w-xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col justify-center border border-yellow-500">
         <div className="p-5">
@@ -74,6 +93,7 @@ const Login = () => {
               id="email"
               placeholder="Email"
               className=" w-full input input-bordered input-primary"
+              onChange={handleChange}
             ></input>
 
             <h3 className="text-sm font-bold text-gray-600 pt-5">Password</h3>
@@ -82,7 +102,14 @@ const Login = () => {
               id="password"
               placeholder="Password"
               className="w-full input input-bordered input-primary"
+              onChange={handleChange}
             ></input>
+
+            {message && (
+              <div className='pt-4 text-center font-bold' style={{color: "red"}}>
+                {message}
+              </div>
+            )}
 
             <div className=" w-full py-5 flex flex-col m-auto">
               <button
@@ -95,12 +122,6 @@ const Login = () => {
           </form>
 
           <div className="pt-3 flex flex-col">
-            <a
-              href="#"
-              className="text-base text-gray-600 hover:underline hover:text-blue-600 text-center"
-            >
-              Forgot Password?
-            </a>
             <div className="m-auto">
               <a className="text-base text-gray-600">Don't have an account? </a>
               <a

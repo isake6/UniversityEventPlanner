@@ -1,0 +1,27 @@
+@import '~leaflet/dist/leaflet.css';
+.btn-error {
+    color: white;
+    background-color: red;
+}
+
+.btn-error:hover {
+    background-color: darkred;
+}
+
+.btn-info {
+    color: white;
+    background-color: blue;
+}
+
+.btn-info:hover {
+    background-color: darkblue;
+}
+
+.btn-success {
+    color: white;
+    background-color: green;
+}
+
+.btn-success:hover {
+    background-color: darkgreen;
+}

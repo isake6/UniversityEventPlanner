@@ -18,6 +18,8 @@ import MyRSOSelection from './components/MyRsoListing';
 import RSODetailsPage from './pages/rsoDetailsPage';
 import EditRsoEventForm from './components/EditRsoEventForm';
 import CreateRsoEventForm from './components/CreateRsoEventForm';
+import UniversityProfile from './components/UniversityProfile';
+import MyMap from './components/Map';
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
         <Route path="/details" element={<RSODetailsPage />} />
         <Route path="/editRsoEvent" element={<EditRsoEventForm />} />
         <Route path="/createRsoEvent" element={<CreateRsoEventForm />} />
+        <Route path="/UniversityProfile" element={<UniversityProfile />} />
+        <Route path="/map" element={<MyMap position={[0, 0]} zoom={3} />} />
       </Routes>
     </BrowserRouter>
   );

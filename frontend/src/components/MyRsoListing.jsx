@@ -9,7 +9,6 @@ const MyRSOSelection = () => {
   const { getUserSessionData } = useUserSession();
   const userSession = getUserSessionData();
   const [rsos, setRsos] = useState([]); // State to hold RSOs
-  const [newRSOId, setNewRSOId] = useState(''); // State for new RSO ID to join
 
   useEffect(() => {
     fetchRSOs();
@@ -20,7 +19,7 @@ const MyRSOSelection = () => {
     const { id: user_id } = userSession;
     try {
 
-    // Fetch user RSOs
+      // Fetch user RSOs
       const userRsosResponse = await axios.post(
         'https://somethingorother.xyz/get_user_rso_list',
         { user_id },
@@ -58,23 +57,6 @@ const MyRSOSelection = () => {
     // navigate(`/rso/${rsoId}`);
   };
 
-  const handleDeleteRSO = async (rsoId) => {
-    console.log('Attempting to leave/delete RSO ID:', rsoId);
-    try {
-      const response = await axios.post(
-        'https://somethingorother.xyz/leave_rso',
-        { user_id: userSession.id, rso_id: rsoId },
-        { withCredentials: true }
-      );
-      console.log('Delete Response:', response.data);
-      if (response.data.success) {
-        setRsos(rsos.filter((rso) => rso.id !== rsoId));
-      }
-    } catch (error) {
-      console.error('Error leaving RSO:', error);
-    }
-  };
-
   return (
     <div>
       <Navbar />
@@ -94,29 +76,22 @@ const MyRSOSelection = () => {
                     onClick={() => handleSelectRSO(rso.id, rso.admin, rso.name)}
                     className="text-lg text-left w-full font-semibold hover:bg-yellow-100 px-2 py-1 rounded"
                   >
-                    {rso.name}
+                    <h2 style={{fontSize: "24px"}}>{rso.name}</h2>
+
+                    <p style={{fontSize: "16px"}}>
+                    {rso.description}
+                    </p>
                   </button>
                   <button
-                    onClick={() => handleDeleteRSO(rso.id)}
-                    className="ml-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => handleSelectRSO(rso.id, rso.admin, rso.name)}
+                    className="ml-4 btn btn-success text-white font-bold py-2 px-4 rounded"
                   >
-                    Leave
+                    View
                   </button>
                 </lis>
               ))}
             </ul>
-            {/* <div className="mt-4">
-              <input
-                type="text"
-                placeholder="Enter RSO ID to join"
-                value={newRSOId}
-                onChange={(e) => setNewRSOId(e.target.value)}
-                className="input input-bordered w-full max-w-xs"
-              />
-              <button onClick={handleJoinRSO} className="btn btn-success ml-2">
-                Join RSO
-              </button>
-            </div> */}
+
             <div className="w-full py-5 flex flex-col m-auto">
               <button
                 onClick={() => navigate('/home')}
