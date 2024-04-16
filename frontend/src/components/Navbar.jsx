@@ -1,16 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useUserSession } from '../hooks/useUserSession';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useUserSession } from "../hooks/useUserSession";
 
 const Navbar = () => {
   // Function to get user role from local storage
   const getUserRole = () => {
-    const userSession = localStorage.getItem('userSession');
+    const userSession = localStorage.getItem("userSession");
     return userSession ? JSON.parse(userSession).role : null;
   };
 
   const role = getUserRole();
-  console.log('Role:', role);
+  console.log("Role:", role);
 
   const doLogout = () => {
     localStorage.clear();
@@ -18,7 +18,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <div className="navbar bg-yellow-500 pb-3 fixed bg-opacity-100 z-50">
+      <div className="navbar bg-yellow-500 pb-3 fixed bg-opacity-100 z-500">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex="0" role="button" className="btn btn-ghost lg:hidden">
@@ -63,21 +63,21 @@ const Navbar = () => {
                 </li>
               )}
               {role && (
-                <Link to={'/registerRSO'}>
+                <Link to={"/registerRSO"}>
                   <li>
                     <button>Register RSO</button>
                   </li>
                 </Link>
               )}
-              {role === 'super admin' && (
-                <Link to={'/UniversityProfile'}>
+              {role === "super admin" && (
+                <Link to={"/UniversityProfile"}>
                   <li>
                     <button>University Profile</button>
                   </li>
                 </Link>
               )}
               {role && (
-                <Link to={'/'}>
+                <Link to={"/"}>
                   <li>
                     <button>Logout</button>
                   </li>
@@ -85,13 +85,12 @@ const Navbar = () => {
               )}
 
               {!role && (
-                <Link to={'/'}>
+                <Link to={"/"}>
                   <li>
                     <button>Login</button>
                   </li>
                 </Link>
               )}
-
             </ul>
           </div>
           {/* <Link to={'/'}> */}
@@ -125,21 +124,21 @@ const Navbar = () => {
             )}
 
             {role && (
-              <Link to={'/registerRSO'}>
+              <Link to={"/registerRSO"}>
                 <li>
                   <button>Register RSO</button>
                 </li>
               </Link>
             )}
-            {role === 'super admin' && (
-              <Link to={'/UniversityProfile'}>
+            {role === "super admin" && (
+              <Link to={"/UniversityProfile"}>
                 <li>
                   <button>University Profile</button>
                 </li>
               </Link>
             )}
             {role && (
-              <Link to={'/'}>
+              <Link to={"/"}>
                 <li>
                   <button onClick={doLogout}>Logout</button>
                 </li>
@@ -147,7 +146,7 @@ const Navbar = () => {
             )}
 
             {!role && (
-              <Link to={'/'}>
+              <Link to={"/"}>
                 <li>
                   <button>Login</button>
                 </li>

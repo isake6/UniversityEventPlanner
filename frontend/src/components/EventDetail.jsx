@@ -240,7 +240,7 @@ const EventDetail = () => {
                       text: e.target.value,
                     })
                   }
-                  style={{ width: "100%", height: "100px" }}
+                  style={{ padding: "5px", width: "100%", height: "100px" }}
                 />
                 <div className="flex justify-between">
                   <button
@@ -282,7 +282,7 @@ const EventDetail = () => {
                   onChange={(e) =>
                     setNewComment({ ...currentComment, text: e.target.value })
                   }
-                  style={{ width: "100%", height: "100px" }}
+                  style={{ padding: "5px", width: "100%", height: "100px" }}
                 />
                 <div className="flex justify-between">
                   <button

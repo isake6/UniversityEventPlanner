@@ -303,7 +303,12 @@ const RSODetails = () => {
                   id="description"
                   value={description}
                   onChange={handleChange}
-                  style={{ color: "grey", width: "100%", height: "100px" }}
+                  style={{
+                    padding: "5px",
+                    color: "grey",
+                    width: "100%",
+                    height: "100px",
+                  }}
                 />
               </div>
 

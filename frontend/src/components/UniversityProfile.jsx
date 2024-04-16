@@ -207,12 +207,14 @@ const UniversityDetails = () => {
           <p className="text-lg text-black mb-1 text-center">
             {lat}, {long}
           </p>
-          <div
-            className="flex justify-center items-center mb-4"
-            style={{ height: "300px", width: "25%", margin: "0 auto" }}
-          >
-            <MyMap id="mymap" position={[lat, long]} zoom={13} />
-          </div>
+          {!isModalOpen && (
+            <div
+              className="flex justify-center items-center mb-4"
+              style={{ height: "300px", width: "25%", margin: "0 auto" }}
+            >
+              <MyMap id="mymap" position={[lat, long]} zoom={13} />
+            </div>
+          )}
           <p className="text-lg text-black mb-1 text-center">
             Description: {description}
           </p>
@@ -398,7 +400,9 @@ const UniversityDetails = () => {
                   className="border rounded-md px-2 py-1 w-full text-gray-600"
                 />
               </div>
-              <MyMap id="mymap" position={[lat, long]} zoom={13} />
+              <div>
+                <MyMap id="mymap" position={[lat, long]} zoom={13} />
+              </div>
               <div>
                 <label htmlFor="description" className="font-bold">
                   Description:
@@ -408,6 +412,7 @@ const UniversityDetails = () => {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   className="border rounded-md px-2 py-1 w-full h-24 text-gray-600"
+                  style={{ padding: "5px" }}
                 />
               </div>
               <div>
