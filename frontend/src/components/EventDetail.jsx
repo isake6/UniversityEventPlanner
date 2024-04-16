@@ -46,15 +46,18 @@ const EventDetail = () => {
   
   const handleAddComment = () => {
     setAddCommentModalIsOpen(true);
+    console.log('Open the add comment modal');
   };
 
   const handleAddCommentCancel = () => {
     setAddCommentModalIsOpen(false);
+    console.log('Closed on AddCommentCancel the add comment modal');
     setNewComment({ ...newComment, text: '' });
   };
 
   const handleAddCommentSubmit = async () => {
     setAddCommentModalIsOpen(false);
+    console.log('Closed on submit the add comment modal');
     console.log('User session:', userSession);
     console.log('Event ID:', event_id); // You can log it to verify it's correct
     const { id: user_id, university_id } = userSession;
@@ -177,62 +180,6 @@ const EventDetail = () => {
                         Edit
                       </button>
                     )}
-                    {/* Edit Comment Modal */}
-                    <Modal
-                      isOpen={modalIsOpen}
-                      onRequestClose={() => setModalIsOpen(false)}
-                      style={{
-                        overlay: {
-                          backgroundColor: 'rgba(0, 0, 0, 0.75)' // This will give the overlay a black color with 75% opacity
-                        },
-                        content: {
-                          color: 'black', // This will give the text inside the modal a light steel blue color
-                          width: '50%', // This will make the modal take up 50% of the width of the viewport
-                          height: '25%', // This will make the modal take up 50% of the height of the viewport
-                          margin: 'auto', // This will center the modal in the middle of the viewport
-                          padding: '20px' // This will add 20px of padding inside the modal
-                        }
-                      }}
-                    >
-                      <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>Edit Comment</h2>
-                      <textarea
-                        value={currentComment?.text}
-                        onChange={e => setCurrentComment({ ...currentComment, text: e.target.value })}
-                        style={{ width: '100%', height: '100px' }}
-                      />
-                      <div className="flex justify-between">
-                        <button className='btn btn-info' onClick={handleEditCommentSubmit}>Submit</button>
-                        <button className='btn btn-error' onClick={() => setModalIsOpen(false)}>Cancel</button>
-                      </div>
-                    </Modal>
-                    {/* Add Comment Modal */}
-                    <Modal
-                      isOpen={addCommentModalIsOpen}
-                      onRequestClose={() => setAddCommentModalIsOpen(false)}
-                      style={{
-                        overlay: {
-                          backgroundColor: 'rgba(0, 0, 0, 0.75)' // This will give the overlay a black color with 75% opacity
-                        },
-                        content: {
-                          color: 'black', // This will give the text inside the modal a light steel blue color
-                          width: '50%', // This will make the modal take up 50% of the width of the viewport
-                          height: '25%', // This will make the modal take up 50% of the height of the viewport
-                          margin: 'auto', // This will center the modal in the middle of the viewport
-                          padding: '20px' // This will add 20px of padding inside the modal
-                        }
-                      }}
-                    >
-                      <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>Add Comment</h2>
-                      <textarea
-                        value={newComment?.text}
-                        onChange={e => setNewComment({ ...currentComment, text: e.target.value })}
-                        style={{ width: '100%', height: '100px' }}
-                      />
-                      <div className="flex justify-between">
-                        <button className='btn btn-info' onClick={handleAddCommentSubmit}>Submit</button>
-                        <button className='btn btn-error' onClick={handleAddCommentCancel}>Cancel</button>
-                      </div>
-                    </Modal>
 
                     {userSession.id === comment.author_id && (
                       <button onClick={() => handleDeleteComment(comment.id)} className="btn btn-error"> 
@@ -243,6 +190,62 @@ const EventDetail = () => {
                 </div>
               ))}
 
+              {/* Edit Comment Modal */}
+              <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={() => setModalIsOpen(false)}
+                style={{
+                  overlay: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.75)' // This will give the overlay a black color with 75% opacity
+                  },
+                  content: {
+                    color: 'black', // This will give the text inside the modal a light steel blue color
+                    width: '50%', // This will make the modal take up 50% of the width of the viewport
+                    height: '25%', // This will make the modal take up 50% of the height of the viewport
+                    margin: 'auto', // This will center the modal in the middle of the viewport
+                    padding: '20px' // This will add 20px of padding inside the modal
+                  }
+                }}
+              >
+                <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>Edit Comment</h2>
+                <textarea
+                  value={currentComment?.text}
+                  onChange={e => setCurrentComment({ ...currentComment, text: e.target.value })}
+                  style={{ width: '100%', height: '100px' }}
+                />
+                <div className="flex justify-between">
+                  <button className='btn btn-info' onClick={handleEditCommentSubmit}>Submit</button>
+                  <button className='btn btn-error' onClick={() => setModalIsOpen(false)}>Cancel</button>
+                </div>
+              </Modal>
+              {/* Add Comment Modal */}
+              <Modal
+                isOpen={addCommentModalIsOpen}
+                onRequestClose={() => setAddCommentModalIsOpen(false)}
+                style={{
+                  overlay: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.75)' // This will give the overlay a black color with 75% opacity
+                  },
+                  content: {
+                    color: 'black', // This will give the text inside the modal a light steel blue color
+                    width: '50%', // This will make the modal take up 50% of the width of the viewport
+                    height: '25%', // This will make the modal take up 50% of the height of the viewport
+                    margin: 'auto', // This will center the modal in the middle of the viewport
+                    padding: '20px' // This will add 20px of padding inside the modal
+                  }
+                }}
+              >
+                <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>Add Comment</h2>
+                <textarea
+                  value={newComment?.text}
+                  onChange={e => setNewComment({ ...currentComment, text: e.target.value })}
+                  style={{ width: '100%', height: '100px' }}
+                />
+                <div className="flex justify-between">
+                  <button className='btn btn-info' onClick={handleAddCommentSubmit}>Submit</button>
+                  <button className='btn btn-error' onClick={handleAddCommentCancel}>Cancel</button>
+                </div>
+              </Modal>
               {userSession.id !== -1 && (
                 <button
                   onClick={handleAddComment}

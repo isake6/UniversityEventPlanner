@@ -76,7 +76,11 @@ const MyRSOSelection = () => {
                     onClick={() => handleSelectRSO(rso.id, rso.admin, rso.name)}
                     className="text-lg text-left w-full font-semibold hover:bg-yellow-100 px-2 py-1 rounded"
                   >
-                    {rso.name}
+                    <h2 style={{fontSize: "24px"}}>{rso.name}</h2>
+
+                    <p style={{fontSize: "16px"}}>
+                    {rso.description}
+                    </p>
                   </button>
                   <button
                     onClick={() => handleSelectRSO(rso.id, rso.admin, rso.name)}
