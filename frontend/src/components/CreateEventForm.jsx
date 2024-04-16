@@ -128,7 +128,7 @@ const CreateEventForm = () => {
                 onChange={handleChange}
               ></input>
 
-              <MyMap id="mymap" position={[0, 0]} zoom={3} />
+              <MyMap id="mymap" position={[28, -81]} zoom={7} />
 
               <h3 className="text-base font-bold pt-3 text-gray-600">Phone</h3>
               <input

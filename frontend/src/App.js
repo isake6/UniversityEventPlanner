@@ -38,7 +38,7 @@ function App() {
         <Route path="/editRsoEvent" element={<EditRsoEventForm />} />
         <Route path="/createRsoEvent" element={<CreateRsoEventForm />} />
         <Route path="/UniversityProfile" element={<UniversityProfile />} />
-        <Route path="/map" element={<MyMap position={[0, 0]} zoom={3} />} />
+        <Route path="/map" element={<MyMap position={[28, -81]} zoom={7} />} />
       </Routes>
     </BrowserRouter>
   );
