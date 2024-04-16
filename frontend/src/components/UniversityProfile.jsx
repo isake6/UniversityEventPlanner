@@ -207,6 +207,12 @@ const UniversityDetails = () => {
           <p className="text-lg text-black mb-1 text-center">
             {lat}, {long}
           </p>
+          <div
+            className="flex justify-center items-center mb-4"
+            style={{ height: "300px", width: "25%", margin: "0 auto" }}
+          >
+            <MyMap id="mymap" position={[lat, long]} zoom={13} />
+          </div>
           <p className="text-lg text-black mb-1 text-center">
             Description: {description}
           </p>

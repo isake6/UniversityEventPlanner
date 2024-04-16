@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useUserSession } from "../hooks/useUserSession";
 import axios from "axios";
 import Modal from "react-modal";
+import MyMap from "./Map";
 
 const RSODetails = () => {
   const { getUserSessionData } = useUserSession();
@@ -438,6 +439,18 @@ const RSODetails = () => {
                                 Phone:
                               </p>
                               <p>{row.phone}</p>
+                            </div>
+                          </td>
+                          <td>
+                            {/* Map Location */}
+                            <div>
+                              {/* Add content you want to show when row is expanded */}
+                              <p
+                                style={{ fontSize: "15px", fontWeight: "bold" }}
+                              >
+                                Location:
+                              </p>
+                              <MyMap position={[row.lat, row.long]} zoom={13} />
                             </div>
                           </td>
                           <td>

@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useUserSession } from "../hooks/useUserSession";
 import axios from "axios";
 import Modal from "react-modal";
+import MyMap from "./Map";
 
 const EventDetail = () => {
   const location = useLocation();
@@ -158,6 +159,12 @@ const EventDetail = () => {
           <p className="text-lg text-gray-600 text-center mt-2">
             {event.lat}, {event.long}
           </p>
+          <div
+            className="flex justify-center items-center mb-4"
+            style={{ height: "300px", width: "25%", margin: "0 auto" }}
+          >
+            <MyMap id="mymap" position={[event.lat, event.long]} zoom={13} />
+          </div>
           <p className="mt-4 text-md text-gray-700 mx-auto text-center">
             {event.description}
           </p>
