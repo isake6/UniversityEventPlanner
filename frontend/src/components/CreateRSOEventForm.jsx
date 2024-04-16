@@ -1,194 +1,207 @@
-import React, { useState } from 'react';
-import Navbar from './Navbar';
-import axios from 'axios';
-import { useUserSession } from '../hooks/useUserSession';
+import React, { useState } from "react";
+import Navbar from "./Navbar";
+import axios from "axios";
+import { useUserSession } from "../hooks/useUserSession";
+import MyMap from "./Map";
 
 const CreateRsoEventForm = () => {
-    const { getUserSessionData } = useUserSession();
-    const userSession = getUserSessionData();
-    const [message, setMessage] = useState('');
+  const { getUserSessionData } = useUserSession();
+  const userSession = getUserSessionData();
+  const [message, setMessage] = useState("");
 
-    const handleEventSubmit = async (event) => {
-        event.preventDefault();
-        console.log('Form submitted. Awaiting response...');
-        console.log('User session:', userSession);
+  const handleEventSubmit = async (event) => {
+    event.preventDefault();
+    console.log("Form submitted. Awaiting response...");
+    console.log("User session:", userSession);
 
-        const user_id = userSession.id;
-        const user_email = userSession.email;
+    const user_id = userSession.id;
+    const user_email = userSession.email;
+    const lat = localStorage.getItem("lat");
+    const long = localStorage.getItem("long");
 
-        const rso = parseInt(localStorage.getItem("rsoID")); // This is a placeholder value
-        const name = document.getElementById('event_name').value;
-        const category = document.getElementById('category').value;
-        const time = document.getElementById('time').value;
-        const description = document.getElementById('description').value;
-        const location = document.getElementById('location').value;
-        const phone = document.getElementById('phone').value;
-        const contact_email = document.getElementById('contact_email').value;
+    const rso = parseInt(localStorage.getItem("rsoID")); // This is a placeholder value
+    const name = document.getElementById("event_name").value;
+    const category = document.getElementById("category").value;
+    const time = document.getElementById("time").value;
+    const description = document.getElementById("description").value;
+    const location = document.getElementById("location").value;
+    const phone = document.getElementById("phone").value;
+    const contact_email = document.getElementById("contact_email").value;
 
-        try {
-            const response = await axios.post(
-                'https://somethingorother.xyz/add_event',
-                {
-                    user_id,
-                    user_email,
-                    rso,
-                    name,
-                    category,
-                    time,
-                    description,
-                    location,
-                    phone,
-                    contact_email,
-                },
-                { withCredentials: true }
-            );
-            console.log('Response:', response.data);
+    try {
+      const response = await axios.post(
+        "https://somethingorother.xyz/add_event",
+        {
+          user_id,
+          user_email,
+          rso,
+          name,
+          category,
+          time,
+          description,
+          location,
+          phone,
+          contact_email,
+          lat,
+          long,
+        },
+        { withCredentials: true }
+      );
+      console.log("Response:", response.data);
 
-            window.location.href = '/details';
-        } catch (error) {
-            // Log the error message
-            if (error.response) {
-                // The request was made and the server responded with a status code
-                console.error('Error message:', error.response.data);
-                setMessage(error.response.data.message);
-            } else if (error.request) {
-                // The request was made but no response was received
-                console.error('No response received:', error.request);
-            } else {
-                // Something happened in setting up the request that triggered an Error
-                console.error('Error', error.message);
-            }
-
-        }
-    };
-
-    const handleChange = async () => {
-        setMessage('');
+      window.location.href = "/details";
+    } catch (error) {
+      // Log the error message
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error("Error message:", error.response.data);
+        setMessage(error.response.data.message);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("No response received:", error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error", error.message);
+      }
     }
+  };
 
-    return (
-        <>
-            <Navbar />
+  const handleChange = async () => {
+    setMessage("");
+  };
 
-            <div className="flex items-center h-screen pt-28">
-                <div className="w-1/3 h-fit max-w-xl m-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col justify-center border border-yellow-500">
-                    <div className="p-5">
-                        <h1 className="text-3xl font-bold text-center text-black mb-3">
-                            Register Event
-                        </h1>
-                        <p className='text-center font-bold'>Fill out this form to register a Public Event</p>
-                        <p className='text-center font-bold'>Must be approved by Super Admin</p>
-                        <form onSubmit={handleEventSubmit}>
-                            <h3 className="text-base font-bold pt-3 text-gray-600">
-                                Name
-                            </h3>
-                            <input
-                                type="text"
-                                id="event_name"
-                                placeholder="Event Name"
-                                className="w-full input input-bordered border-yellow-500"
-                                onChange={handleChange}
-                            ></input>
+  return (
+    <>
+      <Navbar />
 
-                            <h3 className="text-base font-bold pt-3 text-gray-600">
-                                Category
-                            </h3>
-                            <select id="category" className="w-full input input-bordered border-yellow-500">
-                                <option value="private">Private</option>
-                                <option value="RSO">RSO</option>
-                            </select>
+      <div className="flex items-center h-screen pt-28">
+        <div className="w-1/3 h-fit max-w-xl m-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col justify-center border border-yellow-500">
+          <div className="p-5">
+            <h1 className="text-3xl font-bold text-center text-black mb-3">
+              Register Event
+            </h1>
+            <p className="text-center font-bold">
+              Fill out this form to register a Public Event
+            </p>
+            <p className="text-center font-bold">
+              Must be approved by Super Admin
+            </p>
+            <form onSubmit={handleEventSubmit}>
+              <h3 className="text-base font-bold pt-3 text-gray-600">Name</h3>
+              <input
+                type="text"
+                id="event_name"
+                placeholder="Event Name"
+                className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
+              ></input>
 
-                            <h3 className="text-base font-bold pt-3 text-gray-600">
-                                Time
-                            </h3>
-                            <input
-                                type="datetime-local"
-                                id="time"
-                                placeholder="Time of Event"
-                                className="w-full input input-bordered border-yellow-500"
-                                onChange={handleChange}
-                            ></input>
+              <h3 className="text-base font-bold pt-3 text-gray-600">
+                Category
+              </h3>
+              <select
+                id="category"
+                className="w-full input input-bordered border-yellow-500"
+              >
+                <option value="private">Private</option>
+                <option value="RSO">RSO</option>
+              </select>
 
-                            <h3 className="text-base font-bold pt-3 text-gray-600">
-                                Description
-                            </h3>
-                            <textarea
-                                type="text"
-                                id="description"
-                                placeholder="Description"
-                                className=" w-full input input-bordered border-yellow-500"
-                                onChange={handleChange}
-                            ></textarea>
+              <h3 className="text-base font-bold pt-3 text-gray-600">Time</h3>
+              <input
+                type="datetime-local"
+                id="time"
+                placeholder="Time of Event"
+                className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
+              ></input>
 
-                            <h3 className="text-base font-bold pt-3 text-gray-600">
-                                Location
-                            </h3>
-                            <input
-                                type="text"
-                                id="location"
-                                placeholder="123 example"
-                                className="w-full input input-bordered border-yellow-500"
-                                onChange={handleChange}
-                            ></input>
+              <h3 className="text-base font-bold pt-3 text-gray-600">
+                Description
+              </h3>
+              <textarea
+                type="text"
+                id="description"
+                placeholder="Description"
+                className=" w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
+              ></textarea>
 
-                            <h3 className="text-base font-bold pt-3 text-gray-600">
-                                Phone
-                            </h3>
-                            <input
-                                type="text"
-                                id="phone"
-                                placeholder="1234567890"
-                                className="w-full input input-bordered border-yellow-500"
-                                onChange={handleChange}
-                            ></input>
+              <h3 className="text-base font-bold pt-3 text-gray-600">
+                Location
+              </h3>
+              <input
+                type="text"
+                id="location"
+                placeholder="123 example"
+                className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
+              ></input>
 
-                            <h3 className="text-base font-bold pt-3 text-gray-600">
-                                Contact Email
-                            </h3>
-                            <input
-                                type="text"
-                                id="contact_email"
-                                placeholder="example@domain.com"
-                                className="w-full input input-bordered border-yellow-500"
-                                onChange={handleChange}
-                            ></input>
+              <MyMap id="mymap" position={[0, 0]} zoom={3} />
 
-                            {message && (
-                                <div className='pt-4 text-center font-bold' style={{ color: "red" }}>
-                                    {message}
-                                </div>
-                            )}
+              <h3 className="text-base font-bold pt-3 text-gray-600">Phone</h3>
+              <input
+                type="text"
+                id="phone"
+                placeholder="1234567890"
+                className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
+              ></input>
 
-                            <div className=" w-full py-6 flex flex-col m-auto">
-                                <button
-                                    type="submit"
-                                    className="btn btn-info font-bold text-lg bg-yellow-500"
-                                >
-                                    Register Event
-                                </button>
-                            </div>
+              <h3 className="text-base font-bold pt-3 text-gray-600">
+                Contact Email
+              </h3>
+              <input
+                type="text"
+                id="contact_email"
+                placeholder="example@domain.com"
+                className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
+              ></input>
 
-                            <div className="absolute flex items-center px-2 pt-5 pointer-events-none" style={{right: "42rem", bottom: "34.25rem"}}>
-                                <svg
-                                    className="w-5 h-5 text-gray-400"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M19 9l-7 7-7-7"
-                                    ></path>
-                                </svg>
-                            </div>
-                        </form>
-                    </div>
+              {message && (
+                <div
+                  className="pt-4 text-center font-bold"
+                  style={{ color: "red" }}
+                >
+                  {message}
                 </div>
-            </div>
-        </>
-    );
+              )}
+
+              <div className=" w-full py-6 flex flex-col m-auto">
+                <button
+                  type="submit"
+                  className="btn btn-info font-bold text-lg bg-yellow-500"
+                >
+                  Register Event
+                </button>
+              </div>
+
+              <div
+                className="absolute flex items-center px-2 pt-5 pointer-events-none"
+                style={{ right: "43rem", bottom: "33rem" }}
+              >
+                <svg
+                  className="w-5 h-5 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default CreateRsoEventForm;
