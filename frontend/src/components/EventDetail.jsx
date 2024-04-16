@@ -246,7 +246,7 @@ const EventDetail = () => {
               {userSession.id !== -1 && (
                 <button
                   onClick={handleAddComment}
-                  className="btn btn-success"
+                  className="flex m-auto btn btn-success mt-3"
                 >
                   Add Comment
                 </button>

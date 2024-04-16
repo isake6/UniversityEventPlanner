@@ -16,11 +16,13 @@ const UniversityDetails = () => {
   const [description, setDescription] = useState('');
   const [population, setPopulation] = useState('');
   const [events, setPublicEvents] = useState([]);
+  const [message, setMessage] = useState('');
 
   const [activeRowIndex, setActiveRowIndex] = useState(null);
 
   const toggleRow = (index) => {
     setActiveRowIndex(activeRowIndex === index ? null : index);
+    setMessage('');
   };
 
   const fetchUniversityDetails = async (event) => {
@@ -140,6 +142,7 @@ const UniversityDetails = () => {
       if (error.response) {
         // The request was made and the server responded with a status code
         console.error('Error message:', error.response.data);
+        setMessage(error.response.data.message);
       } else if (error.request) {
         // The request was made but no response was received
         console.error('No response received:', error.request);
@@ -210,7 +213,12 @@ const UniversityDetails = () => {
 
           {/* Table */}
           <div className="overflow-x-auto collapse">
-            <span className='flex justify-center text-2xl font-bold text-black'>Events</span>
+            <span className='flex justify-center text-2xl font-bold text-black'>Pending Public Events</span>
+            {message && (
+              <div className='pt-4 text-center font-bold' style={{ color: "red" }}>
+                {message}
+              </div>
+            )}
             <table className="table mt-4 text-black">
               {/* head */}
               <thead className='text-black text-lg'>

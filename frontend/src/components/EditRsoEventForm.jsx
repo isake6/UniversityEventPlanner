@@ -6,6 +6,7 @@ import { useUserSession } from '../hooks/useUserSession';
 const EditRsoEventForm = () => {
   const { getUserSessionData } = useUserSession();
   const userSession = getUserSessionData();
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     handlePrefill();
@@ -109,78 +110,132 @@ const EditRsoEventForm = () => {
     }
 
   };
+
+  const handleChange = async () => {
+    setMessage('');
+  }
+
   return (
     <>
       <Navbar />
 
-      <div className="text">
-        <h2>Create your event here! </h2>
-      </div>
+      <div className="flex items-center h-screen pt-28">
+        <div className="w-1/3 h-fit max-w-xl m-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col justify-center border border-yellow-500">
+          <div className="p-5">
+            <h1 className="text-3xl font-bold text-center text-black mb-3">
+              Register Event
+            </h1>
+            <p className='text-center font-bold'>Fill out this form to register a Public Event</p>
+            <p className='text-center font-bold'>Must be approved by Super Admin</p>
+            <form onSubmit={handleEventSubmit}>
+              <h3 className="text-base font-bold pt-3 text-gray-600">
+                Name
+              </h3>
+              <input
+                type="text"
+                id="event_name"
+                placeholder="Event Name"
+                className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
+              ></input>
 
-      <form onSubmit={handleEventSubmit}>
-        <div className="flex justify-center items-center min-h-screen ">
-          {/* This line has been updated */}
-          <div className="space-y-4 max-w-md w-full shadow-lg border-2 p-2 border-yellow-400 ">
-            {/* Added for form styling */}
-
-            <label
-              className="input input-bordered flex items-center gap-2"
-            >
-              Event Name
-              <input type="text" id="event_name" placeholder="Knight World" />
-            </label>
-
-            <label className="input input-bordered flex items-center gap-2">
-              Category
-              <select type="input" id="category" placeholder="Category">
-                {' '}
+              <h3 className="text-base font-bold pt-3 text-gray-600">
+                Category
+              </h3>
+              <select id="category" className="w-full input input-bordered border-yellow-500">
                 <option value="private">Private</option>
                 <option value="RSO">RSO</option>
               </select>
-              {/* Changed type to email */}
-            </label>
 
-            <label className="input input-bordered flex items-center gap-2">
-              Event Time
-              <input type="datetime-local" id="time" placeholder="2:00pm" />
-            </label>
-
-            <label className="input input-bordered flex items-center gap-2">
-              Event Description
+              <h3 className="text-base font-bold pt-3 text-gray-600">
+                Time
+              </h3>
               <input
+                type="datetime-local"
+                id="time"
+                placeholder="Time of Event"
+                className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
+              ></input>
+
+              <h3 className="text-base font-bold pt-3 text-gray-600">
+                Description
+              </h3>
+              <textarea
                 type="text"
                 id="description"
-                placeholder="Football Fall Tailgate!"
-              />
-            </label>
+                placeholder="Description"
+                className=" w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
+              ></textarea>
 
-            <label className="input input-bordered flex items-center gap-2">
-              Event Location
+              <h3 className="text-base font-bold pt-3 text-gray-600">
+                Location
+              </h3>
               <input
                 type="text"
                 id="location"
-                placeholder="Football Fall Tailgate!"
-              />
-            </label>
+                placeholder="123 example"
+                className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
+              ></input>
 
-            <label className="input input-bordered flex items-center gap-2">
-              Phone Number
-              <input type="text" id="phone" placeholder="123-456-7890" />
-            </label>
+              <h3 className="text-base font-bold pt-3 text-gray-600">
+                Phone
+              </h3>
+              <input
+                type="text"
+                id="phone"
+                placeholder="1234567890"
+                className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
+              ></input>
 
-            <label className="input input-bordered flex items-center gap-2">
-              Email
+              <h3 className="text-base font-bold pt-3 text-gray-600">
+                Contact Email
+              </h3>
               <input
                 type="text"
                 id="contact_email"
-                placeholder="ucfknights@ucf.edu"
-              />
-            </label>
+                placeholder="example@domain.com"
+                className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
+              ></input>
 
-            <button className="btn btn-info">Submit</button>
+              {message && (
+                <div className='pt-4 text-center font-bold' style={{ color: "red" }}>
+                  {message}
+                </div>
+              )}
+
+              <div className=" w-full py-6 flex flex-col m-auto">
+                <button
+                  type="submit"
+                  className="btn btn-info font-bold text-lg bg-yellow-500"
+                >
+                  Register Event
+                </button>
+              </div>
+
+              <div className="absolute flex items-center px-2 pt-5 pointer-events-none" style={{ right: "42rem", bottom: "34.25rem" }}>
+                <svg
+                  className="w-5 h-5 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </div>
+            </form>
           </div>
         </div>
-      </form>
+      </div>
     </>
   );
 };

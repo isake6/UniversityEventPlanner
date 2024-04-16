@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
 import { useUserSession } from '../hooks/useUserSession';
@@ -11,6 +11,9 @@ import { useUserSession } from '../hooks/useUserSession';
 const RSOForm = () => {
   const { getUserSessionData } = useUserSession();
   const userSession = getUserSessionData();
+
+  const [message, setMessage] = useState('');
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Form submitted. Awaiting response...');
@@ -63,6 +66,7 @@ const RSOForm = () => {
       if (error.response) {
         // The request was made and the server responded with a status code
         console.error('Error message:', error.response.data);
+        setMessage(error.response.data.message);
       } else if (error.request) {
         // The request was made but no response was received
         console.error('No response received:', error.request);
@@ -73,6 +77,10 @@ const RSOForm = () => {
     }
   };
 
+  const handleChange = async () => {
+    setMessage('');
+  }
+
   return (
     <div>
       <Navbar />
@@ -82,6 +90,9 @@ const RSOForm = () => {
             <h1 className="text-3xl font-bold text-center text-black">
               Create RSO
             </h1>
+            <p className='text-center font-bold'>
+              Admin email must match 1 of the 5 emails listed
+            </p>
             <form onSubmit={handleSubmit}>
               <h3 className="text-base font-bold pt-3 text-gray-600">
                 RSO Name
@@ -90,7 +101,8 @@ const RSOForm = () => {
                 type="text"
                 id="name"
                 placeholder=""
-                className=" w-full input input-bordered input-primary"
+                className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
@@ -101,6 +113,7 @@ const RSOForm = () => {
                 id="user1"
                 placeholder=""
                 className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
@@ -111,6 +124,7 @@ const RSOForm = () => {
                 id="user2"
                 placeholder=""
                 className=" w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
@@ -121,6 +135,7 @@ const RSOForm = () => {
                 id="user3"
                 placeholder=""
                 className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
@@ -131,6 +146,7 @@ const RSOForm = () => {
                 id="user4"
                 placeholder=""
                 className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
@@ -141,6 +157,7 @@ const RSOForm = () => {
                 id="user5"
                 placeholder=""
                 className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
@@ -151,9 +168,14 @@ const RSOForm = () => {
                 id="admin"
                 placeholder=""
                 className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
               ></input>
 
-              <div className="relative"></div>
+              {message && (
+                <div className='pt-4 text-center font-bold' style={{ color: "red" }}>
+                  {message}
+                </div>
+              )}
 
               <div className=" w-full py-6 flex flex-col m-auto">
                 <button

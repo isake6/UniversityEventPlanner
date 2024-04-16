@@ -14,6 +14,8 @@ const RSODetails = () => {
     const [name, setName] = useState('');
     const [admin, setAdmin] = useState('');
     const [description, setDescription] = useState('');
+    const [message, setMessage] = useState('');
+    const [activeState, setActiveState] = useState('false');
 
     useEffect(() => {
         handleEventListing();
@@ -34,13 +36,13 @@ const RSODetails = () => {
             console.log('Response:', response.data);
 
             setRsoDetails(response.data.rso_details);
+            setActiveState(response.data.rso_details.active);
 
             if (response.data.rso_details.admin === user_id) {
                 setRole("admin");
                 console.log("Set role to admin for adminID: ", response.data.rso_details.admin, " and user_id: ", user_id);
             }
-            else
-            {
+            else {
                 setRole("student");
                 console.log("Set role to student for adminID: ", response.data.rso_details.admin, " and user_id: ", user_id);
             }
@@ -53,7 +55,7 @@ const RSODetails = () => {
             } else {
                 console.error('Error', error.message);
             }
-        }   
+        }
 
         try {
             const response = await axios.post(
@@ -80,6 +82,7 @@ const RSODetails = () => {
 
     const toggleRow = (index) => {
         setActiveRowIndex(activeRowIndex === index ? null : index);
+        setMessage('');
     };
 
     const [activeRowIndex2, setActiveRowIndex2] = useState(null);
@@ -92,7 +95,7 @@ const RSODetails = () => {
         try {
             const response = await axios.post(
                 'https://somethingorother.xyz/delete_event',
-                { user_id : userSession.id, event_id : eventID },
+                { user_id: userSession.id, event_id: eventID },
                 { withCredentials: true }
             );
             handleEventListing();
@@ -121,6 +124,7 @@ const RSODetails = () => {
 
     const toggleModal = async () => {
         setIsModalOpen(!isModalOpen);
+        setMessage('');
     }
 
     const handleSubmit = async (event) => {
@@ -147,6 +151,7 @@ const RSODetails = () => {
         } catch (error) {
             if (error.response) {
                 console.error('Error message:', error.response.data);
+                setMessage(error.response.data.message);
             } else if (error.request) {
                 console.error('No response received:', error.request);
             } else {
@@ -163,6 +168,42 @@ const RSODetails = () => {
         }
     }, [isModalOpen, rsoDetails]);
 
+    const handleLeave = async () => {
+        const rsoId = localStorage.getItem("rsoID");
+
+        console.log('Attempting to leave/delete RSO ID:', rsoId);
+        try {
+            const response = await axios.post(
+                'https://somethingorother.xyz/leave_rso',
+                { user_id: userSession.id, rso_id: rsoId },
+                { withCredentials: true }
+            );
+            console.log('Delete Response:', response.data);
+            window.location.href = '/myRSO';
+        } catch (error) {
+            if (error.response) {
+                console.error('Error message:', error.response.data);
+                setMessage(error.response.data.message);
+            } else if (error.request) {
+                console.error('No response received:', error.request);
+            } else {
+                console.error('Error', error.message);
+            }
+        }
+    };
+
+    const handleChange = async () => {
+        setMessage('');
+
+        const name = document.getElementById('name').value;
+        const admin = document.getElementById('admin').value;
+        const description = document.getElementById('description').value;
+
+        setName(name);
+        setAdmin(admin);
+        setDescription(description);
+    }
+
     return (
         <>
             <div className='bg-white shadow-md rounded px-8 pt-7 pb-8 mb-4 max-w-md mx-auto'></div> {/* Spacing for Navbar */}
@@ -172,44 +213,59 @@ const RSODetails = () => {
                     <h1 className="text-2xl text-black font-bold mb-1 text-center">{rsoDetails.description}</h1>
                     <p className="text-lg text-black font-bold mb-1 text-center">Admin: {rsoDetails.admin_email}</p>
                     <p className="text-lg text-black mb-1 text-center">Member Count: {rsoDetails.member_count}</p>
+                    <div className='flex justify-center'>
+                        {activeState && (
+                            <p className='text-green-600 font-bold'>Active</p>
+                        )}
+                        {!activeState && (
+                            <p className='text-red-600 font-bold'>Inactive</p>
+                        )}
+                    </div>
                     {/* Edit RSO details button */}
                     {role === "admin" && (
-                    <div className='flex justify-center'>
-                        <button onClick={() => toggleModal()} className='border rounded-lg hover:bg-yellow-500 hover:text-white border-yellow-600 px-10 py-2'>Edit RSO</button>
-                    </div>
+                        <div className='flex justify-center'>
+                            <button onClick={() => toggleModal()} className='border rounded-lg hover:bg-yellow-500 hover:text-white border-yellow-600 px-10 py-2'>Edit RSO</button>
+                        </div>
                     )}
-                    <Modal 
-                        isOpen={isModalOpen} 
+                    <Modal
+                        isOpen={isModalOpen}
                         onRequestClose={() => setIsModalOpen(false)}
                         style={{
                             overlay: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.75)'
+                                backgroundColor: 'rgba(0, 0, 0, 0.75)'
                             },
                             content: {
-                            color: 'black',
-                            width: '50%',
-                            height: '35%',
-                            margin: 'auto',
-                            padding: '20px'
+                                color: 'black',
+                                width: '50%',
+                                height: '35%',
+                                margin: 'auto',
+                                padding: '20px'
                             }
                         }}
-                        >
+                    >
                         {/* Modal content */}
                         <h2 className="text-lg text-black font-bold mb-1 text-center">Edit RSO Details</h2>
                         {/* Add form fields for editing RSO details here */}
                         <form onSubmit={handleSubmit}>
                             <div>
-                                <label htmlFor="name" style={{ fontWeight: 'bold'}}>Name: </label>
-                                <input type="text" id="name" value={name} onChange={e => setName(e.target.value)} style={{ color: 'grey'}}/>
+                                <label htmlFor="name" style={{ fontWeight: 'bold' }}>Name: </label>
+                                <input type="text" id="name" value={name} onChange={handleChange} style={{ color: 'grey' }} />
                             </div>
                             <div>
-                                <label htmlFor="admin" style={{ fontWeight: 'bold'}}>Admin: </label>
-                                <input type="text" id="admin" value={admin} onChange={e => setAdmin(e.target.value)} style={{ color: 'grey'}} />
+                                <label htmlFor="admin" style={{ fontWeight: 'bold' }}>Admin: </label>
+                                <input type="text" id="admin" value={admin} onChange={handleChange} style={{ color: 'grey' }} />
                             </div>
                             <div>
-                                <label htmlFor="description" style={{ fontWeight: 'bold'}}>Description:</label>
-                                <textarea id="description" value={description} onChange={e => setDescription(e.target.value)} style={{ color: 'grey', width: '100%', height: '100px' }}/>
+                                <label htmlFor="description" style={{ fontWeight: 'bold' }}>Description:</label>
+                                <textarea id="description" value={description} onChange={handleChange} style={{ color: 'grey', width: '100%', height: '100px' }} />
                             </div>
+
+                            {message && (
+                                <div className='pt-4 text-center font-bold' style={{ color: "red" }}>
+                                    {message}
+                                </div>
+                            )}
+
                             <div className="flex justify-between">
                                 <button className='btn btn-info' type="submit">Submit</button>
                                 <button className='btn btn-error' onClick={() => setIsModalOpen(false)}>Close</button>
@@ -266,7 +322,7 @@ const RSODetails = () => {
                                                         {/* Description */}
                                                         <div>
                                                             {/* Add content you want to show when row is expanded */}
-                                                            <p style={{fontSize: "15px", fontWeight: "bold"}}>Description:</p>
+                                                            <p style={{ fontSize: "15px", fontWeight: "bold" }}>Description:</p>
                                                             <p>{row.description}</p>
                                                         </div>
                                                     </td>
@@ -274,7 +330,7 @@ const RSODetails = () => {
                                                         {/* Email */}
                                                         <div>
                                                             {/* Add content you want to show when row is expanded */}
-                                                            <p style={{fontSize: "15px", fontWeight: "bold"}}>Email:</p>
+                                                            <p style={{ fontSize: "15px", fontWeight: "bold" }}>Email:</p>
                                                             <p>{row.email}</p>
                                                         </div>
                                                     </td>
@@ -282,18 +338,18 @@ const RSODetails = () => {
                                                         {/* Phone */}
                                                         <div>
                                                             {/* Add content you want to show when row is expanded */}
-                                                            <p style={{fontSize: "15px", fontWeight: "bold"}}>Phone:</p>
+                                                            <p style={{ fontSize: "15px", fontWeight: "bold" }}>Phone:</p>
                                                             <p>{row.phone}</p>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         {/* additional content */}
                                                         {role === "admin" && (
-                                                        <div>
-                                                            {/* Add content you want to show when row is expanded */}
-                                                            <button onClick={() => handleEdit(row.id)} className='btn btn-warning m-4'>Edit</button>
-                                                            <button onClick={() => handleDelete(row.id)} className='btn btn-warning m-4'>Delete</button>
-                                                        </div>
+                                                            <div>
+                                                                {/* Add content you want to show when row is expanded */}
+                                                                <button onClick={() => handleEdit(row.id)} className='btn btn-info'>Edit</button>
+                                                                <button onClick={() => handleDelete(row.id)} className='btn btn-error m-4'>Delete</button>
+                                                            </div>
                                                         )}
                                                     </td>
                                                 </tr>
@@ -306,10 +362,19 @@ const RSODetails = () => {
                         {/* Table End */}
 
                         {role === "admin" && (
-                        <div className='flex justify-center'>
-                            <button onClick={() => handleAddEvent()} className='border rounded-lg hover:bg-yellow-500 hover:text-white border-yellow-600 px-10 py-2'>Add Event</button>
-                        </div>
+                            <div className='flex justify-center'>
+                                <button onClick={() => handleAddEvent()} className='border rounded-lg hover:bg-yellow-500 hover:text-white border-yellow-600 px-10 py-2'>Add Event</button>
+                            </div>
                         )}
+
+                        <div className='flex justify-center'>
+                            {message && (
+                                <div className='absolute bottom-24 right-10 font-bold' style={{ color: "red" }}>
+                                    {message}
+                                </div>
+                            )}
+                            <button onClick={() => handleLeave()} className='absolute bottom-10 right-10 btn btn-error'>Leave RSO</button>
+                        </div>
                     </div>
 
                 </div >

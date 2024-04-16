@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from './Navbar';
 import axios from 'axios';
 import { useUserSession } from '../hooks/useUserSession';
 
 const CreateEventForm = () => {
+  const [message, setMessage] = useState('');
   const { getUserSessionData } = useUserSession();
   const userSession = getUserSessionData();
 
@@ -50,6 +51,7 @@ const CreateEventForm = () => {
       if (error.response) {
         // The request was made and the server responded with a status code
         console.error('Error message:', error.response.data);
+        setMessage(error.response.data.message);
       } else if (error.request) {
         // The request was made but no response was received
         console.error('No response received:', error.request);
@@ -59,6 +61,11 @@ const CreateEventForm = () => {
       }
     }
   };
+
+  const handleChange = async () => {
+    setMessage('');
+  }
+
   return (
     <>
       <Navbar />
@@ -80,6 +87,7 @@ const CreateEventForm = () => {
                 id="event_name"
                 placeholder="Event Name"
                 className=" w-full input input-bordered input-primary"
+                onChange={handleChange}
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
@@ -90,6 +98,7 @@ const CreateEventForm = () => {
                 id="time"
                 placeholder="Time of Event"
                 className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
@@ -100,6 +109,7 @@ const CreateEventForm = () => {
                 id="description"
                 placeholder="Description"
                 className=" w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
               ></textarea>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
@@ -110,6 +120,7 @@ const CreateEventForm = () => {
                 id="location"
                 placeholder="123 example"
                 className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
@@ -120,6 +131,7 @@ const CreateEventForm = () => {
                 id="phone"
                 placeholder="1234567890"
                 className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
@@ -130,9 +142,14 @@ const CreateEventForm = () => {
                 id="contact_email"
                 placeholder="example@domain.com"
                 className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
               ></input>
 
-              <div className="relative"></div>
+              {message && (
+                <div className='pt-4 text-center font-bold' style={{ color: "red" }}>
+                  {message}
+                </div>
+              )}
 
               <div className=" w-full py-6 flex flex-col m-auto">
                 <button

@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 const CreateAccount = () => {
+  const [message, setMessage] = useState('');
+  const [confirmMessage, setConfirmMessage] = useState('');
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Form submitted. Awaiting response...');
@@ -33,6 +37,7 @@ const CreateAccount = () => {
       if (error.response) {
         // The request was made and the server responded with a status code
         console.error('Error message:', error.response.data);
+        setMessage(error.response.data.message);
       } else if (error.request) {
         // The request was made but no response was received
         console.error('No response received:', error.request);
@@ -42,6 +47,22 @@ const CreateAccount = () => {
       }
     }
   };
+
+  const handleChange = async () => {
+    setMessage('');
+  }
+
+  const handleConfirm = async () => {
+    const confirmPassword = document.getElementById('passwordConfirm').value;
+    const password = document.getElementById('password').value;
+
+    if (confirmPassword !== password) {
+      setConfirmMessage('Password does not match!');
+    }
+    else {
+      setConfirmMessage('');
+    }
+  }
 
   return (
     <div>
@@ -60,6 +81,7 @@ const CreateAccount = () => {
                 id="firstName"
                 placeholder="First Name"
                 className=" w-full input input-bordered input-primary"
+                onChange={handleChange}
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
@@ -70,6 +92,7 @@ const CreateAccount = () => {
                 id="lastName"
                 placeholder="Last Name"
                 className="w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">Email</h3>
@@ -78,6 +101,7 @@ const CreateAccount = () => {
                 id="email"
                 placeholder="Email"
                 className=" w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
@@ -88,6 +112,7 @@ const CreateAccount = () => {
                 id="password"
                 placeholder="Password"
                 className=" w-full input input-bordered border-yellow-500"
+                onChange={handleChange}
               ></input>
 
               <h3 className="text-base font-bold pt-3 text-gray-600">
@@ -98,7 +123,13 @@ const CreateAccount = () => {
                 id="passwordConfirm"
                 placeholder="Confirm Password"
                 className="w-full input input-bordered border-yellow-500"
+                onChange={handleConfirm}
               ></input>
+              {confirmMessage && (
+                <div className='pt-4 text-center font-bold' style={{ color: "red" }}>
+                  {confirmMessage}
+                </div>
+              )}
 
               <div className="relative">
                 <h3 className="text-base font-bold mt-2 text-gray-800">Role</h3>
@@ -125,6 +156,12 @@ const CreateAccount = () => {
                   </svg>
                 </div>
               </div>
+
+              {message && (
+                <div className='pt-4 text-center font-bold' style={{ color: "red" }}>
+                  {message}
+                </div>
+              )}
 
               <div className=" w-full py-6 flex flex-col m-auto">
                 <button

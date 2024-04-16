@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate();
+  const [message, setMessage] = useState('');
 
   const userSessionData = JSON.stringify({
     id : -1,
@@ -61,6 +62,7 @@ const Login = () => {
       if (error.response) {
         // The request was made and the server responded with a status code
         console.error('Error message:', error.response.data);
+        setMessage(error.response.data.message);
       } else if (error.request) {
         // The request was made but no response was received
         console.error('No response received:', error.request);
@@ -70,6 +72,10 @@ const Login = () => {
       }
     }
   };
+
+  const handleChange = async () => {
+    setMessage('');
+  }
 
   return (
     <div className="flex items-center h-screen">
@@ -85,6 +91,7 @@ const Login = () => {
               id="email"
               placeholder="Email"
               className=" w-full input input-bordered input-primary"
+              onChange={handleChange}
             ></input>
 
             <h3 className="text-sm font-bold text-gray-600 pt-5">Password</h3>
@@ -93,7 +100,14 @@ const Login = () => {
               id="password"
               placeholder="Password"
               className="w-full input input-bordered input-primary"
+              onChange={handleChange}
             ></input>
+
+            {message && (
+              <div className='pt-4 text-center font-bold' style={{color: "red"}}>
+                {message}
+              </div>
+            )}
 
             <div className=" w-full py-5 flex flex-col m-auto">
               <button
