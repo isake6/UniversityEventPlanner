@@ -159,12 +159,14 @@ const EventDetail = () => {
           <p className="text-lg text-gray-600 text-center mt-2">
             {event.lat}, {event.long}
           </p>
-          <div
-            className="flex justify-center items-center mb-4"
-            style={{ height: "300px", width: "25%", margin: "0 auto" }}
-          >
-            <MyMap id="mymap" position={[event.lat, event.long]} zoom={13} />
-          </div>
+          {!addCommentModalIsOpen && !modalIsOpen && (
+            <div
+              className="flex justify-center items-center mb-4"
+              style={{ height: "300px", width: "25%", margin: "0 auto" }}
+            >
+              <MyMap id="mymap" position={[event.lat, event.long]} zoom={13} />
+            </div>
+          )}
           <p className="mt-4 text-md text-gray-700 mx-auto text-center">
             {event.description}
           </p>
@@ -173,44 +175,52 @@ const EventDetail = () => {
               Comments
             </h2>
             <div className="mt-2">
-              {comments.map((comment) => (
-                <div
-                  key={comment.id}
-                  className="bg-gray-100 rounded p-4 mb-2 relative"
-                >
-                  <p className="m-3">{comment.author_email}</p>
-                  <p className="m-3">
-                    {comment.author_first_name} {comment.author_last_name}
-                  </p>
-                  <p
-                    className="m-3"
-                    style={{ color: "black", whiteSpace: "pre-wrap" }}
+              {comments
+                .sort((a, b) => {
+                  const aTime = a.edit_time || a.created_time;
+                  const bTime = b.edit_time || b.created_time;
+                  return new Date(bTime) - new Date(aTime);
+                })
+                .map((comment) => (
+                  <div
+                    key={comment.id}
+                    className="bg-gray-100 rounded p-4 mb-2 relative"
                   >
-                    {comment.comment}
-                  </p>
-                  <p className="m-3">Created On: {comment.created_time}</p>
-                  <p className="m-3">Edited On: {comment.edit_time}</p>
-                  <div className="flex justify-between">
-                    {userSession.id === comment.author_id && (
-                      <button
-                        onClick={() => toggleModal(comment.comment, comment.id)}
-                        className="btn btn-info"
-                      >
-                        Edit
-                      </button>
-                    )}
+                    <p className="m-3">{comment.author_email}</p>
+                    <p className="m-3">
+                      {comment.author_first_name} {comment.author_last_name}
+                    </p>
+                    <p
+                      className="m-3"
+                      style={{ color: "black", whiteSpace: "pre-wrap" }}
+                    >
+                      {comment.comment}
+                    </p>
+                    <p className="m-3">Created On: {comment.created_time}</p>
+                    <p className="m-3">Edited On: {comment.edit_time}</p>
+                    <div className="flex justify-between">
+                      {userSession.id === comment.author_id && (
+                        <button
+                          onClick={() =>
+                            toggleModal(comment.comment, comment.id)
+                          }
+                          className="btn btn-info"
+                        >
+                          Edit
+                        </button>
+                      )}
 
-                    {userSession.id === comment.author_id && (
-                      <button
-                        onClick={() => handleDeleteComment(comment.id)}
-                        className="btn btn-error"
-                      >
-                        Delete
-                      </button>
-                    )}
+                      {userSession.id === comment.author_id && (
+                        <button
+                          onClick={() => handleDeleteComment(comment.id)}
+                          className="btn btn-error"
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
 
               {/* Edit Comment Modal */}
               <Modal
@@ -278,6 +288,7 @@ const EventDetail = () => {
                   Add Comment
                 </h2>
                 <textarea
+                  placeholder="Enter your comment here"
                   value={newComment?.text}
                   onChange={(e) =>
                     setNewComment({ ...currentComment, text: e.target.value })
