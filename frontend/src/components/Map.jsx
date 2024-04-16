@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { Icon } from "leaflet";
 import pointer from "../images/pointer.png";
 
 const MyMap = ({ position, zoom }) => {
   const [selectedLocation, setSelectedLocation] = useState([0, 0]);
+  const clickedRef = useRef(false);
 
   const customIcon = new Icon({
     iconUrl: pointer,
@@ -15,6 +16,7 @@ const MyMap = ({ position, zoom }) => {
 
     useEffect(() => {
       const handleClick = (e) => {
+        clickedRef.current = true;
         setSelectedLocation(e.latlng);
         localStorage.setItem("lat", e.latlng.lat);
         localStorage.setItem("long", e.latlng.lng);
@@ -27,8 +29,10 @@ const MyMap = ({ position, zoom }) => {
     }, [map]);
 
     useEffect(() => {
-      map.flyTo(position);
-      setSelectedLocation(position);
+      if (!clickedRef.current) {
+        setSelectedLocation(position);
+        map.flyTo(position);
+      }
     }, [position]);
 
     return null;
