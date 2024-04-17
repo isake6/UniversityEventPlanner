@@ -14,8 +14,8 @@ const UniversityDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
-  const [lat, setLat] = useState("");
-  const [long, setLong] = useState("");
+  const [lat, setLat] = useState(0);
+  const [long, setLong] = useState(0);
   const [description, setDescription] = useState("");
   const [population, setPopulation] = useState("");
   const [events, setPublicEvents] = useState([]);
@@ -215,7 +215,10 @@ const UniversityDetails = () => {
               <MyMap id="mymap" position={[lat, long]} zoom={13} />
             </div>
           )}
-          <p className="text-lg text-black mb-1 text-center">
+          <p
+            className="text-lg text-black mb-1 text-center"
+            style={{ whiteSpace: "pre-wrap" }}
+          >
             Description: {description}
           </p>
           <p className="text-lg text-black mb-1 text-center">
@@ -248,12 +251,12 @@ const UniversityDetails = () => {
               {/* head */}
               <thead className="text-black text-lg">
                 <tr>
-                  <th></th>
-                  <th>Name</th>
-                  <th>Category</th>
-                  <th>Location</th>
-                  <th>Time</th>
-                  <th>More</th>
+                  <th style={{ width: "10%" }}></th>
+                  <th style={{ width: "15%" }}>Name</th>
+                  <th style={{ width: "15%" }}>Category</th>
+                  <th style={{ width: "20%" }}>Location</th>
+                  <th style={{ width: "20%" }}>Time</th>
+                  <th style={{ width: "20%" }}>More</th>
                 </tr>
               </thead>
               <tbody>
@@ -315,7 +318,9 @@ const UniversityDetails = () => {
                             <p style={{ fontSize: "15px", fontWeight: "bold" }}>
                               Description:
                             </p>
-                            <p>{row.description}</p>
+                            <p style={{ whiteSpace: "pre-wrap" }}>
+                              {row.description}
+                            </p>
                           </div>
                         </td>
                         <td>
@@ -420,7 +425,7 @@ const UniversityDetails = () => {
                   Student Population:{" "}
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   id="population"
                   value={population}
                   onChange={(e) => setPopulation(e.target.value)}

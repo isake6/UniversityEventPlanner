@@ -16,6 +16,7 @@ const RSODetails = () => {
   const [admin, setAdmin] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
+  const [message2, setMessage2] = useState("");
   const [activeState, setActiveState] = useState("false");
 
   useEffect(() => {
@@ -93,6 +94,7 @@ const RSODetails = () => {
   const toggleRow = (index) => {
     setActiveRowIndex(activeRowIndex === index ? null : index);
     setMessage("");
+    setMessage2("");
   };
 
   const [activeRowIndex2, setActiveRowIndex2] = useState(null);
@@ -128,12 +130,18 @@ const RSODetails = () => {
   };
 
   const handleAddEvent = async () => {
-    window.location.href = "/createRsoEvent";
+    if (activeState) {
+      window.location.href = "/createRsoEvent";
+    } else {
+      setMessage2("RSO is inactive. Cannot add events.");
+      setMessage("");
+    }
   };
 
   const toggleModal = async () => {
     setIsModalOpen(!isModalOpen);
     setMessage("");
+    setMessage2("");
   };
 
   const handleSubmit = async (event) => {
@@ -193,6 +201,7 @@ const RSODetails = () => {
       if (error.response) {
         console.error("Error message:", error.response.data);
         setMessage(error.response.data.message);
+        setMessage2("");
       } else if (error.request) {
         console.error("No response received:", error.request);
       } else {
@@ -203,6 +212,7 @@ const RSODetails = () => {
 
   const handleChange = async () => {
     setMessage("");
+    setMessage2("");
 
     const name = document.getElementById("name").value;
     const admin = document.getElementById("admin").value;
@@ -225,7 +235,10 @@ const RSODetails = () => {
           <h2 className="text-4xl text-black font-bold mb-1 text-center">
             {rsoDetails.name}
           </h2>
-          <h1 className="text-2xl text-black font-bold mb-1 text-center">
+          <h1
+            className="text-2xl text-black font-bold mb-1 text-center"
+            style={{ whiteSpace: "pre-wrap" }}
+          >
             {rsoDetails.description}
           </h1>
           <p className="text-lg text-black font-bold mb-1 text-center">
@@ -347,12 +360,12 @@ const RSODetails = () => {
                 {/* head */}
                 <thead className="text-black text-lg">
                   <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Location</th>
-                    <th>Time</th>
-                    <th>More</th>
+                    <th style={{ width: "10%" }}></th>
+                    <th style={{ width: "15%" }}>Name</th>
+                    <th style={{ width: "15%" }}>Category</th>
+                    <th style={{ width: "20%" }}>Location</th>
+                    <th style={{ width: "20%" }}>Time</th>
+                    <th style={{ width: "20%" }}>More</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -419,7 +432,9 @@ const RSODetails = () => {
                               >
                                 Description:
                               </p>
-                              <p>{row.description}</p>
+                              <p style={{ whiteSpace: "pre-wrap" }}>
+                                {row.description}
+                              </p>
                             </div>
                           </td>
                           <td>
@@ -488,7 +503,12 @@ const RSODetails = () => {
             {/* Table End */}
 
             {role === "admin" && (
-              <div className="flex justify-center">
+              <div className="flex flex-col items-center justiify-center">
+                {message2 && (
+                  <div className="font-bold" style={{ color: "red" }}>
+                    {message2}
+                  </div>
+                )}
                 <button
                   onClick={() => handleAddEvent()}
                   className="border rounded-lg hover:bg-yellow-500 hover:text-white border-yellow-600 px-10 py-2"

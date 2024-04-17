@@ -118,6 +118,7 @@ const EditRsoEventForm = () => {
       if (error.response) {
         // The request was made and the server responded with a status code
         console.error("Error message:", error.response.data);
+        setMessage(error.response.data.message);
       } else if (error.request) {
         // The request was made but no response was received
         console.error("No response received:", error.request);

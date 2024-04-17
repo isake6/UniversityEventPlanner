@@ -181,7 +181,10 @@ const EventList = () => {
                               )
                           : event.name}
                       </div>
-                      <p className="text-black text-base">
+                      <p
+                        className="text-black text-base"
+                        style={{ whiteSpace: "pre-wrap" }}
+                      >
                         <strong>Description: </strong>
                         {searchTerm
                           ? event.description

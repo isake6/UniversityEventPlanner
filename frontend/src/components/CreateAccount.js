@@ -1,68 +1,66 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const CreateAccount = () => {
-  const [message, setMessage] = useState('');
-  const [confirmMessage, setConfirmMessage] = useState('');
-
+  const [message, setMessage] = useState("");
+  const [confirmMessage, setConfirmMessage] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Form submitted. Awaiting response...');
+    console.log("Form submitted. Awaiting response...");
 
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const passwordConfirm = document.getElementById('passwordConfirm').value;
-    const role = document.querySelector('select').value;
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const passwordConfirm = document.getElementById("passwordConfirm").value;
+    const role = document.querySelector("select").value;
 
     if (password !== passwordConfirm) {
-      console.error('Passwords do not match');
+      console.error("Passwords do not match");
       return;
     }
 
     try {
       const response = await axios.post(
-        'https://somethingorother.xyz/create',
+        "https://somethingorother.xyz/create",
         { firstName, lastName, email, password, role },
         { withCredentials: true }
       );
-      console.log('Response:', response.data);
+      console.log("Response:", response.data);
 
       // redirect to login page
-      window.location.href = '/';
+      window.location.href = "/";
     } catch (error) {
       // Log the error message
       if (error.response) {
         // The request was made and the server responded with a status code
-        console.error('Error message:', error.response.data);
+        console.error("Error message:", error.response.data);
         setMessage(error.response.data.message);
       } else if (error.request) {
         // The request was made but no response was received
-        console.error('No response received:', error.request);
+        console.error("No response received:", error.request);
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.error('Error', error.message);
+        console.error("Error", error.message);
       }
     }
   };
 
   const handleChange = async () => {
-    setMessage('');
-  }
+    setMessage("");
+  };
 
   const handleConfirm = async () => {
-    const confirmPassword = document.getElementById('passwordConfirm').value;
-    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById("passwordConfirm").value;
+    const password = document.getElementById("password").value;
 
     if (confirmPassword !== password) {
-      setConfirmMessage('Password does not match!');
+      setConfirmMessage("Password does not match!");
+    } else {
+      setConfirmMessage("");
     }
-    else {
-      setConfirmMessage('');
-    }
-  }
+  };
 
   return (
     <div>
@@ -126,7 +124,10 @@ const CreateAccount = () => {
                 onChange={handleConfirm}
               ></input>
               {confirmMessage && (
-                <div className='pt-4 text-center font-bold' style={{ color: "red" }}>
+                <div
+                  className="pt-4 text-center font-bold"
+                  style={{ color: "red" }}
+                >
                   {confirmMessage}
                 </div>
               )}
@@ -158,7 +159,10 @@ const CreateAccount = () => {
               </div>
 
               {message && (
-                <div className='pt-4 text-center font-bold' style={{ color: "red" }}>
+                <div
+                  className="pt-4 text-center font-bold"
+                  style={{ color: "red" }}
+                >
                   {message}
                 </div>
               )}
@@ -176,7 +180,7 @@ const CreateAccount = () => {
             <div className="pt-3 flex flex-col">
               <div className="m-auto">
                 <a className="text-base text-gray-600">
-                  Already have an account?{' '}
+                  Already have an account?{" "}
                 </a>
                 <a
                   href="/"

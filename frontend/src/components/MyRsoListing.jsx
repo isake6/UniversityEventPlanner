@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from './Navbar';
-import axios from 'axios';
-import { useUserSession } from '../hooks/useUserSession';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import Navbar from "./Navbar";
+import axios from "axios";
+import { useUserSession } from "../hooks/useUserSession";
+import { useNavigate } from "react-router-dom";
 
 const MyRSOSelection = () => {
   const navigate = useNavigate();
@@ -15,18 +15,17 @@ const MyRSOSelection = () => {
   }, []);
 
   const fetchRSOs = async () => {
-    console.log('Fetching RSOs. Awaiting response...');
+    console.log("Fetching RSOs. Awaiting response...");
     const { id: user_id } = userSession;
     try {
-
       // Fetch user RSOs
       const userRsosResponse = await axios.post(
-        'https://somethingorother.xyz/get_user_rso_list',
+        "https://somethingorother.xyz/get_user_rso_list",
         { user_id },
         { withCredentials: true }
       );
 
-      console.log('User RSOs:', userRsosResponse.data);
+      console.log("User RSOs:", userRsosResponse.data);
 
       // Update the state with the difference
       setRsos(userRsosResponse.data.rso_details);
@@ -34,25 +33,24 @@ const MyRSOSelection = () => {
       // Log the error message
       if (error.response) {
         // The request was made and the server responded with a status code
-        console.error('Error message:', error.response.data);
+        console.error("Error message:", error.response.data);
       } else if (error.request) {
         // The request was made but no response was received
-        console.error('No response received:', error.request);
+        console.error("No response received:", error.request);
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.error('Error', error.message);
+        console.error("Error", error.message);
       }
     }
   };
 
   const handleSelectRSO = (rsoId, adminId, rsoName) => {
-    console.log('Selected RSO ID:', rsoId);
+    console.log("Selected RSO ID:", rsoId);
     localStorage.setItem("rsoID", rsoId);
     localStorage.setItem("rsoName", rsoName);
     localStorage.setItem("rsoAdminId", adminId);
 
-    navigate('/details');
-
+    navigate("/details");
 
     // navigate(`/rso/${rsoId}`);
   };
@@ -76,11 +74,9 @@ const MyRSOSelection = () => {
                     onClick={() => handleSelectRSO(rso.id, rso.admin, rso.name)}
                     className="text-lg text-left w-full font-semibold hover:bg-yellow-100 px-2 py-1 rounded"
                   >
-                    <h2 style={{fontSize: "24px"}}>{rso.name}</h2>
+                    <h2 style={{ fontSize: "24px" }}>{rso.name}</h2>
 
-                    <p style={{fontSize: "16px"}}>
-                    {rso.description}
-                    </p>
+                    <p style={{ fontSize: "16px" }}>{rso.description}</p>
                   </button>
                   <button
                     onClick={() => handleSelectRSO(rso.id, rso.admin, rso.name)}
@@ -94,7 +90,7 @@ const MyRSOSelection = () => {
 
             <div className="w-full py-5 flex flex-col m-auto">
               <button
-                onClick={() => navigate('/home')}
+                onClick={() => navigate("/home")}
                 className="btn btn-info font-bold text-xl bg-yellow-500"
               >
                 Continue

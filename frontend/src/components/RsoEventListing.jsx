@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
-import axios from 'axios';
-import { useUserSession } from '../hooks/useUserSession';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import Navbar from "../components/Navbar";
+import axios from "axios";
+import { useUserSession } from "../hooks/useUserSession";
+import { Link } from "react-router-dom";
 
 const EventList = () => {
   const { getUserSessionData } = useUserSession();
@@ -14,30 +14,30 @@ const EventList = () => {
   }, []);
 
   const handleEventListing = async () => {
-    console.log('Fetching events. Awaiting response...');
-    console.log('User session:', userSession);
+    console.log("Fetching events. Awaiting response...");
+    console.log("User session:", userSession);
     const { id: user_id, university_id } = userSession;
 
     try {
       const response = await axios.post(
-        'https://somethingorother.xyz/get_events',
+        "https://somethingorother.xyz/get_events",
         { user_id, university_id },
         { withCredentials: true }
       );
-      console.log('Response:', response.data);
+      console.log("Response:", response.data);
       setEvents(response.data.events);
     } catch (error) {
       if (error.response) {
-        console.error('Error message:', error.response.data);
+        console.error("Error message:", error.response.data);
       } else if (error.request) {
-        console.error('No response received:', error.request);
+        console.error("No response received:", error.request);
       } else {
-        console.error('Error', error.message);
+        console.error("Error", error.message);
       }
     }
   };
 
-  console.log('Events:', events);
+  console.log("Events:", events);
 
   return (
     <div>

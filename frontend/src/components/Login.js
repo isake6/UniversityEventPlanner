@@ -1,39 +1,38 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const userSessionData = JSON.stringify({
-    id : -1,
-    first_name : null,
-    last_name : null,
-    role : null,
+    id: -1,
+    first_name: null,
+    last_name: null,
+    role: null,
     email: null,
-    university_id : null,
+    university_id: null,
   });
 
-  localStorage.setItem('userSession', userSessionData);
-  localStorage.setItem('lat', 0);
-  localStorage.setItem('long', 0);
+  localStorage.setItem("userSession", userSessionData);
+  localStorage.setItem("lat", 0);
+  localStorage.setItem("long", 0);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Form submitted. Awaiting response...');
+    console.log("Form submitted. Awaiting response...");
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
     try {
       const response = await axios.post(
-        'https://somethingorother.xyz/login',
+        "https://somethingorother.xyz/login",
         { email, password },
         { withCredentials: true }
       );
-      console.log('Response:', response.data);
+      console.log("Response:", response.data);
 
       // Renamed "email" from the response to "emailResponse" to avoid shadowing
       const {
@@ -45,7 +44,7 @@ const Login = () => {
         university_id,
       } = response.data;
 
-      console.log('User ID:', id);
+      console.log("User ID:", id);
 
       // Use the renamed variable "emailResponse" here
       const userSessionData = JSON.stringify({
@@ -57,31 +56,30 @@ const Login = () => {
         university_id,
       });
 
-      localStorage.setItem('userSession', userSessionData);
+      localStorage.setItem("userSession", userSessionData);
 
-      navigate('/home');
+      navigate("/home");
     } catch (error) {
       // Log the error message
       if (error.response) {
         // The request was made and the server responded with a status code
-        console.error('Error message:', error.response.data);
+        console.error("Error message:", error.response.data);
         setMessage(error.response.data.message);
       } else if (error.request) {
         // The request was made but no response was received
-        console.error('No response received:', error.request);
+        console.error("No response received:", error.request);
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.error('Error', error.message);
+        console.error("Error", error.message);
       }
     }
   };
 
   const handleChange = async () => {
-    setMessage('');
-  }
+    setMessage("");
+  };
 
   return (
-
     <div className="flex items-center h-screen">
       <div className="w-1/3 h-fit max-w-xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col justify-center border border-yellow-500">
         <div className="p-5">
@@ -108,7 +106,10 @@ const Login = () => {
             ></input>
 
             {message && (
-              <div className='pt-4 text-center font-bold' style={{color: "red"}}>
+              <div
+                className="pt-4 text-center font-bold"
+                style={{ color: "red" }}
+              >
                 {message}
               </div>
             )}

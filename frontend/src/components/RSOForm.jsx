@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import Navbar from './Navbar';
-import { useUserSession } from '../hooks/useUserSession';
+import React, { useState } from "react";
+import axios from "axios";
+import Navbar from "./Navbar";
+import { useUserSession } from "../hooks/useUserSession";
 //# Input: user1_email, user2_email, user3_email, user4_email, user5_email, admin_email, name, university_id
 // //if (password !== passwordConfirm) {
 //     console.error('Passwords do not match');
@@ -12,19 +12,19 @@ const RSOForm = () => {
   const { getUserSessionData } = useUserSession();
   const userSession = getUserSessionData();
 
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Form submitted. Awaiting response...');
+    console.log("Form submitted. Awaiting response...");
 
-    const user1_email = document.getElementById('user1').value;
-    const user2_email = document.getElementById('user2').value;
-    const user3_email = document.getElementById('user3').value;
-    const user4_email = document.getElementById('user4').value;
-    const user5_email = document.getElementById('user5').value;
-    const admin_email = document.getElementById('admin').value;
-    const name = document.getElementById('name').value;
+    const user1_email = document.getElementById("user1").value;
+    const user2_email = document.getElementById("user2").value;
+    const user3_email = document.getElementById("user3").value;
+    const user4_email = document.getElementById("user4").value;
+    const user5_email = document.getElementById("user5").value;
+    const admin_email = document.getElementById("admin").value;
+    const name = document.getElementById("name").value;
     const university_id = userSession.university_id;
 
     const users = [
@@ -36,13 +36,13 @@ const RSOForm = () => {
     ];
 
     if (!users.includes(admin_email)) {
-      console.error('Admin email not in users list');
+      console.error("Admin email not in users list");
       return;
     }
 
     try {
       const response = await axios.post(
-        'https://somethingorother.xyz/add_rso',
+        "https://somethingorother.xyz/add_rso",
         {
           user1_email,
           user2_email,
@@ -55,31 +55,31 @@ const RSOForm = () => {
         },
         { withCredentials: true }
       );
-      console.log('Response:', response.data);
+      console.log("Response:", response.data);
 
       // redirect to login page
       if (!response.error) {
-        window.location.href = '/myRSO';
+        window.location.href = "/myRSO";
       }
     } catch (error) {
       // Log the error message
       if (error.response) {
         // The request was made and the server responded with a status code
-        console.error('Error message:', error.response.data);
+        console.error("Error message:", error.response.data);
         setMessage(error.response.data.message);
       } else if (error.request) {
         // The request was made but no response was received
-        console.error('No response received:', error.request);
+        console.error("No response received:", error.request);
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.error('Error', error.message);
+        console.error("Error", error.message);
       }
     }
   };
 
   const handleChange = async () => {
-    setMessage('');
-  }
+    setMessage("");
+  };
 
   return (
     <div>
@@ -90,7 +90,7 @@ const RSOForm = () => {
             <h1 className="text-3xl font-bold text-center text-black">
               Create RSO
             </h1>
-            <p className='text-center font-bold'>
+            <p className="text-center font-bold">
               Admin email must match 1 of the 5 emails listed
             </p>
             <form onSubmit={handleSubmit}>
@@ -172,7 +172,10 @@ const RSOForm = () => {
               ></input>
 
               {message && (
-                <div className='pt-4 text-center font-bold' style={{ color: "red" }}>
+                <div
+                  className="pt-4 text-center font-bold"
+                  style={{ color: "red" }}
+                >
                   {message}
                 </div>
               )}

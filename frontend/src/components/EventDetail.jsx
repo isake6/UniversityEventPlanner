@@ -5,23 +5,52 @@ import { useUserSession } from "../hooks/useUserSession";
 import axios from "axios";
 import Modal from "react-modal";
 import MyMap from "./Map";
+import StarRatings from "react-star-ratings";
 
 const EventDetail = () => {
   const location = useLocation();
-  const event = location.state;
+  const event_cache = location.state;
   const { getUserSessionData } = useUserSession();
   const userSession = getUserSessionData();
-  const event_id = event.id;
+  const event_id = event_cache.id;
   const [comments, setComments] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [addCommentModalIsOpen, setAddCommentModalIsOpen] = useState(false);
   const [currentComment, setCurrentComment] = useState(null);
   const [newComment, setNewComment] = useState(null);
   const [currentCommentId, setCurrentCommentId] = useState(null);
+  const [rating, setRating] = useState(0);
+  const [ratingID, setRatingID] = useState(-1);
+  const [originalRating, setOriginalRating] = useState(0);
+  const [ratingExists, setRatingExists] = useState(false);
+  const [ratingModalIsOpen, setRatingModalIsOpen] = useState(false);
+  const [event, setEvent] = useState(event_cache);
 
   useEffect(() => {
     getEventComments();
+    getUserRating();
+    getEventDetails();
   }, []);
+
+  const getEventDetails = async () => {
+    try {
+      const response = await axios.post(
+        "https://somethingorother.xyz/get_single_event",
+        { event_id: event_id },
+        { withCredentials: true }
+      );
+      console.log("Response:", response.data);
+      setEvent(response.data.event);
+    } catch (error) {
+      if (error.response) {
+        console.error("Error message:", error.response.data);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error", error.message);
+      }
+    }
+  };
 
   const getEventComments = async () => {
     // Get comments
@@ -34,6 +63,37 @@ const EventDetail = () => {
       );
       console.log("Response:", response.data);
       setComments(response.data.comments);
+    } catch (error) {
+      if (error.response) {
+        console.error("Error message:", error.response.data);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error", error.message);
+      }
+    }
+  };
+
+  const getUserRating = async () => {
+    const userId = userSession.id;
+
+    try {
+      const response = await axios.post(
+        "https://somethingorother.xyz/get_user_rating",
+        { user_id: userId, event_id: event_id },
+        { withCredentials: true }
+      );
+
+      console.log("Response:", response.data);
+      if (response.data.message === "No rating exists") {
+        setRating(0);
+        setRatingExists(false);
+      } else {
+        setRatingID(response.data.rating.id);
+        setOriginalRating(response.data.rating.rating);
+        setRating(response.data.rating.rating);
+        setRatingExists(true);
+      }
     } catch (error) {
       if (error.response) {
         console.error("Error message:", error.response.data);
@@ -146,6 +206,71 @@ const EventDetail = () => {
     setCurrentComment({ ...currentComment, text: comment });
   };
 
+  const handleRating = async () => {
+    setRatingModalIsOpen(true);
+  };
+
+  const handleAddRatingSubmit = async () => {
+    const userId = userSession.id;
+
+    try {
+      const response = await axios.post(
+        "https://somethingorother.xyz/add_rating",
+        { user_id: userId, event_id: event_id, rating },
+        { withCredentials: true }
+      );
+
+      console.log("Response:", response.data);
+      setRatingModalIsOpen(false);
+      setRatingExists(true);
+      getEventDetails();
+    } catch (error) {
+      if (error.response) {
+        console.error("Error message:", error.response.data);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error", error.message);
+      }
+    }
+  };
+
+  const handleEditRatingSubmit = async () => {
+    const userId = userSession.id;
+
+    try {
+      const response = await axios.post(
+        "https://somethingorother.xyz/update_rating",
+        { rating_id: ratingID, new_rating: rating },
+        { withCredentials: true }
+      );
+
+      console.log("Response:", response.data);
+      setRatingModalIsOpen(false);
+      setRatingExists(true);
+      setOriginalRating(rating);
+      setRating(rating);
+      getEventDetails();
+    } catch (error) {
+      if (error.response) {
+        console.error("Error message:", error.response.data);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error", error.message);
+      }
+    }
+  };
+
+  const handleAddRatingCancel = async () => {
+    setRatingModalIsOpen(false);
+    if (!ratingExists) {
+      setRating(0);
+    } else {
+      setRating(originalRating);
+    }
+  };
+
   return (
     <div>
       <Navbar />
@@ -173,8 +298,73 @@ const EventDetail = () => {
             </div>
           )}
           <p className="mt-4 text-md text-gray-700 mx-auto text-center">
+            <strong>Description</strong>
+          </p>
+          <p
+            className="text-md text-gray-700 mx-auto text-center"
+            style={{ whiteSpace: "pre-wrap" }}
+          >
             {event.description}
           </p>
+          <p className="mt-4 text-md text-gray-700 mx-auto text-center">
+            <strong>Time</strong>
+          </p>
+          <p className="text-md text-gray-700 mx-auto text-center">
+            {event.time}
+          </p>
+          <p className="mt-4 text-md text-gray-700 mx-auto text-center">
+            <strong>Contact Us</strong>
+          </p>
+          <p className="text-md text-gray-700 mx-auto text-center">
+            Email: {event.email}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Phone:{" "}
+            {event.phone}
+          </p>
+          <p className="mt-4 text-md text-gray-700 mx-auto text-center">
+            <strong>Rating</strong>
+          </p>
+          <p className="text-md text-gray-700 mx-auto text-center">
+            <p>
+              <span style={{ fontWeight: 500 }}>Average Rating:</span>
+              {event.average_rating
+                ? " " + event.average_rating + "/ 5"
+                : " No ratings yet"}
+            </p>
+
+            {userSession.id !== -1 && (
+              <p className="text-md text-gray-700 mx-auto text-center">
+                <span style={{ fontWeight: 500 }}>Your Rating:</span>
+                <StarRatings
+                  rating={rating}
+                  starRatedColor="yellow"
+                  numberOfStars={5}
+                  name="rating"
+                  starDimension="20px"
+                  starSpacing="5px"
+                />
+              </p>
+            )}
+          </p>
+          {userSession.id !== -1 && !ratingExists && (
+            <p className="mt-2 mx-auto text-center">
+              <button
+                onClick={() => handleRating()}
+                className="btn btn-success"
+              >
+                Rate This Event
+              </button>
+            </p>
+          )}
+          {rating !== 0 && (
+            <p className="mt-2 mx-auto text-center">
+              <button
+                onClick={() => handleRating()}
+                className="btn btn-success"
+              >
+                Edit Rating
+              </button>
+            </p>
+          )}
           <div className="mt-6">
             <h2 className="text-xl font-semibold text-gray-900 text-center">
               Comments
@@ -310,6 +500,68 @@ const EventDetail = () => {
                   <button
                     className="btn btn-error"
                     onClick={handleAddCommentCancel}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </Modal>
+              {/* Rating Modal */}
+              <Modal
+                isOpen={ratingModalIsOpen}
+                onRequestClose={() => setRatingModalIsOpen(false)}
+                style={{
+                  overlay: {
+                    backgroundColor: "rgba(0, 0, 0, 0.75)", // This will give the overlay a black color with 75% opacity
+                  },
+                  content: {
+                    color: "black", // This will give the text inside the modal a light steel blue color
+                    width: "50%", // This will make the modal take up 50% of the width of the viewport
+                    height: "25%", // This will make the modal take up 50% of the height of the viewport
+                    margin: "auto", // This will center the modal in the middle of the viewport
+                    padding: "20px", // This will add 20px of padding inside the modal
+                  },
+                }}
+              >
+                <h2
+                  style={{
+                    textAlign: "center",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {ratingExists ? "Edit Rating" : "Add Rating"}
+                </h2>
+                <p className="mt-4 flex justify-center">
+                  <StarRatings
+                    rating={rating}
+                    starRatedColor="yellow"
+                    changeRating={(newRating) => setRating(newRating)}
+                    numberOfStars={5}
+                    name="rating"
+                    starDimension="32px"
+                    starSpacing="5px"
+                  />
+                </p>
+                <div className="mt-14 flex justify-between">
+                  {!ratingExists && (
+                    <button
+                      className="btn btn-info"
+                      onClick={handleAddRatingSubmit}
+                    >
+                      Submit
+                    </button>
+                  )}
+                  {ratingExists && (
+                    <button
+                      className="btn btn-info"
+                      onClick={handleEditRatingSubmit}
+                    >
+                      Submit
+                    </button>
+                  )}
+                  <button
+                    className="btn btn-error"
+                    onClick={handleAddRatingCancel}
                   >
                     Cancel
                   </button>
