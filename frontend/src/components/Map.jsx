@@ -42,7 +42,7 @@ const MyMap = ({ position, zoom }) => {
     <MapContainer
       center={position}
       zoom={zoom}
-      style={{ height: "30vh", width: "100%", zIndex: 1 }}
+      style={{ height: "30vh", width: "100%", zIndex: 0 }}
     >
       <MapClickHandler />
       <TileLayer
