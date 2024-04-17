@@ -224,6 +224,7 @@ const EventDetail = () => {
       setRatingModalIsOpen(false);
       setRatingExists(true);
       getEventDetails();
+      getUserRating();
     } catch (error) {
       if (error.response) {
         console.error("Error message:", error.response.data);
