@@ -159,7 +159,7 @@ const UniversityDetails = () => {
         console.error("Error", error.message);
       }
     }
-    console.log("Approved: ", event_id);
+
     fetchPendingPublicEvents();
   };
 

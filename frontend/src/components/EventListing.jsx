@@ -162,7 +162,7 @@ const EventList = () => {
                 <Link key={event.id} to={`/events/${event.id}`} state={event}>
                   <div className="max-w-sm rounded overflow-hidden shadow-lg">
                     <div className="px-6 py-4">
-                      <div className="font-bold text-xl mb-2">
+                      <div className="font-bold text-xl mb-4">
                         {searchTerm
                           ? event.name
                               .split(new RegExp(`(${searchTerm})`, "gi"))
@@ -182,6 +182,7 @@ const EventList = () => {
                           : event.name}
                       </div>
                       <p className="text-black text-base">
+                        <strong>Description: </strong>
                         {searchTerm
                           ? event.description
                               .split(new RegExp(`(${searchTerm})`, "gi"))
@@ -201,6 +202,7 @@ const EventList = () => {
                           : event.description}
                       </p>
                       <p className="text-gray-700 text-base">
+                        <strong>Location: </strong>
                         {searchTerm
                           ? event.location
                               .split(new RegExp(`(${searchTerm})`, "gi"))
@@ -219,11 +221,12 @@ const EventList = () => {
                               )
                           : event.location}
                       </p>
-                      <p className="text-gray-700 text-base">
+                      <p className="text-gray-700 text-base text-center">
                         {event.lat}, {event.long}
                       </p>
                       <p className="text-gray-700 text-base">
-                        Time: {event.time}
+                        <strong>Time: </strong>
+                        {event.time}
                       </p>
                     </div>
                     <div className="px-6 pt-4 pb-2">
