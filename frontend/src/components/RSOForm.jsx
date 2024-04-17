@@ -37,6 +37,7 @@ const RSOForm = () => {
 
     if (!users.includes(admin_email)) {
       console.error("Admin email not in users list");
+      setMessage("Admin email not in users list");
       return;
     }
 
